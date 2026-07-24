@@ -28,11 +28,35 @@
   --stamp-rot:-6deg;
   --font-display:'Amiri','Lora',serif;
   --font-body:'IBM Plex Sans Arabic','Inter',sans-serif;
+  --surface:#fff;
+  --header-bg:#efe9d9;
+  --portal-bg:#fffdf8;
 }
 html[lang="en"]{
   --font-display:'Lora','Amiri',serif;
   --font-body:'Inter','IBM Plex Sans Arabic',sans-serif;
   --stamp-rot:6deg;
+}
+html[data-theme="dark"]{
+  --paper:#14181a;
+  --paper-card:#1c2226;
+  --ink:#e9e6dd;
+  --ink-soft:rgba(233,230,221,.66);
+  --ink-faint:rgba(233,230,221,.42);
+  --rule:#c9a25a;
+  --rule-soft:rgba(201,162,90,.32);
+  --navy:#4f9ac0;
+  --navy-2:#6bb4d8;
+  --good:#5fc088;
+  --good-bg:rgba(95,192,136,.14);
+  --bad:#e2776a;
+  --bad-bg:rgba(226,119,106,.14);
+  --divider:rgba(233,230,221,.16);
+  --divider-soft:rgba(233,230,221,.08);
+  --shadow:0 18px 40px -22px rgba(0,0,0,.6), 0 4px 10px -6px rgba(0,0,0,.45);
+  --surface:#20272b;
+  --header-bg:#252d31;
+  --portal-bg:#20272b;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
@@ -89,7 +113,7 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 .dropzone .dz-s{font-size:12px;color:var(--ink-faint);}
 .import-opts{display:flex;justify-content:center;gap:14px;margin-top:22px;flex-wrap:wrap;}
 .import-opts label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ink-soft);font-weight:600;}
-.import-opts input{border:1px solid var(--divider);border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink);width:170px;outline:none;}
+.import-opts input{border:1px solid var(--divider);border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--ink);width:170px;outline:none;}
 .import-opts input:focus{border-color:var(--rule);}
 #importStatus{margin-top:16px;font-size:13px;min-height:18px;}
 #importStatus.err{color:var(--bad);}
@@ -102,7 +126,7 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 .preview-summary b{color:var(--ink);}
 .preview-scroll{max-height:420px;overflow:auto;border:1px solid var(--divider);border-radius:14px;margin-bottom:18px;}
 .preview-scroll table{width:100%;border-collapse:collapse;}
-.preview-scroll th{position:sticky;top:0;background:#efe9d9;color:var(--navy);font-size:11.5px;font-weight:700;padding:10px 12px;white-space:nowrap;text-align:start;z-index:1;}
+.preview-scroll th{position:sticky;top:0;background:var(--header-bg);color:var(--navy);font-size:11.5px;font-weight:700;padding:10px 12px;white-space:nowrap;text-align:start;z-index:1;}
 .preview-scroll td{padding:9px 12px;font-size:12.5px;border-top:1px solid var(--divider-soft);white-space:nowrap;}
 .preview-scroll tr.invalid td{background:var(--bad-bg);color:var(--bad);}
 .preview-scroll tr.invalid td.notes{font-weight:600;}
@@ -123,16 +147,21 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 
 .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
 .toolbar.second{margin-bottom:14px;}
-.toolbar.third{margin-bottom:22px;}
+.toolbar.third{margin-bottom:14px;}
+.toolbar.fourth{margin-bottom:22px;}
+.toolbar.fourth .icon-btn{border:1px solid var(--divider);border-radius:9px;width:32px;height:32px;}
+.toolbar.fourth .icon-btn:hover{border-color:var(--ink-faint);}
+.sort-rules{display:inline-flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.sort-rule{display:inline-flex;align-items:center;gap:6px;}
 .chip-row{display:inline-flex;gap:8px;flex-wrap:wrap;}
-.chip-toggle{border:1px solid var(--divider);background:#fff;color:var(--ink-soft);padding:9px 15px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit;white-space:nowrap;}
+.chip-toggle{border:1px solid var(--divider);background:var(--surface);color:var(--ink-soft);padding:9px 15px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit;white-space:nowrap;}
 .chip-toggle:hover{border-color:var(--ink-faint);color:var(--ink);}
 .chip-toggle.active{background:var(--navy);color:#faf8f2;border-color:var(--navy);box-shadow:0 8px 18px -10px rgba(18,58,68,.45);}
 .search-wrap{position:relative;flex:1;min-width:210px;max-width:300px;}
 .search-wrap svg{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);color:var(--ink-faint);}
-.search-wrap input{width:100%;padding:10px 12px;padding-inline-start:34px;border-radius:11px;border:1px solid var(--divider);background:#fff;font-family:inherit;font-size:13.5px;color:var(--ink);outline:none;transition:.2s;}
+.search-wrap input{width:100%;padding:10px 12px;padding-inline-start:34px;border-radius:11px;border:1px solid var(--divider);background:var(--surface);font-family:inherit;font-size:13.5px;color:var(--ink);outline:none;transition:.2s;}
 .search-wrap input:focus{border-color:var(--rule);box-shadow:0 0 0 3px rgba(179,137,63,.14);}
-.seg{display:inline-flex;gap:2px;padding:4px;border-radius:12px;background:#fff;border:1px solid var(--divider);}
+.seg{display:inline-flex;gap:2px;padding:4px;border-radius:12px;background:var(--surface);border:1px solid var(--divider);}
 .seg-btn{border:none;background:transparent;color:var(--ink-soft);padding:8px 15px;border-radius:9px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:.2s;}
 .seg-btn.active{background:var(--navy);color:#faf8f2;}
 .spacer{flex:1;}
@@ -143,7 +172,7 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 .csel-wrap{position:relative;min-width:150px;}
 .csel-trigger{
   width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  border:1px solid var(--divider);background:#fff;border-radius:11px;padding:9px 13px;
+  border:1px solid var(--divider);background:var(--surface);border-radius:11px;padding:9px 13px;
   font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;transition:.2s;text-align:start;
 }
 .csel-trigger:hover{border-color:var(--ink-faint);}
@@ -154,7 +183,7 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 .csel-trigger.on .csel-chev{transform:rotate(180deg);}
 #cselPortal{
   position:fixed;z-index:1000;max-height:270px;overflow-y:auto;border-radius:14px;
-  border:1px solid var(--divider);background:#fffdf8;box-shadow:0 26px 50px -20px rgba(28,43,44,.35);
+  border:1px solid var(--divider);background:var(--portal-bg);box-shadow:0 26px 50px -20px rgba(28,43,44,.35);
   padding:6px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top center;
   transition:opacity .15s ease, transform .15s ease;pointer-events:none;
 }
@@ -167,7 +196,7 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 table{width:100%;border-collapse:collapse;background:var(--paper-card);}
 .group-band th{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#faf8f2;text-align:start;font-size:13.5px;font-weight:700;padding:13px 18px;letter-spacing:.01em;}
 .group-band .g-count{font-weight:400;font-size:12px;opacity:.82;margin-inline-start:10px;}
-.col-head th{background:#efe9d9;color:var(--navy);font-size:12px;font-weight:700;text-align:start;padding:11px 14px;border-bottom:2px solid var(--rule-soft);white-space:nowrap;}
+.col-head th{background:var(--header-bg);color:var(--navy);font-size:12px;font-weight:700;text-align:start;padding:11px 14px;border-bottom:2px solid var(--rule-soft);white-space:nowrap;}
 .col-head th.num{text-align:left;}
 tbody tr{border-bottom:1px solid var(--divider-soft);}
 tbody tr:last-child{border-bottom:none;}
@@ -222,13 +251,33 @@ td.actions-cell{text-align:center;width:40px;}
 }
 
 @media print{
-  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding-top:36px;}
+  html,html[data-theme="dark"]{
+    --paper:#fff; --paper-card:#fff; --surface:#fff; --header-bg:#fff; --portal-bg:#fff;
+    --ink:#000; --ink-soft:#333; --ink-faint:#555;
+    --rule:#000; --rule-soft:#888;
+    --navy:#000; --navy-2:#000;
+    --good:#000; --good-bg:transparent;
+    --bad:#000; --bad-bg:transparent;
+    --divider:#999; --divider-soft:#ccc;
+    --shadow:none;
+  }
+  body{background:#fff;-webkit-print-color-adjust:economy;print-color-adjust:economy;padding-top:36px;font-size:12px;}
   .page{max-width:none;padding:0 8mm 8mm;margin:0;}
   .no-print{display:none !important;}
   .card,.group-table-wrap{box-shadow:none;}
-  .masthead{margin-bottom:18px;}
+  .card,.ecard,.group-table-wrap,.kpi{border:1px solid #000;}
+  .masthead{margin-bottom:18px;border-bottom-color:#000;}
   .ecard{box-shadow:none;}
-  .print-running-header{display:flex;position:fixed;top:0;inset-inline:0;align-items:center;justify-content:space-between;padding:8px 8mm;font-size:10.5px;color:var(--ink-soft);border-bottom:1px solid var(--divider);background:#fff;}
+  .print-running-header{display:flex;position:fixed;top:0;inset-inline:0;align-items:center;justify-content:space-between;padding:8px 8mm;font-size:10.5px;color:#333;border-bottom:1px solid #999;background:#fff;}
+  .group-band{background:#fff !important;}
+  .group-band th{background:#fff !important;color:#000 !important;border-bottom:1.5px solid #000;}
+  .col-head th{background:#fff !important;color:#000 !important;border-bottom:1.5px solid #000;}
+  .tag{background:transparent !important;color:#000 !important;border:1px solid #666;}
+  .pill-var{background:transparent !important;color:#000 !important;border:1px solid #999;}
+  .stamp{color:#000 !important;}
+  .kpi .kpi-value,.kpi.accent .kpi-value,.kpi.good .kpi-value,.kpi.bad .kpi-value{color:#000 !important;}
+  .amt-block.after .amt-value{color:#000 !important;}
+  tbody tr:nth-child(even){background:#f5f5f5;}
   tr{break-inside:avoid;}
   .group-block{break-inside:auto;}
   .group-table-wrap{break-inside:auto;}
@@ -257,6 +306,10 @@ td.actions-cell{text-align:center;width:40px;}
       </div>
     </div>
     <div class="mast-right no-print">
+      <button class="btn btn-ghost" id="themeBtn" title="">
+        <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
+        <span id="themeBtnLabel"></span>
+      </button>
       <button class="btn btn-ghost" id="langBtn"></button>
       <button class="btn btn-outline" id="reimportBtn" hidden></button>
       <button class="btn btn-primary" id="printBtn" hidden>
@@ -321,11 +374,20 @@ td.actions-cell{text-align:center;width:40px;}
     <div class="toolbar third no-print">
       <div class="csel-wrap" id="filterEntityWrap"></div>
       <div class="csel-wrap" id="filterCategoryWrap"></div>
+      <div class="csel-wrap" id="filterBudgetWrap"></div>
       <div class="csel-wrap" id="filterMonthWrap"></div>
       <div class="csel-wrap" id="filterYearWrap"></div>
       <button class="link-btn" id="resetFiltersBtn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         <span id="resetFiltersLabel"></span>
+      </button>
+    </div>
+    <div class="toolbar fourth no-print">
+      <span class="field-label" id="sortByLabel"></span>
+      <div class="sort-rules" id="sortRulesHost"></div>
+      <button class="link-btn" id="addSortBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        <span id="addSortLabel"></span>
       </button>
     </div>
     <div id="viewHost"></div>
@@ -357,17 +419,19 @@ ar:{
   kpiRecords:'عدد السجلات', kpiEntitiesSuffix:'جهة', kpiBefore:'إجمالي قبل المراجعة', kpiAfter:'إجمالي بعد المراجعة',
   kpiNet:'صافي الخصم', kpiReduced:'تخفيض', kpiIncreased:'زيادة',
   searchPh:'بحث بالاسم أو التصنيف...', viewTable:'جدول مجمّع', viewCards:'بطاقات موجزة',
-  groupByLabel:'تجميع حسب', groupNone:'بدون تجميع', groupCategory:'التصنيف', groupEntity:'الجهة', groupMonth:'الشهر', groupYear:'السنة',
-  filterAllEntity:'كل الجهات', filterAllCategory:'كل التصنيفات', filterAllMonth:'كل الأشهر', filterAllYear:'كل السنوات',
+  groupByLabel:'تجميع حسب', groupNone:'بدون تجميع', groupCategory:'التصنيف', groupBudget:'الموازنة', groupEntity:'الجهة', groupMonth:'الشهر', groupYear:'السنة',
+  filterAllEntity:'كل الجهات', filterAllCategory:'كل التصنيفات', filterAllBudget:'كل الموازنات', filterAllMonth:'كل الأشهر', filterAllYear:'كل السنوات',
   resetFilters:'إعادة تعيين الفلاتر',
-  colName:'الاسم', colCategory:'التصنيف', colMonth:'الشهر', colYear:'السنة', colBefore:'قبل المراجعة', colAfter:'بعد المراجعة', colDiscount:'الخصم',
+  sortByLabel:'الفرز حسب', sortNone:'بدون فرز', sortAsc:'تصاعدي', sortDesc:'تنازلي', sortRemove:'إزالة مستوى الفرز', sortAddLevel:'إضافة مستوى فرز',
+  colName:'الاسم', colCategory:'التصنيف', colBudget:'الموازنة', colMonth:'الشهر', colYear:'السنة', colBefore:'قبل المراجعة', colAfter:'بعد المراجعة', colDiscount:'الخصم',
+  themeToLight:'وضع فاتح', themeToDark:'وضع داكن',
   colGroup:'المجموعة', colRecordCount:'عدد السجلات',
   tableModeDetailed:'تفصيلي', tableModeAggregated:'مجمّع', groupAllLabel:'كل السجلات',
   groupRecords:'سجل', groupTotal:'الإجمالي بعد المراجعة',
   noResults:'لا توجد نتائج مطابقة',
   copy:'نسخ', copied:'تم نسخ البيانات',
   copyLabelName:'الاسم', copyLabelCategory:'التصنيف', copyLabelMonth:'الشهر', copyLabelYear:'السنة',
-  copyLabelBefore:'قبل المراجعة', copyLabelAfter:'بعد المراجعة', copyLabelDiscount:'الخصم', copyLabelGroup:'المجموعة', copyLabelCount:'عدد السجلات',
+  copyLabelBefore:'قبل المراجعة', copyLabelAfter:'بعد المراجعة', copyLabelDiscount:'الخصم', copyLabelGroup:'المجموعة', copyLabelCount:'عدد السجلات', copyLabelBudget:'الموازنة',
 },
 en:{
   appTitle:'Contracted Entities Statement',
@@ -392,17 +456,19 @@ en:{
   kpiRecords:'Records', kpiEntitiesSuffix:'entities', kpiBefore:'Total before review', kpiAfter:'Total after review',
   kpiNet:'Net discount', kpiReduced:'reduced', kpiIncreased:'increased',
   searchPh:'Search by name or category...', viewTable:'Grouped table', viewCards:'Summary cards',
-  groupByLabel:'Group by', groupNone:'No grouping', groupCategory:'Category', groupEntity:'Entity', groupMonth:'Month', groupYear:'Year',
-  filterAllEntity:'All entities', filterAllCategory:'All categories', filterAllMonth:'All months', filterAllYear:'All years',
+  groupByLabel:'Group by', groupNone:'No grouping', groupCategory:'Category', groupBudget:'Budget', groupEntity:'Entity', groupMonth:'Month', groupYear:'Year',
+  filterAllEntity:'All entities', filterAllCategory:'All categories', filterAllBudget:'All budgets', filterAllMonth:'All months', filterAllYear:'All years',
   resetFilters:'Reset filters',
-  colName:'Name', colCategory:'Category', colMonth:'Month', colYear:'Year', colBefore:'Before review', colAfter:'After review', colDiscount:'Discount',
+  sortByLabel:'Sort by', sortNone:'No sort', sortAsc:'Ascending', sortDesc:'Descending', sortRemove:'Remove sort level', sortAddLevel:'Add sort level',
+  colName:'Name', colCategory:'Category', colBudget:'Budget', colMonth:'Month', colYear:'Year', colBefore:'Before review', colAfter:'After review', colDiscount:'Discount',
+  themeToLight:'Light mode', themeToDark:'Dark mode',
   colGroup:'Group', colRecordCount:'Record count',
   tableModeDetailed:'Detailed', tableModeAggregated:'Aggregated', groupAllLabel:'All records',
   groupRecords:'records', groupTotal:'Total after review',
   noResults:'No matching results',
   copy:'Copy', copied:'Copied to clipboard',
   copyLabelName:'Name', copyLabelCategory:'Category', copyLabelMonth:'Month', copyLabelYear:'Year',
-  copyLabelBefore:'Before review', copyLabelAfter:'After review', copyLabelDiscount:'Discount', copyLabelGroup:'Group', copyLabelCount:'Record count',
+  copyLabelBefore:'Before review', copyLabelAfter:'After review', copyLabelDiscount:'Discount', copyLabelGroup:'Group', copyLabelCount:'Record count', copyLabelBudget:'Budget',
 },
 };
 function t(key, vars){
@@ -461,15 +527,80 @@ function matchHeader(cell){
 
 let state = {
   lang:'ar', records:[], currency:'', view:'table', groupDims:new Set(['category']), tableMode:'detailed',
-  query:'', fEntity:'all', fCategory:'all', fMonth:'all', fYear:'all', previewRows:null,
+  query:'', fEntity:'all', fCategory:'all', fBudget:'all', fMonth:'all', fYear:'all', previewRows:null,
+  sortRules:[{field:'none',dir:'asc'}],
 };
-const GROUP_DIM_ORDER = ['category','name','month','year'];
+const SORT_MAX = 6;
+const GROUP_DIM_ORDER = ['category','budgetType','name','month','year'];
 function groupDimLabel(dim){
   if(dim==='category') return t('groupCategory');
+  if(dim==='budgetType') return t('groupBudget');
   if(dim==='name') return t('groupEntity');
   if(dim==='month') return t('groupMonth');
   if(dim==='year') return t('groupYear');
   return dim;
+}
+
+const MONTHS_AR = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_EN_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTH_RANK = {};
+[MONTHS_AR, MONTHS_EN, MONTHS_EN_SHORT].forEach(list=> list.forEach((m,i)=>{ MONTH_RANK[normalizeText(m)] = i+1; }));
+for(let n=1;n<=12;n++){ MONTH_RANK[String(n)] = n; MONTH_RANK[String(n).padStart(2,'0')] = n; }
+function monthRank(m){
+  const r = MONTH_RANK[normalizeText(m)];
+  return r===undefined ? 99 : r;
+}
+const SORT_FIELDS = ['name','category','budgetType','month','year','before','after','discount'];
+function sortFieldType(field){
+  if(field==='month') return 'month';
+  if(field==='year') return 'year';
+  if(field==='before'||field==='after'||field==='discount') return 'number';
+  return 'text';
+}
+function compareByField(a,b,field,dir){
+  const type = sortFieldType(field);
+  let res;
+  if(type==='month') res = monthRank(a.month) - monthRank(b.month);
+  else if(type==='year') res = (Number(a.year)||0) - (Number(b.year)||0);
+  else if(type==='number') res = (a[field]||0) - (b[field]||0);
+  else res = String(a[field]||'').localeCompare(String(b[field]||''), state.lang==='ar'?'ar':'en', {numeric:true, sensitivity:'base'});
+  return dir==='desc' ? -res : res;
+}
+function applySort(records){
+  const rules = state.sortRules.filter(r=>r.field && r.field!=='none');
+  if(!rules.length) return records;
+  return [...records].sort((a,b)=>{
+    for(const rule of rules){
+      const c = compareByField(a,b,rule.field,rule.dir);
+      if(c!==0) return c;
+    }
+    return 0;
+  });
+}
+function groupKeyCompare(va,vb,dim){
+  if(dim==='month') return monthRank(va)-monthRank(vb);
+  if(dim==='year') return (Number(va)||0)-(Number(vb)||0);
+  return String(va).localeCompare(String(vb), state.lang==='ar'?'ar':'en', {numeric:true, sensitivity:'base'});
+}
+function compareGroupsBySort(entryA, entryB, active){
+  const rules = state.sortRules.filter(r=>r.field && r.field!=='none');
+  for(const rule of rules){
+    const type = sortFieldType(rule.field);
+    let c;
+    if(type==='number'){
+      const sumA = entryA.rows.reduce((s,r)=>s+(r[rule.field]||0),0);
+      const sumB = entryB.rows.reduce((s,r)=>s+(r[rule.field]||0),0);
+      c = sumA - sumB;
+    } else {
+      const dimIdx = active.indexOf(rule.field);
+      if(dimIdx===-1) continue;
+      c = groupKeyCompare(entryA.parts[dimIdx], entryB.parts[dimIdx], rule.field);
+    }
+    if(rule.dir==='desc') c = -c;
+    if(c!==0) return c;
+  }
+  return 0;
 }
 
 const cselRegistry = {};
@@ -543,9 +674,18 @@ function chooseCsel(id, value){
 function onCselChange(id, value){
   if(id==='filterEntitySel') state.fEntity = value;
   else if(id==='filterCategorySel') state.fCategory = value;
+  else if(id==='filterBudgetSel') state.fBudget = value;
   else if(id==='filterMonthSel') state.fMonth = value;
   else if(id==='filterYearSel') state.fYear = value;
+  else {
+    const m = id.match(/^sortField(\d+)Sel$/);
+    if(m){
+      const idx = Number(m[1]) - 1;
+      if(state.sortRules[idx]) state.sortRules[idx].field = value;
+    }
+  }
   populateFilterOptions();
+  renderSortControls();
   renderAll();
 }
 document.addEventListener('click', (e)=>{
@@ -684,6 +824,7 @@ function showReport(){
   document.getElementById('printBtn').hidden = false;
   renderGroupDimChips();
   populateFilterOptions();
+  renderSortControls();
   renderAll();
 }
 function currencyUnit(){ return state.currency ? ' '+state.currency : ''; }
@@ -705,27 +846,91 @@ document.addEventListener('click', (e)=>{
   renderGroupDimChips();
   renderAll();
 });
+function sortFieldOptions(){
+  return [
+    {value:'none', label:t('sortNone')},
+    {value:'name', label:t('colName')},
+    {value:'category', label:t('colCategory')},
+    {value:'budgetType', label:t('colBudget')},
+    {value:'month', label:t('colMonth')},
+    {value:'year', label:t('colYear')},
+    {value:'before', label:t('colBefore')},
+    {value:'after', label:t('colAfter')},
+    {value:'discount', label:t('colDiscount')},
+  ];
+}
+function dirIconSvg(dir){
+  return dir==='asc'
+    ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 19V5M6 11l6-6 6 6"/></svg>'
+    : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';
+}
+function removeIconSvg(){
+  return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+}
+function renderSortControls(){
+  const opts = sortFieldOptions();
+  const host = document.getElementById('sortRulesHost');
+  host.innerHTML = state.sortRules.map((rule,i)=>'<span class="sort-rule">'
+    +'<span class="csel-wrap" id="sortField'+(i+1)+'Wrap"></span>'
+    +'<button type="button" class="icon-btn" id="sortDir'+(i+1)+'Btn" data-sortdir="'+i+'"></button>'
+    +(state.sortRules.length>1 ? '<button type="button" class="icon-btn" data-sortremove="'+i+'" title="'+t('sortRemove')+'">'+removeIconSvg()+'</button>' : '')
+    +'</span>').join('');
+  state.sortRules.forEach((rule,i)=>{
+    renderCsel('sortField'+(i+1)+'Wrap', 'sortField'+(i+1)+'Sel', opts, rule.field);
+    const btn = document.getElementById('sortDir'+(i+1)+'Btn');
+    if(!btn) return;
+    const active = rule.field !== 'none';
+    btn.style.visibility = active ? 'visible' : 'hidden';
+    btn.innerHTML = dirIconSvg(rule.dir);
+    btn.title = rule.dir==='asc' ? t('sortAsc') : t('sortDesc');
+  });
+  const addBtn = document.getElementById('addSortBtn');
+  if(addBtn) addBtn.hidden = state.sortRules.length >= SORT_MAX || state.sortRules[state.sortRules.length-1].field === 'none';
+}
+document.getElementById('addSortBtn').addEventListener('click', ()=>{
+  if(state.sortRules.length < SORT_MAX) state.sortRules.push({field:'none',dir:'asc'});
+  renderSortControls();
+});
+document.addEventListener('click', (e)=>{
+  const rmBtn = e.target.closest('[data-sortremove]');
+  if(!rmBtn) return;
+  const idx = Number(rmBtn.dataset.sortremove);
+  if(state.sortRules.length>1){ state.sortRules.splice(idx,1); renderSortControls(); renderAll(); }
+});
+document.addEventListener('click', (e)=>{
+  const dirBtn = e.target.closest('[data-sortdir]');
+  if(!dirBtn) return;
+  const idx = Number(dirBtn.dataset.sortdir);
+  state.sortRules[idx].dir = state.sortRules[idx].dir==='asc' ? 'desc' : 'asc';
+  renderSortControls();
+  renderAll();
+});
+
 function populateFilterOptions(){
   const entities = [...new Set(state.records.map(r=>r.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   const cats = [...new Set(state.records.map(r=>r.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-  const months = [...new Set(state.records.map(r=>r.month).filter(Boolean))];
+  const budgets = [...new Set(state.records.map(r=>r.budgetType).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  const months = [...new Set(state.records.map(r=>r.month).filter(Boolean))].sort((a,b)=>monthRank(a)-monthRank(b));
   const years = [...new Set(state.records.map(r=>r.year).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
   renderCsel('filterEntityWrap', 'filterEntitySel', [{value:'all',label:t('filterAllEntity')}, ...entities.map(v=>({value:v,label:v}))], state.fEntity);
   renderCsel('filterCategoryWrap', 'filterCategorySel', [{value:'all',label:t('filterAllCategory')}, ...cats.map(v=>({value:v,label:v}))], state.fCategory);
+  renderCsel('filterBudgetWrap', 'filterBudgetSel', [{value:'all',label:t('filterAllBudget')}, ...budgets.map(v=>({value:v,label:v}))], state.fBudget);
   renderCsel('filterMonthWrap', 'filterMonthSel', [{value:'all',label:t('filterAllMonth')}, ...months.map(v=>({value:v,label:v}))], state.fMonth);
   renderCsel('filterYearWrap', 'filterYearSel', [{value:'all',label:t('filterAllYear')}, ...years.map(v=>({value:v,label:String(v)}))], state.fYear);
 }
 
 function computeFiltered(){
   const q = normalizeText(state.query);
-  return state.records.filter(r=>{
+  const filtered = state.records.filter(r=>{
     if(state.fEntity!=='all' && r.name!==state.fEntity) return false;
     if(state.fCategory!=='all' && r.category!==state.fCategory) return false;
+    if(state.fBudget!=='all' && r.budgetType!==state.fBudget) return false;
     if(state.fMonth!=='all' && r.month!==state.fMonth) return false;
     if(state.fYear!=='all' && String(r.year)!==String(state.fYear)) return false;
     if(q && !(normalizeText(r.name).includes(q) || normalizeText(r.category).includes(q))) return false;
     return true;
   });
+  return applySort(filtered);
 }
 
 function renderKpis(){
@@ -777,6 +982,7 @@ function copyRecord(id){
   const lines = [
     t('copyLabelName')+': '+r.name,
     t('copyLabelCategory')+': '+(r.category||'—'),
+    t('copyLabelBudget')+': '+(r.budgetType||'—'),
     t('copyLabelMonth')+': '+(r.month||'—'),
     t('copyLabelYear')+': '+(r.year||'—'),
     t('copyLabelBefore')+': '+fmt(r.before)+currencyUnit(),
@@ -800,6 +1006,7 @@ function copyGroup(idx){
 
 function groupKeyValue(r, dim){
   if(dim==='category') return r.category || '—';
+  if(dim==='budgetType') return r.budgetType || '—';
   if(dim==='name') return r.name || '—';
   if(dim==='month') return r.month || '—';
   if(dim==='year') return String(r.year || '—');
@@ -815,7 +1022,16 @@ function buildGroups(records, dims){
     if(!map[key]) map[key] = { parts, rows: [] };
     map[key].rows.push(r);
   });
-  return Object.keys(map).sort((a,b)=>a.localeCompare(b, undefined, {numeric:true})).map(k=>{
+  return Object.keys(map).sort((ka,kb)=>{
+    const ea = map[ka], eb = map[kb];
+    const bySort = compareGroupsBySort(ea, eb, active);
+    if(bySort!==0) return bySort;
+    for(let i=0;i<active.length;i++){
+      const c = groupKeyCompare(ea.parts[i], eb.parts[i], active[i]);
+      if(c!==0) return c;
+    }
+    return 0;
+  }).map(k=>{
     const entry = map[k];
     const label = active.length>1
       ? entry.parts.map((v,i)=>groupDimLabel(active[i])+': '+v).join(' · ')
@@ -860,14 +1076,15 @@ function renderTableView(){
   host.innerHTML = groups.map(g=>{
     const sumAfter = g.rows.reduce((s,r)=>s+r.after,0);
     const bandRow = state.groupDims.size>0
-      ? '<tr class="group-band"><th colspan="8">'+esc(g.label)+'<span class="g-count">'+g.rows.length+' '+t('groupRecords')+' · '+t('groupTotal')+': '+fmt(sumAfter)+currencyUnit()+'</span></th></tr>'
+      ? '<tr class="group-band"><th colspan="9">'+esc(g.label)+'<span class="g-count">'+g.rows.length+' '+t('groupRecords')+' · '+t('groupTotal')+': '+fmt(sumAfter)+currencyUnit()+'</span></th></tr>'
       : '';
     return '<div class="group-table-wrap group-block"><table><thead>'+bandRow
-      +'<tr class="col-head"><th>'+t('colName')+'</th><th>'+t('colCategory')+'</th><th>'+t('colMonth')+'</th><th>'+t('colYear')+'</th>'
+      +'<tr class="col-head"><th>'+t('colName')+'</th><th>'+t('colCategory')+'</th><th>'+t('colBudget')+'</th><th>'+t('colMonth')+'</th><th>'+t('colYear')+'</th>'
       +'<th class="num">'+t('colBefore')+'</th><th class="num">'+t('colAfter')+'</th><th class="num">'+t('colDiscount')+'</th><th></th></tr></thead><tbody>'
       +g.rows.map(r=>'<tr>'
         +'<td class="name">'+esc(r.name)+'</td>'
         +'<td>'+tagHtml(r.category)+'</td>'
+        +'<td class="muted">'+esc(r.budgetType||'—')+'</td>'
         +'<td class="muted">'+esc(r.month)+'</td>'
         +'<td class="muted">'+esc(r.year)+'</td>'
         +'<td class="num">'+fmt(r.before)+currencyUnit()+'</td>'
@@ -889,7 +1106,7 @@ function renderCardsView(){
     host.innerHTML = '<div class="card-grid">'+records.map(r=>'<div class="card ecard">'
       +'<button class="icon-btn no-print" data-copy-id="'+r.id+'" title="'+t('copy')+'">'+copyIconSvg()+'</button>'
       +'<div class="ecard-top"><span class="ecard-name">'+esc(r.name)+'</span>'+tagHtml(r.category)
-      +'<span class="ecard-meta">'+esc(r.month)+' '+esc(r.year)+'</span></div>'
+      +'<span class="ecard-meta">'+(r.budgetType?esc(r.budgetType)+' · ':'')+esc(r.month)+' '+esc(r.year)+'</span></div>'
       +'<div class="ecard-amounts">'
         +'<div class="amt-block before"><span class="amt-label">'+t('colBefore')+'</span><span class="amt-value">'+fmt(r.before)+currencyUnit()+'</span></div>'
         +'<span class="amt-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>'
@@ -945,10 +1162,14 @@ function renderChrome(){
   document.querySelector('#tableModeSeg [data-mode="aggregated"]').textContent = t('tableModeAggregated');
   document.getElementById('groupByLabel').textContent = t('groupByLabel');
   document.getElementById('resetFiltersLabel').textContent = t('resetFilters');
+  document.getElementById('sortByLabel').textContent = t('sortByLabel');
+  document.getElementById('addSortLabel').textContent = t('sortAddLevel');
+  updateThemeButton();
   if(state.previewRows) renderPreview();
   if(!document.getElementById('reportArea').hidden){
     renderGroupDimChips();
     populateFilterOptions();
+    renderSortControls();
     renderAll();
   }
   document.getElementById('printRunMeta').textContent = state.records.length
@@ -982,9 +1203,11 @@ document.getElementById('searchInput').addEventListener('input', (e)=>{
   searchDebounce = setTimeout(()=>{ state.query = val; renderAll(); }, 200);
 });
 document.getElementById('resetFiltersBtn').addEventListener('click', ()=>{
-  state.query=''; state.fEntity='all'; state.fCategory='all'; state.fMonth='all'; state.fYear='all';
+  state.query=''; state.fEntity='all'; state.fCategory='all'; state.fBudget='all'; state.fMonth='all'; state.fYear='all';
+  state.sortRules=[{field:'none',dir:'asc'}];
   document.getElementById('searchInput').value='';
   populateFilterOptions();
+  renderSortControls();
   renderAll();
 });
 document.querySelectorAll('#viewSeg .seg-btn').forEach(btn=>{
@@ -1012,6 +1235,28 @@ document.getElementById('langBtn').addEventListener('click', ()=>{
   state.lang = state.lang==='ar' ? 'en' : 'ar';
   renderChrome();
 });
+
+const SUN_ICON = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const MOON_ICON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+function updateThemeButton(){
+  const dark = document.documentElement.dataset.theme === 'dark';
+  const icon = document.getElementById('themeIcon');
+  if(icon) icon.innerHTML = dark ? SUN_ICON : MOON_ICON;
+  const label = dark ? t('themeToLight') : t('themeToDark');
+  const labelEl = document.getElementById('themeBtnLabel');
+  if(labelEl) labelEl.textContent = label;
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.title = label;
+}
+document.getElementById('themeBtn').addEventListener('click', ()=>{
+  const dark = document.documentElement.dataset.theme === 'dark';
+  if(dark) delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = 'dark';
+  updateThemeButton();
+});
+if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+  document.documentElement.dataset.theme = 'dark';
+}
 
 renderChrome();
 </script>
