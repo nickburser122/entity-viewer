@@ -119,6 +119,16 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 #importStatus.err{color:var(--bad);}
 #importStatus.ok{color:var(--good);}
 
+.sheet-card{padding:30px;margin-bottom:26px;}
+.sheet-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.sheet-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--divider);border-radius:12px;padding:13px 16px;cursor:pointer;transition:.15s;}
+.sheet-opt:hover{border-color:var(--ink-faint);}
+.sheet-opt.active{border-color:var(--rule);background:rgba(179,137,63,.06);}
+.sheet-opt .sheet-name{font-size:13.5px;font-weight:600;color:var(--ink);}
+.sheet-opt .sheet-meta{font-size:11.5px;color:var(--ink-faint);}
+.sheet-opt .sheet-radio{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:2px solid var(--divider);position:relative;}
+.sheet-opt.active .sheet-radio{border-color:var(--rule);}
+.sheet-opt.active .sheet-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--rule);}
 .preview-card{padding:30px;margin-bottom:26px;}
 .preview-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
 .preview-head h2{margin:0;font-size:18px;color:var(--navy);}
@@ -130,6 +140,9 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 .preview-scroll td{padding:9px 12px;font-size:12.5px;border-top:1px solid var(--divider-soft);white-space:nowrap;}
 .preview-scroll tr.invalid td{background:var(--bad-bg);color:var(--bad);}
 .preview-scroll tr.invalid td.notes{font-weight:600;}
+.preview-scroll tr.excluded td{opacity:.4;}
+.preview-scroll th.colcheck,.preview-scroll td.colcheck{width:36px;text-align:center;}
+.row-check{width:16px;height:16px;cursor:pointer;accent-color:var(--rule);}
 .status-dot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;}
 .status-dot.ok{background:var(--good-bg);color:var(--good);}
 .status-dot.bad{background:var(--bad-bg);color:var(--bad);}
@@ -337,9 +350,24 @@ td.actions-cell{text-align:center;width:40px;}
     <div id="importStatus"></div>
   </section>
 
+  <section class="card sheet-card no-print" id="sheetZone" hidden>
+    <div class="preview-head"><h2 id="sheetTitle"></h2></div>
+    <p class="preview-summary" id="sheetHint"></p>
+    <div class="sheet-list" id="sheetList"></div>
+    <div class="preview-actions">
+      <button class="btn btn-ghost" id="cancelSheetBtn"></button>
+      <button class="btn btn-primary" id="confirmSheetBtn"></button>
+    </div>
+  </section>
+
   <section class="card preview-card no-print" id="previewZone" hidden>
     <div class="preview-head"><h2 id="previewTitle"></h2></div>
     <p class="preview-summary" id="previewSummary"></p>
+    <div class="toolbar" id="previewToolbar">
+      <button class="btn btn-ghost" id="selectAllRowsBtn"></button>
+      <button class="btn btn-ghost" id="selectValidRowsBtn"></button>
+      <button class="btn btn-ghost" id="selectNoneRowsBtn"></button>
+    </div>
     <div class="preview-scroll"><table>
       <thead><tr id="previewHeadRow"></tr></thead>
       <tbody id="previewBody"></tbody>
@@ -411,9 +439,12 @@ ar:{
   errNoColumns:'تعذر التعرف على أعمدة الملف — تأكد من مطابقة أسماء الأعمدة للقالب',
   errRead:'حدث خطأ أثناء قراءة الملف',
   previewTitle:'معاينة قبل الاستيراد',
-  previewSummary:'تم العثور على <b>{total}</b> صف — <b>{valid}</b> صالح للاستيراد و <b>{invalid}</b> غير صالح',
+  previewSummary:'تم العثور على <b>{total}</b> صف — <b>{selected}</b> محدد للاستيراد ({valid} صالح، {invalid} غير صالح)',
   previewColStatus:'الحالة', previewColRow:'الصف', previewColName:'الاسم', previewColCategory:'التصنيف',
   previewColMonth:'الشهر', previewColYear:'السنة', previewColBefore:'قبل المراجعة', previewColAfter:'بعد المراجعة', previewColNotes:'ملاحظات',
+  sheetTitle:'اختر ورقة العمل', sheetHint:'يحتوي الملف على أكثر من ورقة عمل — اختر الورقة التي تريد استيرادها',
+  sheetRows:'{n} صف', cancelSheet:'إلغاء', confirmSheet:'متابعة',
+  selectAllRows:'تحديد الكل', selectValidRows:'تحديد الصالح فقط', selectNoneRows:'إلغاء التحديد',
   reasonName:'الاسم مفقود', reasonBefore:'قيمة المبلغ قبل المراجعة غير رقمية', reasonAfter:'قيمة المبلغ بعد المراجعة غير رقمية',
   cancelPreview:'إلغاء', confirmImport:'تأكيد استيراد ({n})', noValidRows:'لا توجد صفوف صالحة للاستيراد',
   kpiRecords:'عدد السجلات', kpiEntitiesSuffix:'جهة', kpiBefore:'إجمالي قبل المراجعة', kpiAfter:'إجمالي بعد المراجعة',
@@ -448,9 +479,12 @@ en:{
   errNoColumns:'Could not detect the file columns — make sure column names match the template',
   errRead:'An error occurred while reading the file',
   previewTitle:'Preview before import',
-  previewSummary:'Found <b>{total}</b> rows — <b>{valid}</b> valid and <b>{invalid}</b> invalid',
+  previewSummary:'Found <b>{total}</b> rows — <b>{selected}</b> selected to import ({valid} valid, {invalid} invalid)',
   previewColStatus:'Status', previewColRow:'Row', previewColName:'Name', previewColCategory:'Category',
   previewColMonth:'Month', previewColYear:'Year', previewColBefore:'Before review', previewColAfter:'After review', previewColNotes:'Notes',
+  sheetTitle:'Choose a sheet', sheetHint:'This workbook has more than one sheet — pick the one you want to import',
+  sheetRows:'{n} rows', cancelSheet:'Cancel', confirmSheet:'Continue',
+  selectAllRows:'Select all', selectValidRows:'Valid rows only', selectNoneRows:'Clear selection',
   reasonName:'Missing name', reasonBefore:'Non-numeric before-review amount', reasonAfter:'Non-numeric after-review amount',
   cancelPreview:'Cancel', confirmImport:'Confirm import ({n})', noValidRows:'No valid rows to import',
   kpiRecords:'Records', kpiEntitiesSuffix:'entities', kpiBefore:'Total before review', kpiAfter:'Total after review',
@@ -528,7 +562,7 @@ function matchHeader(cell){
 let state = {
   lang:'ar', records:[], currency:'', view:'table', groupDims:new Set(['category']), tableMode:'detailed',
   query:'', fEntity:'all', fCategory:'all', fBudget:'all', fMonth:'all', fYear:'all', previewRows:null,
-  sortRules:[{field:'none',dir:'asc'}],
+  sortRules:[{field:'none',dir:'asc'}], workbook:null, sheetName:null,
 };
 const SORT_MAX = 6;
 const GROUP_DIM_ORDER = ['category','budgetType','name','month','year'];
@@ -731,43 +765,95 @@ function parseAndLoad(file){
   reader.onload = (e)=>{
     try{
       const wb = isCsv ? XLSX.read(e.target.result, {type:'string'}) : XLSX.read(e.target.result, {type:'array'});
-      const sheet = wb.Sheets[wb.SheetNames[0]];
-      const grid = XLSX.utils.sheet_to_json(sheet, {header:1, defval:"", raw:false});
-      if(!grid.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
-      const headerRow = grid[0];
-      const colMap = headerRow.map(matchHeader);
-      if(!colMap.includes('name') || (!colMap.includes('before') && !colMap.includes('after'))){
-        status.className='err'; status.textContent = t('errNoColumns'); return;
-      }
-      const rows = [];
-      for(let i=1;i<grid.length;i++){
-        const row = grid[i];
-        if(!row || row.every(v=>v==="" || v==null)) continue;
-        const rec = {rowNum:i+1, name:'', category:'', budgetType:'', month:'', year:'', before:0, after:0, reasons:[]};
-        let rawBefore='', rawAfter='';
-        colMap.forEach((key, idx)=>{
-          if(!key) return;
-          const val = row[idx];
-          if(key==='before'){ rawBefore = String(val??'').trim(); rec.before = Number(rawBefore) || 0; }
-          else if(key==='after'){ rawAfter = String(val??'').trim(); rec.after = Number(rawAfter) || 0; }
-          else rec[key] = String(val??'').trim();
-        });
-        if(!rec.name) rec.reasons.push(t('reasonName'));
-        if(rawBefore !== '' && Number.isNaN(Number(rawBefore))) rec.reasons.push(t('reasonBefore'));
-        if(rawAfter !== '' && Number.isNaN(Number(rawAfter))) rec.reasons.push(t('reasonAfter'));
-        rec.valid = rec.reasons.length === 0;
-        rows.push(rec);
-      }
-      if(!rows.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
+      if(!wb.SheetNames.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
       state.currency = document.getElementById('currencyInput').value.trim();
-      state.previewRows = rows;
-      showPreview();
+      state.workbook = wb;
+      if(wb.SheetNames.length > 1){
+        showSheetPicker(wb);
+      }else{
+        loadSheet(wb, wb.SheetNames[0]);
+      }
     }catch(err){
       status.className='err'; status.textContent = t('errRead');
     }
   };
   reader.onerror = ()=>{ status.className='err'; status.textContent = t('errRead'); };
   if(isCsv) reader.readAsText(file, 'UTF-8'); else reader.readAsArrayBuffer(file);
+}
+
+function showSheetPicker(wb){
+  document.getElementById('importZone').hidden = true;
+  document.getElementById('sheetZone').hidden = false;
+  document.getElementById('sheetTitle').textContent = t('sheetTitle');
+  document.getElementById('sheetHint').textContent = t('sheetHint');
+  document.getElementById('cancelSheetBtn').textContent = t('cancelSheet');
+  document.getElementById('confirmSheetBtn').textContent = t('confirmSheet');
+  state.sheetName = wb.SheetNames[0];
+  renderSheetList(wb);
+}
+function renderSheetList(wb){
+  const list = document.getElementById('sheetList');
+  list.innerHTML = wb.SheetNames.map(name=>{
+    const grid = XLSX.utils.sheet_to_json(wb.Sheets[name], {header:1, defval:"", raw:false});
+    const rowCount = Math.max(0, grid.filter(r=>r && !r.every(v=>v==="" || v==null)).length - 1);
+    const active = name === state.sheetName;
+    return '<div class="sheet-opt'+(active?' active':'')+'" data-sheet="'+esc(name)+'">'
+      +'<div><div class="sheet-name">'+esc(name)+'</div><div class="sheet-meta">'+t('sheetRows',{n:rowCount})+'</div></div>'
+      +'<div class="sheet-radio"></div></div>';
+  }).join('');
+  list.querySelectorAll('.sheet-opt').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      state.sheetName = opt.dataset.sheet;
+      list.querySelectorAll('.sheet-opt').forEach(o=>o.classList.toggle('active', o===opt));
+    });
+  });
+}
+function cancelSheetPicker(){
+  state.workbook = null; state.sheetName = null;
+  document.getElementById('sheetZone').hidden = true;
+  document.getElementById('importZone').hidden = false;
+  document.getElementById('fileInput').value = '';
+}
+function loadSheet(wb, sheetName){
+  const status = document.getElementById('importStatus');
+  try{
+    const sheet = wb.Sheets[sheetName];
+    const grid = XLSX.utils.sheet_to_json(sheet, {header:1, defval:"", raw:false});
+    if(!grid.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
+    const headerRow = grid[0];
+    const colMap = headerRow.map(matchHeader);
+    if(!colMap.includes('name') || (!colMap.includes('before') && !colMap.includes('after'))){
+      status.className='err'; status.textContent = t('errNoColumns'); return;
+    }
+    const rows = [];
+    for(let i=1;i<grid.length;i++){
+      const row = grid[i];
+      if(!row || row.every(v=>v==="" || v==null)) continue;
+      const rec = {rowNum:i+1, name:'', category:'', budgetType:'', month:'', year:'', before:0, after:0, reasons:[]};
+      let rawBefore='', rawAfter='';
+      colMap.forEach((key, idx)=>{
+        if(!key) return;
+        const val = row[idx];
+        if(key==='before'){ rawBefore = String(val??'').trim(); rec.before = Number(rawBefore) || 0; }
+        else if(key==='after'){ rawAfter = String(val??'').trim(); rec.after = Number(rawAfter) || 0; }
+        else rec[key] = String(val??'').trim();
+      });
+      if(!rec.name) rec.reasons.push(t('reasonName'));
+      if(rawBefore !== '' && Number.isNaN(Number(rawBefore))) rec.reasons.push(t('reasonBefore'));
+      if(rawAfter !== '' && Number.isNaN(Number(rawAfter))) rec.reasons.push(t('reasonAfter'));
+      rec.valid = rec.reasons.length === 0;
+      rec.included = rec.valid;
+      rows.push(rec);
+    }
+    if(!rows.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
+    document.getElementById('sheetZone').hidden = true;
+    state.previewRows = rows;
+    showPreview();
+  }catch(err){
+    document.getElementById('sheetZone').hidden = true;
+    document.getElementById('importZone').hidden = false;
+    status.className='err'; status.textContent = t('errRead');
+  }
 }
 
 function showPreview(){
@@ -779,38 +865,60 @@ function renderPreview(){
   const rows = state.previewRows || [];
   const validCount = rows.filter(r=>r.valid).length;
   const invalidCount = rows.length - validCount;
-  document.getElementById('previewSummary').innerHTML = t('previewSummary', {total:rows.length, valid:validCount, invalid:invalidCount});
+  const selectedCount = rows.filter(r=>r.included).length;
+  document.getElementById('previewSummary').innerHTML = t('previewSummary', {total:rows.length, selected:selectedCount, valid:validCount, invalid:invalidCount});
+  document.getElementById('selectAllRowsBtn').textContent = t('selectAllRows');
+  document.getElementById('selectValidRowsBtn').textContent = t('selectValidRows');
+  document.getElementById('selectNoneRowsBtn').textContent = t('selectNoneRows');
   document.getElementById('previewHeadRow').innerHTML =
+    '<th class="colcheck"><input type="checkbox" id="previewHeadCheck" class="row-check"></th>'+
     '<th>'+t('previewColStatus')+'</th><th>'+t('previewColRow')+'</th><th>'+t('previewColName')+'</th><th>'+t('previewColCategory')+'</th>'+
     '<th>'+t('previewColMonth')+'</th><th>'+t('previewColYear')+'</th><th>'+t('previewColBefore')+'</th><th>'+t('previewColAfter')+'</th><th>'+t('previewColNotes')+'</th>';
-  document.getElementById('previewBody').innerHTML = rows.map(r=>{
+  document.getElementById('previewBody').innerHTML = rows.map((r,idx)=>{
     const dot = r.valid
       ? '<span class="status-dot ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>'
       : '<span class="status-dot bad"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg></span>';
-    return '<tr class="'+(r.valid?'':'invalid')+'">'
+    const cls = [r.valid?'':'invalid', r.included?'':'excluded'].filter(Boolean).join(' ');
+    return '<tr class="'+cls+'">'
+      +'<td class="colcheck"><input type="checkbox" class="row-check" data-row-idx="'+idx+'"'+(r.included?' checked':'')+'></td>'
       +'<td>'+dot+'</td><td>'+r.rowNum+'</td><td>'+esc(r.name||'—')+'</td><td>'+esc(r.category||'—')+'</td>'
       +'<td>'+esc(r.month||'—')+'</td><td>'+esc(r.year||'—')+'</td><td>'+fmt(r.before)+'</td><td>'+fmt(r.after)+'</td>'
       +'<td class="notes">'+(r.reasons.length?esc(r.reasons.join(' · ')):'—')+'</td></tr>';
   }).join('');
+  const headCheck = document.getElementById('previewHeadCheck');
+  headCheck.checked = rows.length>0 && selectedCount===rows.length;
+  headCheck.indeterminate = selectedCount>0 && selectedCount<rows.length;
+  headCheck.addEventListener('change', ()=>{
+    rows.forEach(r=>r.included = headCheck.checked);
+    renderPreview();
+  });
+  document.getElementById('previewBody').querySelectorAll('[data-row-idx]').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      rows[Number(cb.dataset.rowIdx)].included = cb.checked;
+      renderPreview();
+    });
+  });
   const confirmBtn = document.getElementById('confirmImportBtn');
-  confirmBtn.textContent = validCount ? t('confirmImport', {n:validCount}) : t('noValidRows');
-  confirmBtn.disabled = validCount === 0;
+  confirmBtn.textContent = selectedCount ? t('confirmImport', {n:selectedCount}) : t('noValidRows');
+  confirmBtn.disabled = selectedCount === 0;
   document.getElementById('cancelPreviewBtn').textContent = t('cancelPreview');
   document.getElementById('previewTitle').textContent = t('previewTitle');
 }
 function confirmImport(){
-  const valid = (state.previewRows||[]).filter(r=>r.valid);
-  state.records = valid.map(r=>({
+  const selected = (state.previewRows||[]).filter(r=>r.included);
+  state.records = selected.map(r=>({
     id:uid(), name:r.name, category:r.category, budgetType:r.budgetType, month:r.month, year:r.year,
     before:r.before, after:r.after, discount:r.before-r.after,
   }));
   state.previewRows = null;
+  state.workbook = null; state.sheetName = null;
   document.getElementById('previewZone').hidden = true;
   document.getElementById('fileInput').value = '';
   showReport();
 }
 function cancelPreview(){
   state.previewRows = null;
+  state.workbook = null; state.sheetName = null;
   document.getElementById('previewZone').hidden = true;
   document.getElementById('importZone').hidden = false;
   document.getElementById('fileInput').value = '';
@@ -1166,6 +1274,13 @@ function renderChrome(){
   document.getElementById('addSortLabel').textContent = t('sortAddLevel');
   updateThemeButton();
   if(state.previewRows) renderPreview();
+  if(state.workbook && !document.getElementById('sheetZone').hidden){
+    document.getElementById('sheetTitle').textContent = t('sheetTitle');
+    document.getElementById('sheetHint').textContent = t('sheetHint');
+    document.getElementById('cancelSheetBtn').textContent = t('cancelSheet');
+    document.getElementById('confirmSheetBtn').textContent = t('confirmSheet');
+    renderSheetList(state.workbook);
+  }
   if(!document.getElementById('reportArea').hidden){
     renderGroupDimChips();
     populateFilterOptions();
@@ -1196,6 +1311,22 @@ document.getElementById('reimportBtn').addEventListener('click', ()=>{
 });
 document.getElementById('cancelPreviewBtn').addEventListener('click', cancelPreview);
 document.getElementById('confirmImportBtn').addEventListener('click', confirmImport);
+document.getElementById('cancelSheetBtn').addEventListener('click', cancelSheetPicker);
+document.getElementById('confirmSheetBtn').addEventListener('click', ()=>{
+  if(state.workbook && state.sheetName) loadSheet(state.workbook, state.sheetName);
+});
+document.getElementById('selectAllRowsBtn').addEventListener('click', ()=>{
+  (state.previewRows||[]).forEach(r=>r.included = true);
+  renderPreview();
+});
+document.getElementById('selectValidRowsBtn').addEventListener('click', ()=>{
+  (state.previewRows||[]).forEach(r=>r.included = r.valid);
+  renderPreview();
+});
+document.getElementById('selectNoneRowsBtn').addEventListener('click', ()=>{
+  (state.previewRows||[]).forEach(r=>r.included = false);
+  renderPreview();
+});
 let searchDebounce = null;
 document.getElementById('searchInput').addEventListener('input', (e)=>{
   const val = e.target.value;
