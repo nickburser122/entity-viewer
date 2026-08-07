@@ -692,7 +692,7 @@ ar:{
   copyLabelAvgMonthly:'المتوسط الشهري', copyLabelRefBefore:'متوسط مرجعي قبل', copyLabelRefAfter:'متوسط مرجعي بعد',
   matchingTitle:'المطابقة', matchingSummary:'المطابقة: {matched}/{total} جهة',
   matchAccountsOnlyTitle:'جهات في الحسابات فقط', matchClaimsOnlyTitle:'جهات في المطالبات فقط',
-  matchPickPlaceholder:'اختر مطابقة...', matchEmpty:'لا توجد جهات غير مطابقة',
+  matchPickPlaceholder:'اختر مطابقة...', matchEmpty:'لا توجد جهات غير مطابقة', matchNoCandidates:'لا توجد مطالبات غير مطابقة للاختيار',
   periodLabelText:'الفترة', periodAll:'الكل', periodLast3:'آخر 3', periodLast6:'آخر 6', periodLast12:'آخر 12', periodCustom:'مخصص',
   periodSplitLabel:'مقارنة قبل/بعد', periodBasisLabel:'أساس المتوسط: أشهر بها حركة',
   cutoffLabel:'نقطة الفصل',
@@ -765,7 +765,7 @@ en:{
   copyLabelAvgMonthly:'Monthly average', copyLabelRefBefore:'Ref. avg before', copyLabelRefAfter:'Ref. avg after',
   matchingTitle:'Matching', matchingSummary:'Matching: {matched}/{total} entities',
   matchAccountsOnlyTitle:'Accounts-only entities', matchClaimsOnlyTitle:'Claims-only entities',
-  matchPickPlaceholder:'Pick a match...', matchEmpty:'No unmatched entities',
+  matchPickPlaceholder:'Pick a match...', matchEmpty:'No unmatched entities', matchNoCandidates:'No unmatched claims available to select',
   periodLabelText:'Period', periodAll:'All', periodLast3:'Last 3', periodLast6:'Last 6', periodLast12:'Last 12', periodCustom:'Custom',
   periodSplitLabel:'Compare before/after', periodBasisLabel:'Average basis: months with activity',
   cutoffLabel:'Cutoff',
@@ -1683,14 +1683,13 @@ function renderMatchPanel(){
   } else {
     accountsOnlyList.innerHTML = [...state.index.accountsOnly].map(ak=>{
       const acc = accountsByKey(ak);
-      const suggestion = suggestMatch(acc ? acc.name : ak, claimsOnlyNames);
-      const options = [{value:'', label:t('matchPickPlaceholder')}].concat(
-        claimsOnlyKeys.map(ck=>({value:ck, label: claimsNameFor(ck) + (claimsNameFor(ck)===suggestion ? ' ★' : '')}))
-      );
       const wrapId = 'matchWrap_'+ak;
-      return '<div class="match-row"><span class="match-name">'+esc(acc?acc.name:ak)+'</span><div class="csel-wrap" id="'+wrapId+'" style="min-width:180px;"></div></div>';
+      const control = claimsOnlyKeys.length
+        ? '<div class="csel-wrap" id="'+wrapId+'" style="min-width:180px;"></div>'
+        : '<span class="match-empty">'+esc(t('matchNoCandidates'))+'</span>';
+      return '<div class="match-row"><span class="match-name">'+esc(acc?acc.name:ak)+'</span>'+control+'</div>';
     }).join('');
-    [...state.index.accountsOnly].forEach(ak=>{
+    if(claimsOnlyKeys.length) [...state.index.accountsOnly].forEach(ak=>{
       const suggestion = suggestMatch((accountsByKey(ak)||{}).name || ak, claimsOnlyNames);
       const suggestedKey = suggestion ? claimsOnlyKeys.find(ck=>claimsNameFor(ck)===suggestion) : null;
       const options = [{value:'', label:t('matchPickPlaceholder')}].concat(claimsOnlyKeys.map(ck=>({value:ck, label:claimsNameFor(ck)})));
