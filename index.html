@@ -216,7 +216,7 @@ h1,h2,h3,.display{font-family:var(--font-display);}
 .csel-opt:hover,.csel-opt.hl{background:rgba(28,43,44,.06);}
 .csel-opt.sel{background:rgba(18,58,68,.09);color:var(--navy);font-weight:700;}
 
-.group-table-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--divider);box-shadow:var(--shadow);margin-bottom:22px;transition:box-shadow .25s ease;}
+.group-table-wrap{border-radius:18px;overflow-x:auto;overflow-y:hidden;border:1px solid var(--divider);box-shadow:var(--shadow);margin-bottom:22px;transition:box-shadow .25s ease;}
 table{width:100%;border-collapse:collapse;background:var(--paper-card);}
 .group-band th{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#faf8f2;text-align:start;font-size:13.5px;font-weight:700;padding:13px 18px;letter-spacing:.01em;}
 .group-band .g-count{font-weight:400;font-size:12px;opacity:.82;margin-inline-start:10px;}
@@ -267,6 +267,97 @@ td.actions-cell{text-align:center;width:40px;}
 
 .toast-host{position:fixed;top:22px;left:50%;transform:translateX(-50%);z-index:999;}
 .toast{background:var(--navy);color:#faf8f2;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 16px 30px -14px rgba(18,58,68,.5);}
+
+.import-slots{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0 6px;text-align:start;}
+.import-slot{border:1.5px dashed var(--divider);border-radius:16px;padding:20px;transition:.2s;}
+.import-slot.filled{border-style:solid;border-color:var(--rule-soft);background:rgba(179,137,63,.045);}
+.slot-kind-label{font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:12px;letter-spacing:.01em;}
+.slot-dz{border:2px dashed var(--divider);border-radius:12px;padding:22px 12px;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
+.slot-dz.drag{border-color:var(--rule);background:rgba(179,137,63,.06);}
+.slot-dz .dz-icon{color:var(--navy-2);}
+.slot-dz .dz-t{font-size:13px;font-weight:600;color:var(--ink);}
+.slot-dz .dz-s{font-size:11px;color:var(--ink-faint);}
+.slot-filled-body{display:flex;align-items:flex-start;gap:12px;}
+.slot-filled-icon{flex-shrink:0;width:36px;height:36px;border-radius:10px;background:var(--good-bg);color:var(--good);display:flex;align-items:center;justify-content:center;}
+.slot-filled-info{flex:1;min-width:0;}
+.slot-file-name{font-size:13px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.slot-file-meta{font-size:11px;color:var(--ink-faint);margin-top:3px;}
+.audit-line{font-size:11px;margin-top:7px;display:inline-flex;align-items:center;gap:5px;}
+.audit-line.ok{color:var(--good);}
+.audit-line.warn{color:var(--rule);}
+.slot-actions{display:flex;gap:8px;margin-top:13px;}
+.slot-actions .btn{padding:6px 12px;font-size:11.5px;border-radius:8px;}
+.import-proceed{display:flex;justify-content:center;margin-top:22px;}
+
+.slot-loading{display:flex;flex-direction:column;align-items:center;gap:12px;padding:14px 6px 6px;}
+.slot-spinner{width:26px;height:26px;border-radius:50%;border:3px solid var(--divider);border-top-color:var(--navy);animation:slot-spin .8s linear infinite;}
+@keyframes slot-spin{to{transform:rotate(360deg);}}
+.slot-loading-text{font-size:12px;color:var(--ink-soft);font-weight:600;}
+.slot-progress{width:100%;max-width:220px;height:6px;border-radius:999px;background:var(--divider-soft);overflow:hidden;}
+.slot-progress-bar{height:100%;width:0%;background:var(--navy);border-radius:999px;transition:width .2s ease;}
+.slot-progress-bar.indeterminate{width:40%!important;animation:slot-indet 1.1s ease-in-out infinite;}
+@keyframes slot-indet{0%{margin-inline-start:-40%;}100%{margin-inline-start:100%;}}
+
+.kind-seg{display:inline-flex;gap:2px;padding:3px;border-radius:10px;background:var(--surface);border:1px solid var(--divider);margin-inline-start:14px;vertical-align:middle;}
+.kind-seg button{border:none;background:transparent;color:var(--ink-soft);padding:6px 13px;border-radius:7px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:.2s;}
+.kind-seg button.active{background:var(--navy);color:#faf8f2;}
+
+.match-panel{padding:20px 26px;margin-bottom:22px;}
+.match-head{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;}
+.match-head .chev{transition:transform .2s;color:var(--ink-faint);flex-shrink:0;}
+.match-panel.open .match-head .chev{transform:rotate(180deg);}
+.match-summary{font-size:13.5px;font-weight:600;color:var(--ink);flex:1;}
+.match-summary b{color:var(--navy);}
+.match-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+.match-panel.open .match-body{max-height:1000px;}
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding-top:18px;}
+@media (max-width:760px){.match-cols{grid-template-columns:1fr;}}
+.match-col h4{margin:0 0 10px;font-size:12px;color:var(--ink-soft);font-weight:700;}
+.match-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--divider-soft);flex-wrap:wrap;}
+.match-row:last-child{border-bottom:none;}
+.match-name{font-size:13px;color:var(--ink);font-weight:600;}
+.match-plain{font-size:13px;color:var(--ink-soft);padding:9px 0;border-bottom:1px solid var(--divider-soft);}
+.match-plain:last-child{border-bottom:none;}
+.match-empty{font-size:12px;color:var(--ink-faint);padding:6px 0;}
+
+.period-fields{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.period-divider{width:1px;height:22px;background:var(--divider);}
+.toggle-switch{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft);cursor:pointer;user-select:none;white-space:nowrap;}
+.toggle-switch input{appearance:none;-webkit-appearance:none;margin:0;width:34px;height:19px;border-radius:999px;background:var(--divider);position:relative;cursor:pointer;transition:.2s;flex-shrink:0;}
+.toggle-switch input::after{content:'';position:absolute;top:2px;inset-inline-start:2px;width:15px;height:15px;border-radius:50%;background:var(--surface);transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.toggle-switch input:checked{background:var(--navy);}
+.toggle-switch input:checked::after{inset-inline-start:17px;}
+
+.marker-badge{font-size:10px;font-weight:700;color:var(--ink-faint);background:var(--divider-soft);border-radius:6px;padding:2px 7px;margin-inline-start:6px;white-space:nowrap;vertical-align:middle;}
+.delta-pill{font-size:11.5px;font-weight:700;direction:ltr;}
+.delta-pill.good{color:var(--good);}
+.delta-pill.bad{color:var(--bad);}
+.acct-na{color:var(--ink-faint);cursor:help;}
+.kpi-sub .audit-line{margin-top:0;}
+.kpi-label{display:inline-flex;align-items:center;gap:6px;}
+.kpi-src-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.kpi-src-dot.claims{background:var(--navy);}
+.kpi-src-dot.accounts{background:var(--rule);}
+.kpi-sub{display:flex;flex-direction:column;gap:3px;align-items:flex-start;}
+.kpi-sub-note{color:var(--ink-faint);}
+.avg-src-toggle{display:inline-flex;gap:2px;padding:2px;border-radius:7px;background:var(--divider-soft);}
+.avg-src-btn{border:none;background:transparent;color:var(--ink-faint);font-family:inherit;font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;cursor:pointer;transition:.15s;}
+.avg-src-btn.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12);}
+
+.entity-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+.entity-toolbar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.entity-count-note{font-size:12.5px;color:var(--ink-soft);font-weight:600;}
+.entity-info-icon{color:var(--ink-faint);cursor:help;display:inline-flex;}
+.entity-ecard{gap:10px;}
+.entity-ecard-name{font-family:var(--font-display);font-size:16.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;flex-wrap:wrap;padding-inline-end:26px;}
+.entity-line{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-top:10px;border-top:1px solid var(--divider-soft);font-size:12.5px;}
+.entity-line.no-border{border-top:none;padding-top:0;}
+.entity-line-label{display:inline-flex;align-items:center;gap:6px;color:var(--ink-soft);font-weight:600;}
+.entity-line-value{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
+.entity-reconcile{font-size:11.5px;color:var(--ink-soft);display:flex;align-items:center;gap:5px;}
+.entity-reconcile.match{color:var(--good);}
+.entity-reconcile svg{flex-shrink:0;}
+.entity-empty-note{font-size:12px;color:var(--ink-faint);text-align:center;padding:30px 0;}
 
 @media (max-width:760px){
   .masthead{flex-direction:column;align-items:flex-start;}
@@ -349,16 +440,75 @@ td.actions-cell{text-align:center;width:40px;}
     </div>
     <h2 id="importTitle"></h2>
     <p class="hint" id="importHint"></p>
-    <div class="dropzone" id="dropzone">
-      <div class="dz-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 18a4 4 0 0 1-.6-7.95A5 5 0 0 1 16 8a4.5 4.5 0 0 1 1.1 8.86"/><path d="M12 12v7M9.5 14.5L12 12l2.5 2.5"/></svg></div>
-      <div class="dz-t" id="dzTitle"></div>
-      <div class="dz-s">xlsx, xls, csv</div>
-      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;">
+    <div class="import-slots">
+      <div class="import-slot" id="slotClaims" data-kind="claims">
+        <div class="slot-kind-label" id="slotClaimsLabel"></div>
+        <div id="slotClaimsEmpty">
+          <div class="slot-dz" id="dzClaims">
+            <div class="dz-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 18a4 4 0 0 1-.6-7.95A5 5 0 0 1 16 8a4.5 4.5 0 0 1 1.1 8.86"/><path d="M12 12v7M9.5 14.5L12 12l2.5 2.5"/></svg></div>
+            <div class="dz-t" id="dzClaimsTitle"></div>
+            <div class="dz-s">xlsx, xls, csv</div>
+          </div>
+          <input type="file" id="fileInputClaims" accept=".xlsx,.xls,.csv" style="display:none;">
+        </div>
+        <div class="slot-loading" id="slotClaimsLoading" hidden>
+          <div class="slot-spinner"></div>
+          <div class="slot-loading-text" id="slotClaimsLoadingText"></div>
+          <div class="slot-progress"><div class="slot-progress-bar" id="slotClaimsProgressBar"></div></div>
+        </div>
+        <div class="slot-filled" id="slotClaimsFilled" hidden>
+          <div class="slot-filled-body">
+            <div class="slot-filled-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="slot-filled-info">
+              <div class="slot-file-name" id="slotClaimsFileName"></div>
+              <div class="slot-file-meta" id="slotClaimsFileMeta"></div>
+              <div id="slotClaimsAudit"></div>
+            </div>
+          </div>
+          <div class="slot-actions">
+            <button class="btn btn-ghost" id="slotClaimsReplaceBtn"></button>
+            <button class="btn btn-ghost" id="slotClaimsRemoveBtn"></button>
+          </div>
+        </div>
+      </div>
+      <div class="import-slot" id="slotAccounts" data-kind="accounts">
+        <div class="slot-kind-label" id="slotAccountsLabel"></div>
+        <div id="slotAccountsEmpty">
+          <div class="slot-dz" id="dzAccounts">
+            <div class="dz-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 18a4 4 0 0 1-.6-7.95A5 5 0 0 1 16 8a4.5 4.5 0 0 1 1.1 8.86"/><path d="M12 12v7M9.5 14.5L12 12l2.5 2.5"/></svg></div>
+            <div class="dz-t" id="dzAccountsTitle"></div>
+            <div class="dz-s">xlsx, xls, csv</div>
+          </div>
+          <input type="file" id="fileInputAccounts" accept=".xlsx,.xls,.csv" style="display:none;">
+        </div>
+        <div class="slot-loading" id="slotAccountsLoading" hidden>
+          <div class="slot-spinner"></div>
+          <div class="slot-loading-text" id="slotAccountsLoadingText"></div>
+          <div class="slot-progress"><div class="slot-progress-bar" id="slotAccountsProgressBar"></div></div>
+        </div>
+        <div class="slot-filled" id="slotAccountsFilled" hidden>
+          <div class="slot-filled-body">
+            <div class="slot-filled-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="slot-filled-info">
+              <div class="slot-file-name" id="slotAccountsFileName"></div>
+              <div class="slot-file-meta" id="slotAccountsFileMeta"></div>
+              <div id="slotAccountsAudit"></div>
+            </div>
+          </div>
+          <div class="slot-actions">
+            <button class="btn btn-ghost" id="slotAccountsReplaceBtn"></button>
+            <button class="btn btn-ghost" id="slotAccountsRemoveBtn"></button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="import-opts">
       <label id="currencyLabel"><input type="text" id="currencyInput" value=""></label>
     </div>
     <div id="importStatus"></div>
+    <div class="import-proceed">
+      <button class="btn btn-primary" id="proceedReportBtn" hidden></button>
+    </div>
   </section>
 
   <section class="card sheet-card no-print" id="sheetZone" hidden>
@@ -372,7 +522,12 @@ td.actions-cell{text-align:center;width:40px;}
   </section>
 
   <section class="card preview-card no-print" id="previewZone" hidden>
-    <div class="preview-head"><h2 id="previewTitle"></h2></div>
+    <div class="preview-head"><h2 id="previewTitle"></h2>
+      <div class="kind-seg" id="previewKindSeg">
+        <button type="button" data-kind="claims" id="previewKindClaimsBtn"></button>
+        <button type="button" data-kind="accounts" id="previewKindAccountsBtn"></button>
+      </div>
+    </div>
     <p class="preview-summary" id="previewSummary"></p>
     <div class="toolbar" id="previewToolbar">
       <button class="btn btn-ghost" id="selectAllRowsBtn"></button>
@@ -390,7 +545,39 @@ td.actions-cell{text-align:center;width:40px;}
   </section>
 
   <section id="reportArea" hidden>
+    <div class="card match-panel no-print" id="matchPanel" hidden>
+      <div class="match-head" id="matchHead">
+        <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        <span class="match-summary" id="matchSummary"></span>
+      </div>
+      <div class="match-body">
+        <div class="match-cols">
+          <div class="match-col">
+            <h4 id="matchAccountsOnlyTitle"></h4>
+            <div id="matchAccountsOnlyList"></div>
+          </div>
+          <div class="match-col">
+            <h4 id="matchClaimsOnlyTitle"></h4>
+            <div id="matchClaimsOnlyList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="kpi-strip" id="kpiStrip"></div>
+    <div class="toolbar period-toolbar no-print" id="periodToolbar">
+      <span class="field-label" id="periodLabelText"></span>
+      <div class="chip-row" id="periodPresetChips"></div>
+      <div class="period-fields">
+        <div class="csel-wrap" id="periodFromWrap"></div>
+        <span class="field-label" id="periodToArrow">→</span>
+        <div class="csel-wrap" id="periodToWrap"></div>
+      </div>
+      <div class="period-divider"></div>
+      <label class="toggle-switch" id="periodSplitToggleWrap"><input type="checkbox" id="periodSplitToggle"><span id="periodSplitLabel"></span></label>
+      <div class="csel-wrap" id="periodCutoffWrap" hidden></div>
+      <div class="period-divider"></div>
+      <label class="toggle-switch" id="periodBasisToggleWrap"><input type="checkbox" id="periodBasisToggle"><span id="periodBasisLabelText"></span></label>
+    </div>
     <div class="toolbar no-print">
       <div class="search-wrap">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -399,6 +586,7 @@ td.actions-cell{text-align:center;width:40px;}
       <div class="seg" id="viewSeg">
         <button class="seg-btn active" data-view="table"></button>
         <button class="seg-btn" data-view="cards"></button>
+        <button class="seg-btn" data-view="entity"></button>
       </div>
     </div>
     <div class="toolbar second no-print">
@@ -416,6 +604,7 @@ td.actions-cell{text-align:center;width:40px;}
       <div class="csel-wrap" id="filterBudgetWrap"></div>
       <div class="csel-wrap" id="filterMonthWrap"></div>
       <div class="csel-wrap" id="filterYearWrap"></div>
+      <button class="chip-toggle" id="matchedOnlyChip"></button>
       <button class="link-btn" id="resetFiltersBtn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         <span id="resetFiltersLabel"></span>
@@ -437,35 +626,60 @@ td.actions-cell{text-align:center;width:40px;}
 const I18N = {
 ar:{
   appTitle:'بيان جهات متعاقدة',
-  appSub:'كشف مراجعة الموازنات — المبالغ قبل وبعد المراجعة',
+  appSub:'كشف مراجعة الموازنات — المطالبات والحسابات',
   langSwitch:'English',
   reimport:'استيراد ملف آخر',
+  editImport:'تعديل الاستيراد',
   printBtn:'طباعة البيان',
   importTitle:'استيراد بيانات الجهات',
-  importHint:'ارفع ملف Excel يحتوي على أعمدة: الاسم، التصنيف، الموازنة، الشهر، السنة، المبلغ قبل المراجعة، المبلغ بعد المراجعة',
+  importHint:'ارفع ملف المطالبات أو ملف الحسابات أو الاثنين معًا — يمكن رفعهما بأي ترتيب',
   dzTitle:'اسحب الملف هنا أو اضغط للاختيار',
+  slotClaimsLabel:'المطالبات',
+  slotAccountsLabel:'الحسابات',
   currencyLabel:'وحدة العملة (اختياري)',
   currencyPh:'مثال: ر.س',
   errEmptyFile:'الملف فارغ أو لا يحتوي على بيانات صالحة',
   errNoColumns:'تعذر التعرف على أعمدة الملف — تأكد من مطابقة أسماء الأعمدة للقالب',
   errRead:'حدث خطأ أثناء قراءة الملف',
+  proceedToReport:'المتابعة إلى التقرير',
+  slotReplace:'استبدال', slotRemove:'إزالة',
+  slotMeta:'{rows} صف · {sheet}',
+  slotParsing:'جارٍ تحليل الملف...', slotReading:'جارٍ القراءة... {pct}%',
   previewTitle:'معاينة قبل الاستيراد',
   previewSummary:'تم العثور على <b>{total}</b> صف — <b>{selected}</b> محدد للاستيراد ({valid} صالح، {invalid} غير صالح)',
   previewColStatus:'الحالة', previewColRow:'الصف', previewColName:'الاسم', previewColCategory:'التصنيف',
   previewColMonth:'الشهر', previewColYear:'السنة', previewColBefore:'قبل المراجعة', previewColAfter:'بعد المراجعة', previewColNotes:'ملاحظات',
+  previewColOrders:'أوامر الدفع', previewColDues:'المستحقات', previewColFirstDue:'أول استحقاق', previewColLastDue:'آخر استحقاق',
+  previewColRefBefore:'متوسط مرجعي قبل', previewColRefAfter:'متوسط مرجعي بعد',
+  kindClaims:'مطالبات', kindAccounts:'حسابات',
   sheetTitle:'اختر ورقة العمل', sheetHint:'يحتوي الملف على أكثر من ورقة عمل — اختر الورقة التي تريد استيرادها',
-  sheetRows:'{n} صف', cancelSheet:'إلغاء', confirmSheet:'متابعة',
+  sheetRows:'{n} صف', cancelSheet:'إلغاء', confirmSheet:'متابعة', confirmSheetLoading:'جارٍ التحميل...',
   selectAllRows:'تحديد الكل', selectValidRows:'تحديد الصالح فقط', selectNoneRows:'إلغاء التحديد',
   reasonName:'الاسم مفقود', reasonBefore:'قيمة المبلغ قبل المراجعة غير رقمية', reasonAfter:'قيمة المبلغ بعد المراجعة غير رقمية',
+  reasonOrders:'عدد أوامر الدفع غير رقمي', reasonDues:'قيمة المستحقات غير رقمية',
+  totalRowNote:'صف إجمالي — مرجع تدقيق', dateFixedNote:'تم تصحيح ترتيب التواريخ',
   cancelPreview:'إلغاء', confirmImport:'تأكيد استيراد ({n})', noValidRows:'لا توجد صفوف صالحة للاستيراد',
   kpiRecords:'عدد السجلات', kpiEntitiesSuffix:'جهة', kpiBefore:'إجمالي قبل المراجعة', kpiAfter:'إجمالي بعد المراجعة',
   kpiNet:'صافي الخصم', kpiReduced:'تخفيض', kpiIncreased:'زيادة',
-  searchPh:'بحث بالاسم أو التصنيف...', viewTable:'جدول مجمّع', viewCards:'بطاقات موجزة',
+  kpiOrders:'أوامر الدفع', kpiDues:'المستحقات', kpiTotalAfterPeriod:'إجمالي بعد المراجعة', kpiAvgMonthly:'المتوسط الشهري', kpiSplitDelta:'الفرق قبل/بعد',
+  allPeriods:'كل الفترات', auditOk:'مطابق لصف الإجمالي', auditWarn:'فرق عن الإجمالي: {n}',
+  searchPh:'بحث بالاسم أو التصنيف...', viewTable:'جدول مجمّع', viewCards:'بطاقات موجزة', viewEntity:'الجهات',
   groupByLabel:'تجميع حسب', groupNone:'بدون تجميع', groupCategory:'التصنيف', groupBudget:'الموازنة', groupEntity:'الجهة', groupMonth:'الشهر', groupYear:'السنة',
   filterAllEntity:'كل الجهات', filterAllCategory:'كل التصنيفات', filterAllBudget:'كل الموازنات', filterAllMonth:'كل الأشهر', filterAllYear:'كل السنوات',
+  filterMatchedOnly:'الجهات المطابقة فقط',
   resetFilters:'إعادة تعيين الفلاتر',
   sortByLabel:'الفرز حسب', sortNone:'بدون فرز', sortAsc:'تصاعدي', sortDesc:'تنازلي', sortRemove:'إزالة مستوى الفرز', sortAddLevel:'إضافة مستوى فرز',
   colName:'الاسم', colCategory:'التصنيف', colBudget:'الموازنة', colMonth:'الشهر', colYear:'السنة', colBefore:'قبل المراجعة', colAfter:'بعد المراجعة', colDiscount:'الخصم',
+  colOrders:'أوامر الدفع', colDues:'المستحقات', colFirstDue:'أول استحقاق', colLastDue:'آخر استحقاق',
+  colTotalAfterPeriod:'إجمالي بعد المراجعة (الفترة)', colAvgMonthly:'المتوسط الشهري', colRefBefore:'متوسط مرجعي قبل', colRefAfter:'متوسط مرجعي بعد', colDelta:'الفرق',
+  onlyClaims:'مطالبات فقط', onlyAccounts:'حسابات فقط', acctColsHint:'غير متاح إلا عند التجميع حسب الجهة',
+  srcClaims:'من المطالبات', srcAccounts:'من الحسابات', avgCaption:'بعد المراجعة، شهريًا',
+  colDueRange:'الاستحقاق', colReconcile:'الفرق عن المستحقات', colRefDelta:'فرق المتوسط المرجعي', refAvgLabel:'متوسط مرجعي ثابت',
+  reconcileLabel:'بعد المراجعة مقابل المستحقات',
+  avgAccountsNote:'متوسط مرجعي ثابت من الحسابات',
+  reconcileMatch:'يطابق المراجعة',
+  focusAll:'الكل', entityCountNote:'{n} جهة',
+  entityScopeNote:'"بعد المراجعة" ضمن الفترة المحددة أعلاه، بينما "المستحقات" تشمل كل الفترات المسجّلة',
   themeToLight:'وضع فاتح', themeToDark:'وضع داكن',
   colGroup:'المجموعة', colRecordCount:'عدد السجلات',
   tableModeDetailed:'تفصيلي', tableModeAggregated:'مجمّع', groupAllLabel:'كل السجلات',
@@ -474,38 +688,71 @@ ar:{
   copy:'نسخ', copied:'تم نسخ البيانات',
   copyLabelName:'الاسم', copyLabelCategory:'التصنيف', copyLabelMonth:'الشهر', copyLabelYear:'السنة',
   copyLabelBefore:'قبل المراجعة', copyLabelAfter:'بعد المراجعة', copyLabelDiscount:'الخصم', copyLabelGroup:'المجموعة', copyLabelCount:'عدد السجلات', copyLabelBudget:'الموازنة',
+  copyLabelOrders:'أوامر الدفع', copyLabelDues:'المستحقات', copyLabelFirstDue:'أول استحقاق', copyLabelLastDue:'آخر استحقاق',
+  copyLabelAvgMonthly:'المتوسط الشهري', copyLabelRefBefore:'متوسط مرجعي قبل', copyLabelRefAfter:'متوسط مرجعي بعد',
+  matchingTitle:'المطابقة', matchingSummary:'المطابقة: {matched}/{total} جهة',
+  matchAccountsOnlyTitle:'جهات في الحسابات فقط', matchClaimsOnlyTitle:'جهات في المطالبات فقط',
+  matchPickPlaceholder:'اختر مطابقة...', matchEmpty:'لا توجد جهات غير مطابقة',
+  periodLabelText:'الفترة', periodAll:'الكل', periodLast3:'آخر 3', periodLast6:'آخر 6', periodLast12:'آخر 12', periodCustom:'مخصص',
+  periodSplitLabel:'مقارنة قبل/بعد', periodBasisLabel:'أساس المتوسط: أشهر بها حركة',
+  cutoffLabel:'نقطة الفصل',
 },
 en:{
   appTitle:'Contracted Entities Statement',
-  appSub:'Budget review statement — amounts before and after review',
+  appSub:'Budget review statement — claims and accounts',
   langSwitch:'العربية',
   reimport:'Import another file',
+  editImport:'Edit import',
   printBtn:'Print statement',
   importTitle:'Import entity data',
-  importHint:'Upload an Excel file with columns: Name, Category, Budget, Month, Year, Amount Before Review, Amount After Review',
+  importHint:'Upload the claims file, the accounts file, or both — either order works',
   dzTitle:'Drop the file here or click to choose',
+  slotClaimsLabel:'Claims',
+  slotAccountsLabel:'Accounts',
   currencyLabel:'Currency unit (optional)',
   currencyPh:'e.g. SAR',
   errEmptyFile:'The file is empty or has no valid data',
   errNoColumns:'Could not detect the file columns — make sure column names match the template',
   errRead:'An error occurred while reading the file',
+  proceedToReport:'Continue to report',
+  slotReplace:'Replace', slotRemove:'Remove',
+  slotMeta:'{rows} rows · {sheet}',
+  slotParsing:'Parsing file...', slotReading:'Reading... {pct}%',
   previewTitle:'Preview before import',
   previewSummary:'Found <b>{total}</b> rows — <b>{selected}</b> selected to import ({valid} valid, {invalid} invalid)',
   previewColStatus:'Status', previewColRow:'Row', previewColName:'Name', previewColCategory:'Category',
   previewColMonth:'Month', previewColYear:'Year', previewColBefore:'Before review', previewColAfter:'After review', previewColNotes:'Notes',
+  previewColOrders:'Payment orders', previewColDues:'Dues', previewColFirstDue:'First due', previewColLastDue:'Last due',
+  previewColRefBefore:'Ref. avg before', previewColRefAfter:'Ref. avg after',
+  kindClaims:'Claims', kindAccounts:'Accounts',
   sheetTitle:'Choose a sheet', sheetHint:'This workbook has more than one sheet — pick the one you want to import',
-  sheetRows:'{n} rows', cancelSheet:'Cancel', confirmSheet:'Continue',
+  sheetRows:'{n} rows', cancelSheet:'Cancel', confirmSheet:'Continue', confirmSheetLoading:'Loading...',
   selectAllRows:'Select all', selectValidRows:'Valid rows only', selectNoneRows:'Clear selection',
   reasonName:'Missing name', reasonBefore:'Non-numeric before-review amount', reasonAfter:'Non-numeric after-review amount',
+  reasonOrders:'Non-numeric payment orders value', reasonDues:'Non-numeric dues value',
+  totalRowNote:'Total row — audit reference', dateFixedNote:'Date order corrected',
   cancelPreview:'Cancel', confirmImport:'Confirm import ({n})', noValidRows:'No valid rows to import',
   kpiRecords:'Records', kpiEntitiesSuffix:'entities', kpiBefore:'Total before review', kpiAfter:'Total after review',
   kpiNet:'Net discount', kpiReduced:'reduced', kpiIncreased:'increased',
-  searchPh:'Search by name or category...', viewTable:'Grouped table', viewCards:'Summary cards',
+  kpiOrders:'Payment orders', kpiDues:'Dues', kpiTotalAfterPeriod:'Total after review', kpiAvgMonthly:'Monthly average', kpiSplitDelta:'Before/after gap',
+  allPeriods:'All periods', auditOk:'Matches total row', auditWarn:'Diff. from total: {n}',
+  searchPh:'Search by name or category...', viewTable:'Grouped table', viewCards:'Summary cards', viewEntity:'Entities',
   groupByLabel:'Group by', groupNone:'No grouping', groupCategory:'Category', groupBudget:'Budget', groupEntity:'Entity', groupMonth:'Month', groupYear:'Year',
   filterAllEntity:'All entities', filterAllCategory:'All categories', filterAllBudget:'All budgets', filterAllMonth:'All months', filterAllYear:'All years',
+  filterMatchedOnly:'Matched entities only',
   resetFilters:'Reset filters',
   sortByLabel:'Sort by', sortNone:'No sort', sortAsc:'Ascending', sortDesc:'Descending', sortRemove:'Remove sort level', sortAddLevel:'Add sort level',
   colName:'Name', colCategory:'Category', colBudget:'Budget', colMonth:'Month', colYear:'Year', colBefore:'Before review', colAfter:'After review', colDiscount:'Discount',
+  colOrders:'Payment orders', colDues:'Dues', colFirstDue:'First due', colLastDue:'Last due',
+  colTotalAfterPeriod:'Total after review (period)', colAvgMonthly:'Monthly average', colRefBefore:'Ref. avg before', colRefAfter:'Ref. avg after', colDelta:'Delta',
+  onlyClaims:'Claims only', onlyAccounts:'Accounts only', acctColsHint:'Only available when grouped by entity',
+  srcClaims:'From Claims', srcAccounts:'From Accounts', avgCaption:'After review, monthly',
+  colDueRange:'Due dates', colReconcile:'Gap vs dues', colRefDelta:'Reference average delta', refAvgLabel:'Fixed reference average',
+  reconcileLabel:'After review vs. dues',
+  avgAccountsNote:'Fixed reference average from Accounts',
+  reconcileMatch:'Matches review',
+  focusAll:'All', entityCountNote:'{n} entities',
+  entityScopeNote:'"After review" reflects the period selected above, while "Dues" covers all recorded periods',
   themeToLight:'Light mode', themeToDark:'Dark mode',
   colGroup:'Group', colRecordCount:'Record count',
   tableModeDetailed:'Detailed', tableModeAggregated:'Aggregated', groupAllLabel:'All records',
@@ -514,6 +761,14 @@ en:{
   copy:'Copy', copied:'Copied to clipboard',
   copyLabelName:'Name', copyLabelCategory:'Category', copyLabelMonth:'Month', copyLabelYear:'Year',
   copyLabelBefore:'Before review', copyLabelAfter:'After review', copyLabelDiscount:'Discount', copyLabelGroup:'Group', copyLabelCount:'Record count', copyLabelBudget:'Budget',
+  copyLabelOrders:'Payment orders', copyLabelDues:'Dues', copyLabelFirstDue:'First due', copyLabelLastDue:'Last due',
+  copyLabelAvgMonthly:'Monthly average', copyLabelRefBefore:'Ref. avg before', copyLabelRefAfter:'Ref. avg after',
+  matchingTitle:'Matching', matchingSummary:'Matching: {matched}/{total} entities',
+  matchAccountsOnlyTitle:'Accounts-only entities', matchClaimsOnlyTitle:'Claims-only entities',
+  matchPickPlaceholder:'Pick a match...', matchEmpty:'No unmatched entities',
+  periodLabelText:'Period', periodAll:'All', periodLast3:'Last 3', periodLast6:'Last 6', periodLast12:'Last 12', periodCustom:'Custom',
+  periodSplitLabel:'Compare before/after', periodBasisLabel:'Average basis: months with activity',
+  cutoffLabel:'Cutoff',
 },
 };
 function t(key, vars){
@@ -532,10 +787,13 @@ const CATEGORY_PALETTE = [
 ];
 function normalizeText(s){
   return String(s||'')
+    .normalize('NFKC')
+    .replace(/[\u200B-\u200F\u061C\uFEFF]/g,'')
     .replace(/[\u064B-\u0652\u0670\u0640]/g,'')
     .replace(/[إأآا]/g,'ا')
     .replace(/ة/g,'ه')
     .replace(/[يى]/g,'ي')
+    .replace(/[\s\u00A0\u202F\u2009\u3000]+/g,' ')
     .toLowerCase()
     .trim();
 }
@@ -551,9 +809,67 @@ function tagHtml(text){
 }
 function esc(s){ return String(s??"").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function fmt(n){ return new Intl.NumberFormat('en-US').format(Math.round(n||0)); }
+function fmtSigned(n){ return (n>=0?'':'−')+fmt(Math.abs(n)); }
 function uid(){ return Math.random().toString(36).slice(2,9); }
 
-const HEADER_MAP = {
+function parseNum(v){
+  if(v===null || v===undefined) return {ok:true, value:0, blank:true};
+  if(typeof v === 'number'){ return Number.isFinite(v) ? {ok:true, value:v} : {ok:false, value:0}; }
+  let s = String(v).trim();
+  if(s===''||s==='—'||s==='-'||s==='–') return {ok:true, value:0, blank:true};
+  s = s.replace(/[\u0660-\u0669]/g, d => String(d.charCodeAt(0)-0x0660))
+       .replace(/[\u06F0-\u06F9]/g, d => String(d.charCodeAt(0)-0x06F0));
+  let neg = false;
+  const paren = s.match(/^\((.*)\)$/);
+  if(paren){ neg = true; s = paren[1].trim(); }
+  if(/-\s*$/.test(s)){ neg = true; s = s.replace(/-\s*$/,''); }
+  if(/^-/.test(s)){ neg = true; s = s.slice(1); }
+  s = s.replace(/[\s\u00A0\u202F\u2009\u066C,']/g,'');
+  s = s.replace(/\u066B/g,'.');
+  if(s===''||s==='.') return {ok:true, value:0, blank:true};
+  const n = Number(s);
+  if(!Number.isFinite(n)) return {ok:false, value:0};
+  return {ok:true, value: neg ? -n : n};
+}
+function isoFromParts(y,m,d){ return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
+function isoFromDate(d){ return isoFromParts(d.getFullYear(), d.getMonth()+1, d.getDate()); }
+function parseDate(v){
+  if(v===null || v===undefined || v==='') return null;
+  if(v instanceof Date){ return isNaN(v) ? null : isoFromDate(v); }
+  if(typeof v === 'number'){
+    const ms = Math.round((v - 25569) * 86400 * 1000);
+    const d = new Date(ms);
+    return isNaN(d) ? null : isoFromDate(d);
+  }
+  let s = String(v).trim();
+  if(!s) return null;
+  s = s.replace(/[\u0660-\u0669]/g, d=>String(d.charCodeAt(0)-0x0660));
+  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(m) return isoFromParts(+m[1], +m[2], +m[3]);
+  m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if(m){
+    let p1=+m[1], p2=+m[2], y=+m[3];
+    if(y<100) y += 2000;
+    let day, month;
+    if(p1>12){ day=p1; month=p2; }
+    else if(p2>12){ month=p1; day=p2; }
+    else { day=p1; month=p2; }
+    if(month<1||month>12||day<1||day>31) return null;
+    return isoFromParts(y, month, day);
+  }
+  const d2 = new Date(s);
+  if(!isNaN(d2)) return isoFromDate(d2);
+  return null;
+}
+function entityKey(name){
+  let s = normalizeText(name);
+  s = s.replace(/\s+/g,' ').replace(/[.,،؛:()"'\-_]/g,'').trim();
+  return s;
+}
+const TOTAL_ROW_NAMES = new Set(['الاجمالي','الإجمالي','اجمالي','المجموع','الاجمالى','total','sum'].map(entityKey));
+function isTotalRow(name){ return name ? TOTAL_ROW_NAMES.has(entityKey(name)) : false; }
+
+const HEADER_MAP_CLAIMS = {
   name:['الاسم','name'],
   category:['التصنيف','category'],
   budgetType:['الموازنة','budget','budget type','budgettype'],
@@ -562,18 +878,75 @@ const HEADER_MAP = {
   before:['المبلغ قبل المراجعة','قبل المراجعة','before','amount before review'],
   after:['المبلغ بعد المراجعة','بعد المراجعة','after','amount after review'],
 };
-function matchHeader(cell){
-  const c = normalizeText(cell);
-  for(const key of Object.keys(HEADER_MAP)){
-    if(HEADER_MAP[key].some(v=>normalizeText(v)===c)) return key;
+function matchHeaderClaims(cell){
+  const c = normalizeText(cell).replace(/\s+/g,' ').trim();
+  for(const key of Object.keys(HEADER_MAP_CLAIMS)){
+    if(HEADER_MAP_CLAIMS[key].some(v=>normalizeText(v)===c)) return key;
+  }
+  return null;
+}
+const HEADER_MAP_ACCOUNTS = [
+  ['name', /^(الاسم|name)$/],
+  ['orders', /^(عدد\s*اوامر\s*الدفع|اوامر الدفع)$/],
+  ['orders', /payment\s*orders/],
+  ['dues', /^المستحقات$/],
+  ['dues', /dues/],
+  ['firstDue', /^بدايه الاستحقاق/],
+  ['lastDue', /^اخر تاريخ للاستحقاق/],
+  ['lastDue', /^اخر استحقاق/],
+  ['refAvgBefore', /^المتوسط قبل/],
+  ['refAvgAfter', /^المتوسط بعد/],
+];
+function matchHeaderAccounts(cell){
+  const c = normalizeText(cell).replace(/\s+/g,' ').trim();
+  for(const [key, re] of HEADER_MAP_ACCOUNTS){ if(re.test(c)) return key; }
+  return null;
+}
+function scoreHeaderRow(headerRow, kind){
+  const seen = new Set();
+  headerRow.forEach(cell=>{
+    const key = kind==='claims' ? matchHeaderClaims(cell) : matchHeaderAccounts(cell);
+    if(key) seen.add(key);
+  });
+  return seen.size;
+}
+function detectKind(headerRow){
+  const sc = scoreHeaderRow(headerRow,'claims');
+  const sa = scoreHeaderRow(headerRow,'accounts');
+  if(sc<3 && sa<3) return null;
+  return sc>=sa ? 'claims' : 'accounts';
+}
+function extractRefCutoff(headerRow){
+  for(const cell of headerRow){
+    const s = String(cell||'');
+    const m = s.match(/المتوسط\s*(قبل|بعد)\s*(\d{1,2})\s*[-\/](\d{2,4})/);
+    if(m){
+      let mm = +m[2], yy = +m[3];
+      if(yy<100) yy += 2000;
+      if(mm>=1 && mm<=12) return {m:mm, y:yy};
+    }
   }
   return null;
 }
 
 let state = {
-  lang:'ar', records:[], currency:'', view:'table', groupDims:new Set(['category']), tableMode:'detailed',
-  query:'', fEntity:'all', fCategory:'all', fBudget:'all', fMonth:'all', fYear:'all', previewRows:null,
-  sortRules:[{field:'none',dir:'asc'}], workbook:null, sheetName:null,
+  lang:'ar', currency:'', view:'table', groupDims:new Set(['category']), tableMode:'detailed',
+  query:'',
+  filters:{entity:'all', category:'all', budget:'all', month:'all', year:'all', matchedOnly:false},
+  claims:[], accounts:[],
+  checksums:{claims:null, accounts:null},
+  refCutoff:{y:null, m:null},
+  entityMap:{},
+  imports:{claims:null, accounts:null},
+  period:{preset:'all', from:null, to:null, cutoff:null, basis:'calendar', split:false},
+  sortRules:[{field:'none',dir:'asc'}],
+  workbook:null, sheetName:null,
+  previewRows:null, pending:null,
+  index:{monthsPresent:[], byEntityMonth:new Map(), minIdx:null, maxIdx:null, matchedAccountKeys:new Set(), matchedClaimKeys:new Set(), accountsOnly:new Set(), claimsOnly:new Set()},
+  matchPanelOpen:false,
+  entityFocus:'all',
+  avgSource:'claims',
+  _everBothLoaded:false,
 };
 const SORT_MAX = 6;
 const GROUP_DIM_ORDER = ['category','budgetType','name','month','year'];
@@ -596,11 +969,23 @@ function monthRank(m){
   const r = MONTH_RANK[normalizeText(m)];
   return r===undefined ? 99 : r;
 }
-const SORT_FIELDS = ['name','category','budgetType','month','year','before','after','discount'];
+function mIdxFor(year, month){
+  const y = Number(year);
+  const r = monthRank(month);
+  if(!y || r===99) return null;
+  return y*12 + (r-1);
+}
+function monthLabel(mIdx){
+  if(mIdx==null) return '—';
+  const y = Math.floor(mIdx/12), m = ((mIdx%12)+12)%12;
+  const names = state.lang==='ar' ? MONTHS_AR : MONTHS_EN;
+  return names[m]+' '+y;
+}
+
 function sortFieldType(field){
   if(field==='month') return 'month';
   if(field==='year') return 'year';
-  if(field==='before'||field==='after'||field==='discount') return 'number';
+  if(['before','after','discount','orders','dues','avgMonthly','refAvgBefore','refAvgAfter','delta','reconcileDelta'].includes(field)) return 'number';
   return 'text';
 }
 function compareByField(a,b,field,dir){
@@ -633,7 +1018,7 @@ function compareGroupsBySort(entryA, entryB, active){
   for(const rule of rules){
     const type = sortFieldType(rule.field);
     let c;
-    if(type==='number'){
+    if(type==='number' && ['before','after','discount'].includes(rule.field)){
       const sumA = entryA.rows.reduce((s,r)=>s+(r[rule.field]||0),0);
       const sumB = entryB.rows.reduce((s,r)=>s+(r[rule.field]||0),0);
       c = sumA - sumB;
@@ -662,7 +1047,9 @@ function cselHtml(id, options, value){
     +'</button>';
 }
 function renderCsel(wrapId, id, options, value){
-  document.getElementById(wrapId).innerHTML = cselHtml(id, options, value);
+  const wrap = document.getElementById(wrapId);
+  if(!wrap) return;
+  wrap.innerHTML = cselHtml(id, options, value);
 }
 function ensureCselPortal(){
   let el = document.getElementById('cselPortal');
@@ -717,12 +1104,22 @@ function chooseCsel(id, value){
   onCselChange(id, value);
 }
 function onCselChange(id, value){
-  if(id==='filterEntitySel') state.fEntity = value;
-  else if(id==='filterCategorySel') state.fCategory = value;
-  else if(id==='filterBudgetSel') state.fBudget = value;
-  else if(id==='filterMonthSel') state.fMonth = value;
-  else if(id==='filterYearSel') state.fYear = value;
-  else {
+  if(id==='filterEntitySel') state.filters.entity = value;
+  else if(id==='filterCategorySel') state.filters.category = value;
+  else if(id==='filterBudgetSel') state.filters.budget = value;
+  else if(id==='filterMonthSel') state.filters.month = value;
+  else if(id==='filterYearSel') state.filters.year = value;
+  else if(id==='periodFromSel'){ state.period.from = Number(value); state.period.preset='custom'; clampPeriod(); }
+  else if(id==='periodToSel'){ state.period.to = Number(value); state.period.preset='custom'; clampPeriod(); }
+  else if(id==='periodCutoffSel'){ state.period.cutoff = Number(value); }
+  else if(id.indexOf('matchSel_')===0){
+    const accountKey = id.slice('matchSel_'.length);
+    if(value){ state.entityMap[accountKey] = value; } else { delete state.entityMap[accountKey]; }
+    rebuildIndex();
+    renderMatchPanel();
+    renderAll();
+    return;
+  } else {
     const m = id.match(/^sortField(\d+)Sel$/);
     if(m){
       const idx = Number(m[1]) - 1;
@@ -731,6 +1128,7 @@ function onCselChange(id, value){
   }
   populateFilterOptions();
   renderSortControls();
+  renderPeriodToolbar();
   renderAll();
 }
 document.addEventListener('click', (e)=>{
@@ -768,31 +1166,166 @@ function toast(msg){
   setTimeout(()=>{ if(host.contains(el)) host.removeChild(el); }, 2400);
 }
 
-function parseAndLoad(file){
+function previewCols(kind){
+  if(kind==='claims'){
+    return [
+      {key:'name', label:t('previewColName')},
+      {key:'category', label:t('previewColCategory')},
+      {key:'month', label:t('previewColMonth')},
+      {key:'year', label:t('previewColYear')},
+      {key:'before', label:t('previewColBefore'), numeric:true},
+      {key:'after', label:t('previewColAfter'), numeric:true},
+    ];
+  }
+  return [
+    {key:'name', label:t('previewColName')},
+    {key:'orders', label:t('previewColOrders'), numeric:true},
+    {key:'dues', label:t('previewColDues'), numeric:true},
+    {key:'firstDue', label:t('previewColFirstDue')},
+    {key:'lastDue', label:t('previewColLastDue')},
+    {key:'refAvgBefore', label:t('previewColRefBefore'), numeric:true},
+    {key:'refAvgAfter', label:t('previewColRefAfter'), numeric:true},
+  ];
+}
+function buildPreviewRows(grid, kind){
+  const headerRow = grid[0];
+  const colMap = kind==='claims' ? headerRow.map(matchHeaderClaims) : headerRow.map(matchHeaderAccounts);
+  const rows = [];
+  let checksum = null;
+  for(let i=1;i<grid.length;i++){
+    const row = grid[i];
+    if(!row || row.every(v=>v===""||v==null)) continue;
+    let rec;
+    if(kind==='claims'){
+      rec = {rowNum:i+1, kind:'claims', name:'', category:'', budgetType:'', month:'', year:'', before:0, after:0, reasons:[], notes:[], isTotal:false};
+      let badBefore=false, badAfter=false;
+      colMap.forEach((key, idx)=>{
+        if(!key) return;
+        const val = row[idx];
+        if(key==='before'){ const p = parseNum(val); rec.before = p.value; if(!p.ok) badBefore = true; }
+        else if(key==='after'){ const p = parseNum(val); rec.after = p.value; if(!p.ok) badAfter = true; }
+        else rec[key] = String(val??'').trim();
+      });
+      if(isTotalRow(rec.name)){
+        rec.isTotal = true; rec.included = false; rec.valid = true; rec.notes.push(t('totalRowNote'));
+        checksum = { before: rec.before, after: rec.after };
+      } else {
+        if(!rec.name) rec.reasons.push(t('reasonName'));
+        if(badBefore) rec.reasons.push(t('reasonBefore'));
+        if(badAfter) rec.reasons.push(t('reasonAfter'));
+        rec.valid = rec.reasons.length===0;
+        rec.included = rec.valid;
+      }
+    } else {
+      rec = {rowNum:i+1, kind:'accounts', name:'', orders:0, dues:0, firstDue:null, lastDue:null, refAvgBefore:0, refAvgAfter:0, reasons:[], notes:[], isTotal:false};
+      let badOrders=false, badDues=false;
+      colMap.forEach((key, idx)=>{
+        if(!key) return;
+        const val = row[idx];
+        if(key==='name') rec.name = String(val??'').trim();
+        else if(key==='orders'){ const p=parseNum(val); rec.orders=p.value; if(!p.ok) badOrders=true; }
+        else if(key==='dues'){ const p=parseNum(val); rec.dues=p.value; if(!p.ok) badDues=true; }
+        else if(key==='refAvgBefore'){ rec.refAvgBefore = parseNum(val).value; }
+        else if(key==='refAvgAfter'){ rec.refAvgAfter = parseNum(val).value; }
+        else if(key==='firstDue'){ rec.firstDue = parseDate(val); }
+        else if(key==='lastDue'){ rec.lastDue = parseDate(val); }
+      });
+      if(isTotalRow(rec.name)){
+        rec.isTotal = true; rec.included = false; rec.valid = true; rec.notes.push(t('totalRowNote'));
+        checksum = { orders:rec.orders, dues:rec.dues, refAvgBefore:rec.refAvgBefore, refAvgAfter:rec.refAvgAfter };
+      } else {
+        if(!rec.name) rec.reasons.push(t('reasonName'));
+        if(badOrders) rec.reasons.push(t('reasonOrders'));
+        if(badDues) rec.reasons.push(t('reasonDues'));
+        if(rec.firstDue && rec.lastDue && rec.firstDue > rec.lastDue){
+          const tmp = rec.firstDue; rec.firstDue = rec.lastDue; rec.lastDue = tmp;
+          rec.notes.push(t('dateFixedNote'));
+        }
+        rec.valid = rec.reasons.length===0;
+        rec.included = rec.valid;
+      }
+    }
+    rows.push(rec);
+  }
+  return {rows, checksum};
+}
+
+const slotsLoading = new Set();
+function slotCap(kind){ return kind==='claims' ? 'Claims' : 'Accounts'; }
+function showSlotLoading(kind, pct){
+  slotsLoading.add(kind);
+  const cap = slotCap(kind);
+  const emptyEl = document.getElementById('slot'+cap+'Empty');
+  const filledEl = document.getElementById('slot'+cap+'Filled');
+  const loadingEl = document.getElementById('slot'+cap+'Loading');
+  if(emptyEl) emptyEl.hidden = true;
+  if(filledEl) filledEl.hidden = true;
+  loadingEl.hidden = false;
+  const bar = document.getElementById('slot'+cap+'ProgressBar');
+  const text = document.getElementById('slot'+cap+'LoadingText');
+  if(pct==null){
+    bar.classList.add('indeterminate');
+    bar.style.width = '';
+    text.textContent = t('slotParsing');
+  } else {
+    bar.classList.remove('indeterminate');
+    bar.style.width = Math.min(100,Math.max(0,pct))+'%';
+    text.textContent = t('slotReading', {pct: Math.round(pct)});
+  }
+}
+function hideSlotLoading(kind){
+  slotsLoading.delete(kind);
+  const cap = slotCap(kind);
+  const loadingEl = document.getElementById('slot'+cap+'Loading');
+  if(loadingEl) loadingEl.hidden = true;
+}
+function failImport(kind, message){
+  hideSlotLoading(kind);
+  refreshSlotUI();
+  document.getElementById('sheetZone').hidden = true;
+  document.getElementById('previewZone').hidden = true;
+  document.getElementById('importZone').hidden = false;
+  const status = document.getElementById('importStatus');
+  status.className = 'err';
+  status.textContent = message;
+}
+
+function parseAndLoad(file, kindHint){
   const status = document.getElementById('importStatus');
   status.className = ''; status.textContent = '';
+  showSlotLoading(kindHint, 0);
   const isCsv = /\.csv$/i.test(file.name);
   const reader = new FileReader();
-  reader.onload = (e)=>{
-    try{
-      const wb = isCsv ? XLSX.read(e.target.result, {type:'string'}) : XLSX.read(e.target.result, {type:'array'});
-      if(!wb.SheetNames.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
-      state.currency = document.getElementById('currencyInput').value.trim();
-      state.workbook = wb;
-      if(wb.SheetNames.length > 1){
-        showSheetPicker(wb);
-      }else{
-        loadSheet(wb, wb.SheetNames[0]);
-      }
-    }catch(err){
-      status.className='err'; status.textContent = t('errRead');
+  reader.onprogress = (e)=>{
+    if(e.lengthComputable){
+      showSlotLoading(kindHint, Math.min(95, (e.loaded/e.total)*85));
     }
   };
-  reader.onerror = ()=>{ status.className='err'; status.textContent = t('errRead'); };
+  reader.onload = (e)=>{
+    showSlotLoading(kindHint, null);
+    requestAnimationFrame(()=> setTimeout(()=>{
+      try{
+        const wb = isCsv ? XLSX.read(e.target.result, {type:'string', cellDates:true}) : XLSX.read(e.target.result, {type:'array', cellDates:true});
+        if(!wb.SheetNames.length){ failImport(kindHint, t('errEmptyFile')); return; }
+        if(!state.currency) state.currency = document.getElementById('currencyInput').value.trim();
+        state.workbook = wb;
+        state.pending = { kindHint, fileName:file.name };
+        if(wb.SheetNames.length > 1){
+          showSheetPicker(wb);
+        }else{
+          loadSheet(wb, wb.SheetNames[0]);
+        }
+      }catch(err){
+        failImport(kindHint, t('errRead'));
+      }
+    }, 0));
+  };
+  reader.onerror = ()=>{ failImport(kindHint, t('errRead')); };
   if(isCsv) reader.readAsText(file, 'UTF-8'); else reader.readAsArrayBuffer(file);
 }
 
 function showSheetPicker(wb){
+  hideSlotLoading(state.pending.kindHint);
   document.getElementById('importZone').hidden = true;
   document.getElementById('sheetZone').hidden = false;
   document.getElementById('sheetTitle').textContent = t('sheetTitle');
@@ -821,87 +1354,97 @@ function renderSheetList(wb){
   });
 }
 function cancelSheetPicker(){
-  state.workbook = null; state.sheetName = null;
+  hideSlotLoading((state.pending||{}).kindHint || 'claims');
+  state.workbook = null; state.sheetName = null; state.pending = null;
   document.getElementById('sheetZone').hidden = true;
   document.getElementById('importZone').hidden = false;
-  document.getElementById('fileInput').value = '';
+  document.getElementById('fileInputClaims').value = '';
+  document.getElementById('fileInputAccounts').value = '';
 }
 function loadSheet(wb, sheetName){
-  const status = document.getElementById('importStatus');
+  const kindHint = state.pending.kindHint;
   try{
     const sheet = wb.Sheets[sheetName];
-    const grid = XLSX.utils.sheet_to_json(sheet, {header:1, defval:"", raw:false});
-    if(!grid.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
+    const grid = XLSX.utils.sheet_to_json(sheet, {header:1, defval:'', raw:true});
+    if(!grid.length){ failImport(kindHint, t('errEmptyFile')); return; }
     const headerRow = grid[0];
-    const colMap = headerRow.map(matchHeader);
-    if(!colMap.includes('name') || (!colMap.includes('before') && !colMap.includes('after'))){
-      status.className='err'; status.textContent = t('errNoColumns'); return;
-    }
-    const rows = [];
-    for(let i=1;i<grid.length;i++){
-      const row = grid[i];
-      if(!row || row.every(v=>v==="" || v==null)) continue;
-      const rec = {rowNum:i+1, name:'', category:'', budgetType:'', month:'', year:'', before:0, after:0, reasons:[]};
-      let rawBefore='', rawAfter='';
-      colMap.forEach((key, idx)=>{
-        if(!key) return;
-        const val = row[idx];
-        if(key==='before'){ rawBefore = String(val??'').trim(); rec.before = Number(rawBefore) || 0; }
-        else if(key==='after'){ rawAfter = String(val??'').trim(); rec.after = Number(rawAfter) || 0; }
-        else rec[key] = String(val??'').trim();
-      });
-      if(!rec.name) rec.reasons.push(t('reasonName'));
-      if(rawBefore !== '' && Number.isNaN(Number(rawBefore))) rec.reasons.push(t('reasonBefore'));
-      if(rawAfter !== '' && Number.isNaN(Number(rawAfter))) rec.reasons.push(t('reasonAfter'));
-      rec.valid = rec.reasons.length === 0;
-      rec.included = rec.valid;
-      rows.push(rec);
-    }
-    if(!rows.length){ status.className='err'; status.textContent = t('errEmptyFile'); return; }
+    const detected = detectKind(headerRow);
+    const kind = detected || kindHint;
+    if(!detected){ failImport(kindHint, t('errNoColumns')); return; }
+    const {rows, checksum} = buildPreviewRows(grid, kind);
+    if(!rows.length){ failImport(kindHint, t('errEmptyFile')); return; }
+    state.pending.kind = kind;
+    state.pending.grid = grid;
+    state.pending.headerRow = headerRow;
+    state.pending.sheetName = sheetName;
+    state.pending.rows = rows;
+    state.pending.checksum = checksum;
     document.getElementById('sheetZone').hidden = true;
-    state.previewRows = rows;
     showPreview();
   }catch(err){
-    document.getElementById('sheetZone').hidden = true;
-    document.getElementById('importZone').hidden = false;
-    status.className='err'; status.textContent = t('errRead');
+    failImport(kindHint, t('errRead'));
   }
 }
 
 function showPreview(){
+  hideSlotLoading(state.pending.kindHint);
   document.getElementById('importZone').hidden = true;
   document.getElementById('previewZone').hidden = false;
   renderPreview();
 }
+function switchPreviewKind(kind){
+  if(state.pending.kind === kind) return;
+  const {rows, checksum} = buildPreviewRows(state.pending.grid, kind);
+  state.pending.kind = kind;
+  state.pending.rows = rows;
+  state.pending.checksum = checksum;
+  renderPreview();
+}
 function renderPreview(){
-  const rows = state.previewRows || [];
-  const validCount = rows.filter(r=>r.valid).length;
-  const invalidCount = rows.length - validCount;
+  const kind = state.pending.kind;
+  const rows = state.pending.rows || [];
+  const cols = previewCols(kind);
+  const validCount = rows.filter(r=>r.valid && !r.isTotal).length;
+  const invalidCount = rows.filter(r=>!r.valid && !r.isTotal).length;
   const selectedCount = rows.filter(r=>r.included).length;
+  document.getElementById('previewKindClaimsBtn').textContent = t('kindClaims');
+  document.getElementById('previewKindAccountsBtn').textContent = t('kindAccounts');
+  document.getElementById('previewKindClaimsBtn').classList.toggle('active', kind==='claims');
+  document.getElementById('previewKindAccountsBtn').classList.toggle('active', kind==='accounts');
   document.getElementById('previewSummary').innerHTML = t('previewSummary', {total:rows.length, selected:selectedCount, valid:validCount, invalid:invalidCount});
   document.getElementById('selectAllRowsBtn').textContent = t('selectAllRows');
   document.getElementById('selectValidRowsBtn').textContent = t('selectValidRows');
   document.getElementById('selectNoneRowsBtn').textContent = t('selectNoneRows');
   document.getElementById('previewHeadRow').innerHTML =
     '<th class="colcheck"><input type="checkbox" id="previewHeadCheck" class="row-check"></th>'+
-    '<th>'+t('previewColStatus')+'</th><th>'+t('previewColRow')+'</th><th>'+t('previewColName')+'</th><th>'+t('previewColCategory')+'</th>'+
-    '<th>'+t('previewColMonth')+'</th><th>'+t('previewColYear')+'</th><th>'+t('previewColBefore')+'</th><th>'+t('previewColAfter')+'</th><th>'+t('previewColNotes')+'</th>';
+    '<th>'+t('previewColStatus')+'</th><th>'+t('previewColRow')+'</th>'+
+    cols.map(c=>'<th>'+esc(c.label)+'</th>').join('')+
+    '<th>'+t('previewColNotes')+'</th>';
   document.getElementById('previewBody').innerHTML = rows.map((r,idx)=>{
-    const dot = r.valid
-      ? '<span class="status-dot ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>'
-      : '<span class="status-dot bad"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg></span>';
+    const dot = r.isTotal
+      ? '<span class="status-dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span>'
+      : (r.valid
+        ? '<span class="status-dot ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>'
+        : '<span class="status-dot bad"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg></span>');
     const cls = [r.valid?'':'invalid', r.included?'':'excluded'].filter(Boolean).join(' ');
+    const cells = cols.map(c=>{
+      let v = r[c.key];
+      if(c.numeric) v = fmt(v);
+      else v = esc(v||'—');
+      return '<td>'+v+'</td>';
+    }).join('');
+    const noteText = [...r.reasons, ...r.notes].join(' · ') || '—';
     return '<tr class="'+cls+'">'
-      +'<td class="colcheck"><input type="checkbox" class="row-check" data-row-idx="'+idx+'"'+(r.included?' checked':'')+'></td>'
-      +'<td>'+dot+'</td><td>'+r.rowNum+'</td><td>'+esc(r.name||'—')+'</td><td>'+esc(r.category||'—')+'</td>'
-      +'<td>'+esc(r.month||'—')+'</td><td>'+esc(r.year||'—')+'</td><td>'+fmt(r.before)+'</td><td>'+fmt(r.after)+'</td>'
-      +'<td class="notes">'+(r.reasons.length?esc(r.reasons.join(' · ')):'—')+'</td></tr>';
+      +'<td class="colcheck"><input type="checkbox" class="row-check" data-row-idx="'+idx+'"'+(r.included?' checked':'')+(r.isTotal?' disabled':'')+'></td>'
+      +dot+'<td>'+r.rowNum+'</td>'+cells
+      +'<td class="notes">'+noteText+'</td></tr>';
   }).join('');
   const headCheck = document.getElementById('previewHeadCheck');
-  headCheck.checked = rows.length>0 && selectedCount===rows.length;
-  headCheck.indeterminate = selectedCount>0 && selectedCount<rows.length;
+  const selectable = rows.filter(r=>!r.isTotal);
+  headCheck.checked = selectable.length>0 && selectable.every(r=>r.included);
+  headCheck.indeterminate = selectable.some(r=>r.included) && !selectable.every(r=>r.included);
   headCheck.addEventListener('change', ()=>{
-    rows.forEach(r=>r.included = headCheck.checked);
+    rows.forEach(r=>{ if(!r.isTotal) r.included = headCheck.checked; });
     renderPreview();
   });
   document.getElementById('previewBody').querySelectorAll('[data-row-idx]').forEach(cb=>{
@@ -917,57 +1460,469 @@ function renderPreview(){
   document.getElementById('previewTitle').textContent = t('previewTitle');
 }
 function confirmImport(){
-  const selected = (state.previewRows||[]).filter(r=>r.included);
-  state.records = selected.map(r=>({
-    id:uid(), name:r.name, category:r.category, budgetType:r.budgetType, month:r.month, year:r.year,
-    before:r.before, after:r.after, discount:r.before-r.after,
-  }));
-  state.previewRows = null;
+  const kind = state.pending.kind;
+  const selected = (state.pending.rows||[]).filter(r=>r.included && !r.isTotal);
+  if(kind==='claims'){
+    state.claims = selected.map(r=>{
+      const mIdx = mIdxFor(r.year, r.month);
+      return {id:uid(), key:entityKey(r.name), name:r.name, category:r.category, budgetType:r.budgetType,
+        month:r.month, year:r.year, mIdx, before:r.before, after:r.after, discount:r.before-r.after};
+    });
+    state.checksums.claims = state.pending.checksum;
+  } else {
+    const cutoff = extractRefCutoff(state.pending.headerRow);
+    if(cutoff) state.refCutoff = cutoff;
+    state.accounts = selected.map(r=>({id:uid(), key:entityKey(r.name), name:r.name, orders:r.orders, dues:r.dues,
+      firstDue:r.firstDue, lastDue:r.lastDue, refAvgBefore:r.refAvgBefore, refAvgAfter:r.refAvgAfter}));
+    state.checksums.accounts = state.pending.checksum;
+  }
+  state.imports[kind] = {fileName: state.pending.fileName, sheetName: state.pending.sheetName, rows: selected.length, at: Date.now()};
+  pruneEntityMap();
+  state.period.from = null; state.period.to = null; state.period.cutoff = null; state.period.preset='all';
+  rebuildIndex();
+  state.pending = null;
   state.workbook = null; state.sheetName = null;
   document.getElementById('previewZone').hidden = true;
-  document.getElementById('fileInput').value = '';
-  showReport();
+  document.getElementById('fileInputClaims').value = '';
+  document.getElementById('fileInputAccounts').value = '';
+  refreshSlotUI();
+  document.getElementById('proceedReportBtn').hidden = false;
+  document.getElementById('proceedReportBtn').textContent = t('proceedToReport');
+  if(!document.getElementById('reportArea').hidden){
+    showReport();
+  } else {
+    document.getElementById('importZone').hidden = false;
+  }
 }
 function cancelPreview(){
-  state.previewRows = null;
+  state.pending = null;
   state.workbook = null; state.sheetName = null;
   document.getElementById('previewZone').hidden = true;
   document.getElementById('importZone').hidden = false;
-  document.getElementById('fileInput').value = '';
+  document.getElementById('fileInputClaims').value = '';
+  document.getElementById('fileInputAccounts').value = '';
   document.getElementById('importStatus').textContent = '';
   document.getElementById('importStatus').className = '';
 }
-
-function showReport(){
-  document.getElementById('reportArea').hidden = false;
-  document.getElementById('reimportBtn').hidden = false;
-  document.getElementById('printBtn').hidden = false;
-  renderGroupDimChips();
-  populateFilterOptions();
-  renderSortControls();
-  renderAll();
+function pruneEntityMap(){
+  const claimsKeys = new Set(state.claims.map(r=>r.key));
+  const accountsKeys = new Set(state.accounts.map(r=>r.key));
+  Object.keys(state.entityMap).forEach(ak=>{
+    if(!accountsKeys.has(ak) || !claimsKeys.has(state.entityMap[ak])) delete state.entityMap[ak];
+  });
 }
-function currencyUnit(){ return state.currency ? ' '+state.currency : ''; }
-
-function renderGroupDimChips(){
-  const host = document.getElementById('groupDimChips');
-  const noneActive = state.groupDims.size === 0;
-  let html = '<button class="chip-toggle'+(noneActive?' active':'')+'" data-dim="none">'+t('groupNone')+'</button>';
-  html += GROUP_DIM_ORDER.map(dim=>'<button class="chip-toggle'+(state.groupDims.has(dim)?' active':'')+'" data-dim="'+dim+'">'+groupDimLabel(dim)+'</button>').join('');
-  host.innerHTML = html;
+function removeSlot(kind){
+  if(kind==='claims'){ state.claims = []; state.checksums.claims = null; }
+  else { state.accounts = []; state.checksums.accounts = null; }
+  state.imports[kind] = null;
+  pruneEntityMap();
+  rebuildIndex();
+  refreshSlotUI();
+  const anyData = state.claims.length || state.accounts.length;
+  document.getElementById('proceedReportBtn').hidden = !anyData;
+  if(!anyData){
+    document.getElementById('reportArea').hidden = true;
+    document.getElementById('reimportBtn').hidden = true;
+    document.getElementById('printBtn').hidden = true;
+  } else if(!document.getElementById('reportArea').hidden){
+    showReport();
+  }
 }
-document.addEventListener('click', (e)=>{
-  const chip = e.target.closest('#groupDimChips [data-dim]');
-  if(!chip) return;
-  const dim = chip.dataset.dim;
-  if(dim==='none') state.groupDims.clear();
-  else if(state.groupDims.has(dim)) state.groupDims.delete(dim);
-  else state.groupDims.add(dim);
-  renderGroupDimChips();
+function auditLineHtml(kind){
+  const cs = state.checksums[kind];
+  if(!cs) return '';
+  let diffs = [];
+  if(kind==='claims'){
+    const sumBefore = state.claims.reduce((s,r)=>s+r.before,0);
+    const sumAfter = state.claims.reduce((s,r)=>s+r.after,0);
+    if(Math.round(sumBefore) !== Math.round(cs.before||0)) diffs.push(fmtSigned(sumBefore-(cs.before||0))+' '+t('colBefore'));
+    if(Math.round(sumAfter) !== Math.round(cs.after||0)) diffs.push(fmtSigned(sumAfter-(cs.after||0))+' '+t('colAfter'));
+  } else {
+    const sumOrders = state.accounts.reduce((s,r)=>s+r.orders,0);
+    const sumDues = state.accounts.reduce((s,r)=>s+r.dues,0);
+    if(Math.round(sumOrders) !== Math.round(cs.orders||0)) diffs.push(fmtSigned(sumOrders-(cs.orders||0))+' '+t('kpiOrders'));
+    if(Math.round(sumDues) !== Math.round(cs.dues||0)) diffs.push(fmtSigned(sumDues-(cs.dues||0))+' '+t('kpiDues'));
+  }
+  if(!diffs.length) return '<div class="audit-line ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>'+esc(t('auditOk'))+'</div>';
+  return '<div class="audit-line warn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>'+esc(t('auditWarn',{n:diffs.join(' · ')}))+'</div>';
+}
+function refreshSlotUI(){
+  ['claims','accounts'].forEach(kind=>{
+    const cap = kind==='claims' ? 'Claims' : 'Accounts';
+    const slot = document.getElementById('slot'+cap);
+    const emptyEl = document.getElementById('slot'+cap+'Empty');
+    const filledEl = document.getElementById('slot'+cap+'Filled');
+    const imp = state.imports[kind];
+    document.getElementById('slot'+cap+'Label').textContent = t(kind==='claims'?'slotClaimsLabel':'slotAccountsLabel');
+    document.getElementById('dz'+cap+'Title').textContent = t('dzTitle');
+    if(imp){
+      document.getElementById('slot'+cap+'FileName').textContent = imp.fileName;
+      document.getElementById('slot'+cap+'FileMeta').textContent = t('slotMeta',{rows:imp.rows, sheet:imp.sheetName});
+      document.getElementById('slot'+cap+'Audit').innerHTML = auditLineHtml(kind);
+      document.getElementById('slot'+cap+'ReplaceBtn').textContent = t('slotReplace');
+      document.getElementById('slot'+cap+'RemoveBtn').textContent = t('slotRemove');
+    }
+    if(slotsLoading.has(kind)) return;
+    document.getElementById('slot'+cap+'Loading').hidden = true;
+    if(imp){
+      slot.classList.add('filled');
+      emptyEl.hidden = true; filledEl.hidden = false;
+    } else {
+      slot.classList.remove('filled');
+      emptyEl.hidden = false; filledEl.hidden = true;
+    }
+  });
+}
+
+function rebuildIndex(){
+  const monthsSet = new Set();
+  state.claims.forEach(r=>{ if(r.mIdx!=null) monthsSet.add(r.mIdx); });
+  const monthsPresent = [...monthsSet].sort((a,b)=>a-b);
+  const byEntityMonth = new Map();
+  state.claims.forEach(r=>{
+    if(r.mIdx==null) return;
+    const k = r.key+'|'+r.mIdx;
+    if(!byEntityMonth.has(k)) byEntityMonth.set(k, {before:0, after:0, count:0});
+    const e = byEntityMonth.get(k);
+    e.before += r.before; e.after += r.after; e.count += 1;
+  });
+  const minIdx = monthsPresent.length ? monthsPresent[0] : null;
+  const maxIdx = monthsPresent.length ? monthsPresent[monthsPresent.length-1] : null;
+
+  const claimsKeys = new Set(state.claims.map(r=>r.key));
+  const accountsKeys = new Set(state.accounts.map(r=>r.key));
+  const matchedAccountKeys = new Set();
+  const matchedClaimKeys = new Set();
+  accountsKeys.forEach(ak=>{
+    const target = state.entityMap[ak] || ak;
+    if(claimsKeys.has(target)){ matchedAccountKeys.add(ak); matchedClaimKeys.add(target); }
+  });
+  const accountsOnly = new Set([...accountsKeys].filter(k=>!matchedAccountKeys.has(k)));
+  const claimsOnly = new Set([...claimsKeys].filter(k=>!matchedClaimKeys.has(k)));
+
+  state.index = { monthsPresent, byEntityMonth, minIdx, maxIdx, matchedAccountKeys, matchedClaimKeys, accountsOnly, claimsOnly };
+
+  if(state.period.from==null || state.period.to==null){
+    state.period.from = minIdx; state.period.to = maxIdx;
+  } else {
+    clampPeriod();
+  }
+  if(state.period.cutoff==null){
+    if(state.refCutoff.y!=null) state.period.cutoff = state.refCutoff.y*12 + (state.refCutoff.m-1);
+    else if(minIdx!=null && maxIdx!=null) state.period.cutoff = Math.round((minIdx+maxIdx)/2);
+  }
+  if(state.claims.length && state.accounts.length && !state._everBothLoaded){
+    state.view = 'entity';
+    state._everBothLoaded = true;
+  }
+}
+function clampPeriod(){
+  const {minIdx, maxIdx} = state.index;
+  if(minIdx==null || maxIdx==null) return;
+  if(state.period.from==null) state.period.from = minIdx;
+  if(state.period.to==null) state.period.to = maxIdx;
+  state.period.from = Math.min(Math.max(state.period.from, minIdx), maxIdx);
+  state.period.to = Math.min(Math.max(state.period.to, minIdx), maxIdx);
+  if(state.period.from > state.period.to){ const tmp = state.period.from; state.period.from = state.period.to; state.period.to = tmp; }
+}
+function accountSummaryByKey(key){
+  const rows = state.accounts.filter(a=>a.key===key);
+  if(!rows.length) return null;
+  const firstDates = rows.map(a=>a.firstDue).filter(Boolean).sort();
+  const lastDates = rows.map(a=>a.lastDue).filter(Boolean).sort();
+  const average = field => {
+    const values = rows.map(a=>Number(a[field])).filter(Number.isFinite);
+    return values.length ? values.reduce((sum,value)=>sum+value,0)/values.length : 0;
+  };
+  return {
+    key,
+    name: rows[0].name,
+    orders: rows.reduce((sum,a)=>sum+(a.orders||0),0),
+    dues: rows.reduce((sum,a)=>sum+(a.dues||0),0),
+    firstDue: firstDates[0] || null,
+    lastDue: lastDates[lastDates.length-1] || null,
+    refAvgBefore: average('refAvgBefore'),
+    refAvgAfter: average('refAvgAfter'),
+  };
+}
+function accountsByKey(key){ return accountSummaryByKey(key); }
+function claimsNameFor(key){ const r = state.claims.find(c=>c.key===key); return r ? r.name : key; }
+
+function tokenOverlapRatio(a,b){
+  const ta = new Set(entityKey(a).split(' ').filter(Boolean));
+  const tb = new Set(entityKey(b).split(' ').filter(Boolean));
+  if(!ta.size || !tb.size) return 0;
+  let inter=0; ta.forEach(x=>{ if(tb.has(x)) inter++; });
+  const union = new Set([...ta,...tb]).size;
+  return union ? inter/union : 0;
+}
+function suggestMatch(accountName, claimsOnlyNames){
+  let best=null, bestScore=0;
+  claimsOnlyNames.forEach(n=>{
+    const s = tokenOverlapRatio(accountName, n);
+    if(s>bestScore){ bestScore=s; best=n; }
+  });
+  return bestScore>=0.8 ? best : null;
+}
+
+function renderMatchPanel(){
+  const panel = document.getElementById('matchPanel');
+  const hasBoth = state.accounts.length>0 && state.claims.length>0;
+  panel.hidden = !hasBoth;
+  if(!hasBoth) return;
+  panel.classList.toggle('open', state.matchPanelOpen);
+  document.getElementById('matchSummary').textContent = t('matchingSummary', {matched: state.index.matchedAccountKeys.size, total: new Set(state.accounts.map(a=>a.key)).size});
+  document.getElementById('matchAccountsOnlyTitle').textContent = t('matchAccountsOnlyTitle');
+  document.getElementById('matchClaimsOnlyTitle').textContent = t('matchClaimsOnlyTitle');
+
+  const claimsOnlyKeys = [...state.index.claimsOnly];
+  const claimsOnlyNames = claimsOnlyKeys.map(k=>claimsNameFor(k));
+  const accountsOnlyList = document.getElementById('matchAccountsOnlyList');
+  if(!state.index.accountsOnly.size){
+    accountsOnlyList.innerHTML = '<div class="match-empty">'+esc(t('matchEmpty'))+'</div>';
+  } else {
+    accountsOnlyList.innerHTML = [...state.index.accountsOnly].map(ak=>{
+      const acc = accountsByKey(ak);
+      const suggestion = suggestMatch(acc ? acc.name : ak, claimsOnlyNames);
+      const options = [{value:'', label:t('matchPickPlaceholder')}].concat(
+        claimsOnlyKeys.map(ck=>({value:ck, label: claimsNameFor(ck) + (claimsNameFor(ck)===suggestion ? ' ★' : '')}))
+      );
+      const wrapId = 'matchWrap_'+ak;
+      return '<div class="match-row"><span class="match-name">'+esc(acc?acc.name:ak)+'</span><div class="csel-wrap" id="'+wrapId+'" style="min-width:180px;"></div></div>';
+    }).join('');
+    [...state.index.accountsOnly].forEach(ak=>{
+      const suggestion = suggestMatch((accountsByKey(ak)||{}).name || ak, claimsOnlyNames);
+      const suggestedKey = suggestion ? claimsOnlyKeys.find(ck=>claimsNameFor(ck)===suggestion) : null;
+      const options = [{value:'', label:t('matchPickPlaceholder')}].concat(claimsOnlyKeys.map(ck=>({value:ck, label:claimsNameFor(ck)})));
+      renderCsel('matchWrap_'+ak, 'matchSel_'+ak, options, state.entityMap[ak] || suggestedKey || '');
+    });
+  }
+  const claimsOnlyList = document.getElementById('matchClaimsOnlyList');
+  claimsOnlyList.innerHTML = claimsOnlyKeys.length
+    ? claimsOnlyKeys.map(ck=>'<div class="match-plain">'+esc(claimsNameFor(ck))+'</div>').join('')
+    : '<div class="match-empty">'+esc(t('matchEmpty'))+'</div>';
+}
+document.getElementById('matchHead').addEventListener('click', ()=>{
+  state.matchPanelOpen = !state.matchPanelOpen;
+  renderMatchPanel();
+});
+
+function applyPeriodPreset(preset){
+  state.period.preset = preset;
+  const {minIdx, maxIdx} = state.index;
+  if(maxIdx==null) return;
+  if(preset==='all'){ state.period.from = minIdx; state.period.to = maxIdx; }
+  else if(preset==='last3'){ state.period.from = Math.max(minIdx, maxIdx-2); state.period.to = maxIdx; }
+  else if(preset==='last6'){ state.period.from = Math.max(minIdx, maxIdx-5); state.period.to = maxIdx; }
+  else if(preset==='last12'){ state.period.from = Math.max(minIdx, maxIdx-11); state.period.to = maxIdx; }
+}
+function periodLabelForToolbar(){
+  if(state.period.from==null || state.period.to==null) return '';
+  return monthLabel(state.period.from)+' → '+monthLabel(state.period.to);
+}
+function renderPeriodToolbar(){
+  const toolbar = document.getElementById('periodToolbar');
+  const hasClaims = state.claims.length>0;
+  toolbar.hidden = !hasClaims;
+  if(!hasClaims) return;
+  document.getElementById('periodLabelText').textContent = t('periodLabelText');
+  const presets = [
+    {key:'all', label:t('periodAll')}, {key:'last3', label:t('periodLast3')},
+    {key:'last6', label:t('periodLast6')}, {key:'last12', label:t('periodLast12')},
+    {key:'custom', label:t('periodCustom')},
+  ];
+  document.getElementById('periodPresetChips').innerHTML = presets.map(p=>
+    '<button class="chip-toggle'+(state.period.preset===p.key?' active':'')+'" data-preset="'+p.key+'">'+esc(p.label)+'</button>'
+  ).join('');
+  const monthOpts = state.index.monthsPresent.map(idx=>({value:idx, label:monthLabel(idx)}));
+  renderCsel('periodFromWrap', 'periodFromSel', monthOpts.length?monthOpts:[{value:'',label:'—'}], state.period.from);
+  renderCsel('periodToWrap', 'periodToSel', monthOpts.length?monthOpts:[{value:'',label:'—'}], state.period.to);
+  document.getElementById('periodSplitLabel').textContent = t('periodSplitLabel');
+  document.getElementById('periodSplitToggle').checked = state.period.split;
+  document.getElementById('periodCutoffWrap').hidden = !state.period.split;
+  if(state.period.split){
+    renderCsel('periodCutoffWrap', 'periodCutoffSel', monthOpts.length?monthOpts:[{value:'',label:'—'}], state.period.cutoff);
+  }
+  document.getElementById('periodBasisLabelText').textContent = t('periodBasisLabel');
+  document.getElementById('periodBasisToggle').checked = state.period.basis === 'data';
+}
+document.getElementById('periodPresetChips').addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-preset]');
+  if(!btn) return;
+  applyPeriodPreset(btn.dataset.preset);
+  renderPeriodToolbar();
   renderAll();
 });
+document.getElementById('periodSplitToggle').addEventListener('change', (e)=>{
+  state.period.split = e.target.checked;
+  renderPeriodToolbar();
+  renderAll();
+});
+document.getElementById('periodBasisToggle').addEventListener('change', (e)=>{
+  state.period.basis = e.target.checked ? 'data' : 'calendar';
+  renderAll();
+});
+
+function scopedClaims(){
+  const q = normalizeText(state.query);
+  const {from, to} = state.period;
+  return state.claims.filter(r=>{
+    if(from!=null && r.mIdx!=null && r.mIdx<from) return false;
+    if(to!=null && r.mIdx!=null && r.mIdx>to) return false;
+    if(state.filters.category!=='all' && r.category!==state.filters.category) return false;
+    if(state.filters.budget!=='all' && r.budgetType!==state.filters.budget) return false;
+    if(state.filters.month!=='all' && r.month!==state.filters.month) return false;
+    if(state.filters.year!=='all' && String(r.year)!==String(state.filters.year)) return false;
+    if(state.filters.matchedOnly && !state.index.matchedClaimKeys.has(r.key)) return false;
+    if(q && !(normalizeText(r.name).includes(q) || normalizeText(r.category).includes(q))) return false;
+    return true;
+  });
+}
+function computeFiltered(){
+  const base = scopedClaims().filter(r=> state.filters.entity==='all' || r.name===state.filters.entity);
+  return applySort(base);
+}
+function currentAccountsKeySet(){
+  let list = state.accounts;
+  if(state.filters.entity!=='all'){
+    const targetKey = entityKey(state.filters.entity);
+    list = list.filter(a=>a.key===targetKey);
+  }
+  if(state.filters.matchedOnly) list = list.filter(a=>state.index.matchedAccountKeys.has(a.key));
+  return new Set(list.map(a=>a.key));
+}
+function sumAccounts(keySet){
+  let orders=0, dues=0;
+  state.accounts.forEach(a=>{ if(keySet.has(a.key)){ orders += a.orders||0; dues += a.dues||0; } });
+  return {orders, dues};
+}
+function sumAfterIn(rows, fromIdx, toIdx){
+  return rows.filter(r=> fromIdx==null || toIdx==null || (r.mIdx!=null && r.mIdx>=fromIdx && r.mIdx<=toIdx)).reduce((s,r)=>s+r.after,0);
+}
+function periodDivisor(rows, fromIdx, toIdx){
+  if(fromIdx==null || toIdx==null || toIdx<fromIdx) return 0;
+  if(state.period.basis==='calendar') return (toIdx-fromIdx+1);
+  const distinct = new Set(rows.filter(r=>r.mIdx!=null && r.mIdx>=fromIdx && r.mIdx<=toIdx).map(r=>r.mIdx));
+  return distinct.size;
+}
+function avgMonthlyFor(rows, fromIdx, toIdx){
+  const divisor = periodDivisor(rows, fromIdx, toIdx);
+  if(!divisor) return null;
+  return sumAfterIn(rows, fromIdx, toIdx) / divisor;
+}
+
+function currencyUnit(){ return state.currency ? ' '+state.currency : ''; }
+function kpiCard(cls, src, label, value, sub){
+  const dot = src ? '<span class="kpi-src-dot '+src+'"></span>' : '';
+  return '<div class="card kpi'+(cls?' '+cls:'')+'"><span class="kpi-label">'+dot+label+'</span><span class="kpi-value">'+value+'</span>'+(sub?'<span class="kpi-sub">'+sub+'</span>':'')+'</div>';
+}
+function avgSourceToggleHtml(){
+  return '<span class="avg-src-toggle">'
+    +'<button type="button" class="avg-src-btn'+(state.avgSource==='claims'?' active':'')+'" data-avgsrc="claims">'+t('slotClaimsLabel')+'</button>'
+    +'<button type="button" class="avg-src-btn'+(state.avgSource==='accounts'?' active':'')+'" data-avgsrc="accounts">'+t('slotAccountsLabel')+'</button>'
+    +'</span>';
+}
+function renderKpis(){
+  const host = document.getElementById('kpiStrip');
+  if(!state.claims.length && !state.accounts.length){ host.innerHTML=''; return; }
+  const tiles = [];
+
+  if(state.claims.length){
+    const records = computeFiltered();
+    const entities = new Set(records.map(r=>r.key)).size;
+    tiles.push(kpiCard('', 'claims', t('kpiRecords'), fmt(records.length), entities+' '+t('kpiEntitiesSuffix')));
+    const totalBefore = records.reduce((s,r)=>s+r.before,0);
+    tiles.push(kpiCard('', 'claims', t('colBefore'), fmt(totalBefore)+currencyUnit(), periodLabelForToolbar()));
+    const totalAfter = records.reduce((s,r)=>s+r.after,0);
+    tiles.push(kpiCard('accent', 'claims', t('kpiTotalAfterPeriod'), fmt(totalAfter)+currencyUnit(), periodLabelForToolbar()));
+
+    let avgValue, avgSub;
+    if(state.avgSource==='accounts' && state.accounts.length){
+      const keySet = currentAccountsKeySet();
+      const list = state.accounts.filter(a=>keySet.has(a.key));
+      avgValue = list.length ? list.reduce((s,a)=>s+a.refAvgAfter,0) : null;
+      avgSub = avgSourceToggleHtml()+'<span class="kpi-sub-note">'+esc(t('avgAccountsNote'))+'</span>';
+    } else {
+      avgValue = avgMonthlyFor(records, state.period.from, state.period.to);
+      avgSub = avgSourceToggleHtml()+'<span class="kpi-sub-note">'+esc(periodLabelForToolbar())+'</span>';
+    }
+    tiles.push(kpiCard('', 'claims', t('kpiAvgMonthly'), avgValue==null?'—':fmt(avgValue)+currencyUnit(), avgSub));
+
+    if(state.period.split && state.period.cutoff!=null){
+      const avgA = avgMonthlyFor(records, state.period.from, state.period.cutoff-1);
+      const avgB = avgMonthlyFor(records, state.period.cutoff, state.period.to);
+      const delta = (avgA!=null && avgA!==0 && avgB!=null) ? ((avgB-avgA)/avgA)*100 : null;
+      const deltaHtml = delta==null ? '—' : '<span class="delta-pill '+(delta<=0?'good':'bad')+'">'+(delta>0?'+':'')+delta.toFixed(1)+'%</span>';
+      const valueHtml = (avgA==null?'—':fmt(avgA)) + ' → ' + (avgB==null?'—':fmt(avgB));
+      tiles.push(kpiCard('', 'claims', t('kpiSplitDelta'), valueHtml, deltaHtml));
+    }
+  }
+  if(state.accounts.length){
+    const keySet = currentAccountsKeySet();
+    const acc = sumAccounts(keySet);
+    tiles.push(kpiCard('', 'accounts', t('kpiOrders'), fmt(acc.orders), t('allPeriods')));
+    const cs = state.checksums.accounts;
+    let duesSub = t('allPeriods');
+    if(cs){
+      const sumDues = state.accounts.reduce((s,r)=>s+r.dues,0);
+      duesSub = Math.round(sumDues)===Math.round(cs.dues||0) ? t('auditOk') : t('auditWarn',{n:fmtSigned(sumDues-(cs.dues||0))});
+    }
+    tiles.push(kpiCard('accent', 'accounts', t('kpiDues'), fmt(acc.dues)+currencyUnit(), duesSub));
+  }
+  host.innerHTML = tiles.join('');
+}
+document.getElementById('kpiStrip').addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-avgsrc]');
+  if(!btn) return;
+  state.avgSource = btn.dataset.avgsrc;
+  renderAll();
+});
+
+function populateFilterOptions(){
+  const entities = [...new Set(state.claims.map(r=>r.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  const cats = [...new Set(state.claims.map(r=>r.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  const budgets = [...new Set(state.claims.map(r=>r.budgetType).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  const months = [...new Set(state.claims.map(r=>r.month).filter(Boolean))].sort((a,b)=>monthRank(a)-monthRank(b));
+  const years = [...new Set(state.claims.map(r=>r.year).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
+  renderCsel('filterEntityWrap', 'filterEntitySel', [{value:'all',label:t('filterAllEntity')}, ...entities.map(v=>({value:v,label:v}))], state.filters.entity);
+  renderCsel('filterCategoryWrap', 'filterCategorySel', [{value:'all',label:t('filterAllCategory')}, ...cats.map(v=>({value:v,label:v}))], state.filters.category);
+  renderCsel('filterBudgetWrap', 'filterBudgetSel', [{value:'all',label:t('filterAllBudget')}, ...budgets.map(v=>({value:v,label:v}))], state.filters.budget);
+  renderCsel('filterMonthWrap', 'filterMonthSel', [{value:'all',label:t('filterAllMonth')}, ...months.map(v=>({value:v,label:v}))], state.filters.month);
+  renderCsel('filterYearWrap', 'filterYearSel', [{value:'all',label:t('filterAllYear')}, ...years.map(v=>({value:v,label:String(v)}))], state.filters.year);
+  const perRecordOnly = state.view === 'entity';
+  document.getElementById('filterCategoryWrap').hidden = perRecordOnly;
+  document.getElementById('filterBudgetWrap').hidden = perRecordOnly;
+  document.getElementById('filterMonthWrap').hidden = perRecordOnly;
+  document.getElementById('filterYearWrap').hidden = perRecordOnly;
+  const chip = document.getElementById('matchedOnlyChip');
+  chip.textContent = t('filterMatchedOnly');
+  chip.classList.toggle('active', state.filters.matchedOnly);
+  chip.hidden = !(state.claims.length && state.accounts.length);
+}
+document.getElementById('matchedOnlyChip').addEventListener('click', ()=>{
+  state.filters.matchedOnly = !state.filters.matchedOnly;
+  populateFilterOptions();
+  renderAll();
+});
+
 function sortFieldOptions(){
-  return [
+  if(state.view === 'entity'){
+    return [
+      {value:'none', label:t('sortNone')},
+      {value:'name', label:t('colName')},
+      {value:'before', label:t('colBefore')},
+      {value:'after', label:t('colAfter')},
+      {value:'discount', label:t('colDiscount')},
+      {value:'avgMonthly', label:t('colAvgMonthly')},
+      {value:'orders', label:t('colOrders')},
+      {value:'dues', label:t('colDues')},
+      {value:'reconcileDelta', label:t('colReconcile')},
+      {value:'refAvgBefore', label:t('colRefBefore')},
+      {value:'refAvgAfter', label:t('colRefAfter')},
+      {value:'delta', label:t('colRefDelta')},
+    ];
+  }
+  const base = [
     {value:'none', label:t('sortNone')},
     {value:'name', label:t('colName')},
     {value:'category', label:t('colCategory')},
@@ -978,6 +1933,14 @@ function sortFieldOptions(){
     {value:'after', label:t('colAfter')},
     {value:'discount', label:t('colDiscount')},
   ];
+  if(state.view==='table' && state.tableMode==='aggregated' && state.groupDims.size===1 && state.groupDims.has('name')){
+    base.push({value:'orders', label:t('colOrders')}, {value:'dues', label:t('colDues')});
+  }
+  return base;
+}
+function resetInvalidSortRules(){
+  const valid = new Set(sortFieldOptions().map(o=>o.value));
+  state.sortRules.forEach(r=>{ if(!valid.has(r.field)) r.field = 'none'; });
 }
 function dirIconSvg(dir){
   return dir==='asc'
@@ -988,6 +1951,7 @@ function removeIconSvg(){
   return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>';
 }
 function renderSortControls(){
+  resetInvalidSortRules();
   const opts = sortFieldOptions();
   const host = document.getElementById('sortRulesHost');
   host.innerHTML = state.sortRules.map((rule,i)=>'<span class="sort-rule">'
@@ -1025,47 +1989,36 @@ document.addEventListener('click', (e)=>{
   renderSortControls();
   renderAll();
 });
-
-function populateFilterOptions(){
-  const entities = [...new Set(state.records.map(r=>r.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-  const cats = [...new Set(state.records.map(r=>r.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-  const budgets = [...new Set(state.records.map(r=>r.budgetType).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-  const months = [...new Set(state.records.map(r=>r.month).filter(Boolean))].sort((a,b)=>monthRank(a)-monthRank(b));
-  const years = [...new Set(state.records.map(r=>r.year).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
-  renderCsel('filterEntityWrap', 'filterEntitySel', [{value:'all',label:t('filterAllEntity')}, ...entities.map(v=>({value:v,label:v}))], state.fEntity);
-  renderCsel('filterCategoryWrap', 'filterCategorySel', [{value:'all',label:t('filterAllCategory')}, ...cats.map(v=>({value:v,label:v}))], state.fCategory);
-  renderCsel('filterBudgetWrap', 'filterBudgetSel', [{value:'all',label:t('filterAllBudget')}, ...budgets.map(v=>({value:v,label:v}))], state.fBudget);
-  renderCsel('filterMonthWrap', 'filterMonthSel', [{value:'all',label:t('filterAllMonth')}, ...months.map(v=>({value:v,label:v}))], state.fMonth);
-  renderCsel('filterYearWrap', 'filterYearSel', [{value:'all',label:t('filterAllYear')}, ...years.map(v=>({value:v,label:String(v)}))], state.fYear);
-}
-
-function computeFiltered(){
-  const q = normalizeText(state.query);
-  const filtered = state.records.filter(r=>{
-    if(state.fEntity!=='all' && r.name!==state.fEntity) return false;
-    if(state.fCategory!=='all' && r.category!==state.fCategory) return false;
-    if(state.fBudget!=='all' && r.budgetType!==state.fBudget) return false;
-    if(state.fMonth!=='all' && r.month!==state.fMonth) return false;
-    if(state.fYear!=='all' && String(r.year)!==String(state.fYear)) return false;
-    if(q && !(normalizeText(r.name).includes(q) || normalizeText(r.category).includes(q))) return false;
-    return true;
+function applyEntitySort(rows){
+  const rules = state.sortRules.filter(r=>r.field && r.field!=='none');
+  if(!rules.length) return rows;
+  return [...rows].sort((a,b)=>{
+    for(const rule of rules){
+      const c = compareByField(a,b,rule.field,rule.dir);
+      if(c!==0) return c;
+    }
+    return 0;
   });
-  return applySort(filtered);
 }
 
-function renderKpis(){
-  const records = computeFiltered();
-  const totalBefore = records.reduce((s,r)=>s+r.before,0);
-  const totalAfter = records.reduce((s,r)=>s+r.after,0);
-  const totalDiscount = totalBefore - totalAfter;
-  const pct = totalBefore ? (totalDiscount/totalBefore)*100 : 0;
-  const entities = new Set(records.map(r=>r.name)).size;
-  document.getElementById('kpiStrip').innerHTML =
-    '<div class="card kpi"><span class="kpi-label">'+t('kpiRecords')+'</span><span class="kpi-value">'+records.length+'</span><span class="kpi-sub">'+entities+' '+t('kpiEntitiesSuffix')+'</span></div>'
-    +'<div class="card kpi"><span class="kpi-label">'+t('kpiBefore')+'</span><span class="kpi-value">'+fmt(totalBefore)+currencyUnit()+'</span></div>'
-    +'<div class="card kpi accent"><span class="kpi-label">'+t('kpiAfter')+'</span><span class="kpi-value">'+fmt(totalAfter)+currencyUnit()+'</span></div>'
-    +'<div class="card kpi '+(totalDiscount>=0?'good':'bad')+'"><span class="kpi-label">'+t('kpiNet')+'</span><span class="kpi-value">'+(totalDiscount>=0?'−':'+')+fmt(Math.abs(totalDiscount))+currencyUnit()+'</span><span class="kpi-sub">'+Math.abs(pct).toFixed(1)+'% '+(totalDiscount>=0?t('kpiReduced'):t('kpiIncreased'))+'</span></div>';
+function renderGroupDimChips(){
+  const host = document.getElementById('groupDimChips');
+  const noneActive = state.groupDims.size === 0;
+  let html = '<button class="chip-toggle'+(noneActive?' active':'')+'" data-dim="none">'+t('groupNone')+'</button>';
+  html += GROUP_DIM_ORDER.map(dim=>'<button class="chip-toggle'+(state.groupDims.has(dim)?' active':'')+'" data-dim="'+dim+'">'+groupDimLabel(dim)+'</button>').join('');
+  host.innerHTML = html;
 }
+document.addEventListener('click', (e)=>{
+  const chip = e.target.closest('#groupDimChips [data-dim]');
+  if(!chip) return;
+  const dim = chip.dataset.dim;
+  if(dim==='none') state.groupDims.clear();
+  else if(state.groupDims.has(dim)) state.groupDims.delete(dim);
+  else state.groupDims.add(dim);
+  renderGroupDimChips();
+  renderSortControls();
+  renderAll();
+});
 
 function varPill(before, after){
   const diff = before - after;
@@ -1097,7 +2050,7 @@ function doCopyText(text){
   }
 }
 function copyRecord(id){
-  const r = state.records.find(x=>x.id===id);
+  const r = state.claims.find(x=>x.id===id);
   if(!r) return;
   const lines = [
     t('copyLabelName')+': '+r.name,
@@ -1107,7 +2060,7 @@ function copyRecord(id){
     t('copyLabelYear')+': '+(r.year||'—'),
     t('copyLabelBefore')+': '+fmt(r.before)+currencyUnit(),
     t('copyLabelAfter')+': '+fmt(r.after)+currencyUnit(),
-    t('copyLabelDiscount')+': '+(r.discount>=0?'−':'+')+fmt(Math.abs(r.discount))+currencyUnit(),
+    t('copyLabelDiscount')+': '+fmtSigned(r.discount)+currencyUnit(),
   ];
   doCopyText(lines.join('\n'));
 }
@@ -1119,7 +2072,26 @@ function copyGroup(idx){
     t('copyLabelCount')+': '+g.rows.length,
     t('copyLabelBefore')+': '+fmt(g.sumBefore)+currencyUnit(),
     t('copyLabelAfter')+': '+fmt(g.sumAfter)+currencyUnit(),
-    t('copyLabelDiscount')+': '+(g.sumBefore-g.sumAfter>=0?'−':'+')+fmt(Math.abs(g.sumBefore-g.sumAfter))+currencyUnit(),
+    t('copyLabelDiscount')+': '+fmtSigned(g.sumBefore-g.sumAfter)+currencyUnit(),
+  ];
+  doCopyText(lines.join('\n'));
+}
+function copyEntity(key){
+  const row = entityRowsCache.find(r=>r.key===key);
+  if(!row) return;
+  const lines = [
+    t('copyLabelName')+': '+row.name,
+    t('copyLabelCount')+': '+row.claimsCount,
+    t('copyLabelBefore')+': '+(row.totalBefore==null?'—':fmt(row.totalBefore)+currencyUnit()),
+    t('copyLabelAfter')+': '+(row.totalAfter==null?'—':fmt(row.totalAfter)+currencyUnit()),
+    t('copyLabelAvgMonthly')+': '+(row.avgMonthly==null?'—':fmt(row.avgMonthly)+currencyUnit()),
+    t('copyLabelOrders')+': '+(row.orders==null?'—':fmt(row.orders)),
+    t('copyLabelDues')+': '+(row.dues==null?'—':fmt(row.dues)+currencyUnit()),
+    t('copyLabelFirstDue')+': '+(row.firstDue||'—'),
+    t('copyLabelLastDue')+': '+(row.lastDue||'—'),
+    t('reconcileLabel')+': '+(row.reconcileGap==null?'—':fmtSigned(row.reconcileGap)+currencyUnit()),
+    t('copyLabelRefBefore')+': '+(row.refAvgBefore==null?'—':fmt(row.refAvgBefore)+currencyUnit()),
+    t('copyLabelRefAfter')+': '+(row.refAvgAfter==null?'—':fmt(row.refAvgAfter)+currencyUnit()),
   ];
   doCopyText(lines.join('\n'));
 }
@@ -1156,10 +2128,9 @@ function buildGroups(records, dims){
     const label = active.length>1
       ? entry.parts.map((v,i)=>groupDimLabel(active[i])+': '+v).join(' · ')
       : entry.parts[0];
-    return { key:k, label, rows: entry.rows };
+    return { key:k, label, rows: entry.rows, isEntityGroup: active.length===1 && active[0]==='name' };
   });
 }
-
 function computeAggregates(records, dims){
   const groups = buildGroups(records, dims);
   return groups.map(g=>({
@@ -1167,26 +2138,41 @@ function computeAggregates(records, dims){
     rows: g.rows,
     sumBefore: g.rows.reduce((s,r)=>s+r.before,0),
     sumAfter: g.rows.reduce((s,r)=>s+r.after,0),
-    entityCount: new Set(g.rows.map(r=>r.name)).size,
+    entityCount: new Set(g.rows.map(r=>r.key)).size,
+    isEntityGroup: g.isEntityGroup,
   }));
 }
-
 function renderAggregatedTable(records){
   const host = document.getElementById('viewHost');
   const groups = computeAggregates(records, state.groupDims);
+  const groupedByName = state.groupDims.size===1 && state.groupDims.has('name');
   host.innerHTML = '<div class="group-table-wrap"><table><thead><tr class="col-head">'
     +'<th>'+t('colGroup')+'</th><th>'+t('colRecordCount')+'</th>'
-    +'<th class="num">'+t('colBefore')+'</th><th class="num">'+t('colAfter')+'</th><th class="num">'+t('colDiscount')+'</th></tr></thead><tbody>'
-    +groups.map(g=>'<tr>'
-      +'<td class="name">'+esc(g.label)+'</td>'
-      +'<td class="muted">'+g.rows.length+'</td>'
-      +'<td class="num">'+fmt(g.sumBefore)+currencyUnit()+'</td>'
-      +'<td class="num">'+fmt(g.sumAfter)+currencyUnit()+'</td>'
-      +'<td class="num">'+varPill(g.sumBefore,g.sumAfter)+'</td>'
-      +'</tr>').join('')
+    +'<th class="num">'+t('colBefore')+'</th><th class="num">'+t('colAfter')+'</th><th class="num">'+t('colDiscount')+'</th>'
+    +'<th class="num"><span class="kpi-src-dot accounts" style="margin-inline-end:5px;"></span>'+t('colOrders')+'</th>'
+    +'<th class="num"><span class="kpi-src-dot accounts" style="margin-inline-end:5px;"></span>'+t('colDues')+'</th></tr></thead><tbody>'
+    +groups.map(g=>{
+      let acctCells;
+      if(groupedByName){
+        const keys = new Set(g.rows.map(r=>r.key));
+        const acc = sumAccounts(keys);
+        acctCells = '<td class="num">'+fmt(acc.orders)+'</td><td class="num">'+fmt(acc.dues)+currencyUnit()+'</td>';
+      } else {
+        acctCells = '<td class="num acct-na" title="'+esc(t('acctColsHint'))+'">—</td><td class="num acct-na" title="'+esc(t('acctColsHint'))+'">—</td>';
+      }
+      return '<tr>'
+        +'<td class="name">'+esc(g.label)+'</td>'
+        +'<td class="muted">'+g.rows.length+'</td>'
+        +'<td class="num">'+fmt(g.sumBefore)+currencyUnit()+'</td>'
+        +'<td class="num">'+fmt(g.sumAfter)+currencyUnit()+'</td>'
+        +'<td class="num">'+varPill(g.sumBefore,g.sumAfter)+'</td>'
+        +acctCells
+        +'</tr>';
+    }).join('')
     +'</tbody></table></div>';
 }
 
+const DETAILED_COLS = ['name','category','budget','month','year','before','after','discount','actions'];
 function renderTableView(){
   const records = computeFiltered();
   const host = document.getElementById('viewHost');
@@ -1196,7 +2182,7 @@ function renderTableView(){
   host.innerHTML = groups.map(g=>{
     const sumAfter = g.rows.reduce((s,r)=>s+r.after,0);
     const bandRow = state.groupDims.size>0
-      ? '<tr class="group-band"><th colspan="9">'+esc(g.label)+'<span class="g-count">'+g.rows.length+' '+t('groupRecords')+' · '+t('groupTotal')+': '+fmt(sumAfter)+currencyUnit()+'</span></th></tr>'
+      ? '<tr class="group-band"><th colspan="'+DETAILED_COLS.length+'">'+esc(g.label)+'<span class="g-count">'+g.rows.length+' '+t('groupRecords')+' · '+t('groupTotal')+': '+fmt(sumAfter)+currencyUnit()+'</span></th></tr>'
       : '';
     return '<div class="group-table-wrap group-block"><table><thead>'+bandRow
       +'<tr class="col-head"><th>'+t('colName')+'</th><th>'+t('colCategory')+'</th><th>'+t('colBudget')+'</th><th>'+t('colMonth')+'</th><th>'+t('colYear')+'</th>'
@@ -1215,7 +2201,6 @@ function renderTableView(){
       +'</tbody></table></div>';
   }).join('');
 }
-
 function renderCardsView(){
   const records = computeFiltered();
   const host = document.getElementById('viewHost');
@@ -1255,10 +2240,152 @@ function renderCardsView(){
   }).join('')+'</div>';
 }
 
-function renderAll(){
-  renderKpis();
-  if(state.view === 'table') renderTableView(); else renderCardsView();
+let entityRowsCache = [];
+function groupClaimsByKey(rows){
+  const map = new Map();
+  rows.forEach(r=>{
+    if(!map.has(r.key)) map.set(r.key, {name:r.name, rows:[]});
+    map.get(r.key).rows.push(r);
+  });
+  return map;
 }
+function buildEntityRow(account, key, claimsInfo){
+  const name = account ? account.name : (claimsInfo ? claimsInfo.name : key);
+  const claimRows = claimsInfo ? claimsInfo.rows : [];
+  const hasClaims = claimRows.length > 0;
+  const hasAccount = !!account;
+  const claimsCount = claimRows.length;
+  const totalBefore = hasClaims ? claimRows.reduce((s,r)=>s+r.before,0) : null;
+  const totalAfter = hasClaims ? claimRows.reduce((s,r)=>s+r.after,0) : null;
+  const avgMonthly = hasClaims ? avgMonthlyFor(claimRows, state.period.from, state.period.to) : null;
+  const refBefore = hasAccount ? account.refAvgBefore : null;
+  const refAfter = hasAccount ? account.refAvgAfter : null;
+  let delta = null;
+  if(hasAccount && refBefore){ delta = ((refAfter-refBefore)/refBefore)*100; }
+  const dues = hasAccount ? account.dues : null;
+  let reconcileGap = null, reconcilePct = null;
+  if(hasAccount && hasClaims){
+    reconcileGap = totalAfter - dues;
+    reconcilePct = dues ? (reconcileGap/dues)*100 : null;
+  }
+  let marker = null;
+  if(hasAccount && !hasClaims) marker = 'onlyAccounts';
+  else if(!hasAccount && hasClaims) marker = 'onlyClaims';
+  return {
+    key, name,
+    claimsCount, orders: hasAccount?account.orders:null, dues,
+    firstDue: hasAccount?account.firstDue:null, lastDue: hasAccount?account.lastDue:null,
+    totalBefore, totalAfter, avgMonthly, refAvgBefore: refBefore, refAvgAfter: refAfter, delta,
+    reconcileGap, reconcilePct,
+    marker,
+  };
+}
+function buildEntityRows(){
+  const claimRows = scopedClaims();
+  const claimsGrouped = groupClaimsByKey(claimRows);
+  const usedClaimKeys = new Set();
+  const rows = [];
+  const accountKeys = [...new Set(state.accounts.map(a=>a.key))];
+  accountKeys.forEach(accountKey=>{
+    const account = accountSummaryByKey(accountKey);
+    const linkedKey = state.entityMap[accountKey] || (claimsGrouped.has(accountKey) ? accountKey : null);
+    const info = linkedKey ? claimsGrouped.get(linkedKey) : null;
+    if(linkedKey) usedClaimKeys.add(linkedKey);
+    rows.push(buildEntityRow(account, accountKey, info));
+  });
+  claimsGrouped.forEach((info,key)=>{
+    if(usedClaimKeys.has(key)) return;
+    rows.push(buildEntityRow(null, key, info));
+  });
+  let filtered = rows;
+  if(state.entityFocus === 'claims') filtered = filtered.filter(r=>r.claimsCount>0);
+  else if(state.entityFocus === 'accounts') filtered = filtered.filter(r=>r.dues!=null || r.orders!=null);
+  if(state.filters.entity!=='all') filtered = filtered.filter(r=>r.name===state.filters.entity);
+  if(state.filters.matchedOnly) filtered = filtered.filter(r=>!r.marker);
+  const q = normalizeText(state.query);
+  if(q) filtered = filtered.filter(r=>normalizeText(r.name).includes(q));
+  return filtered;
+}
+function renderEntityCard(r){
+  const showClaims = r.claimsCount>0 && state.entityFocus!=='accounts';
+  const showAccounts = (r.dues!=null || r.orders!=null) && state.entityFocus!=='claims';
+  const showReconcile = showClaims && showAccounts && r.reconcileGap!=null;
+  const marker = r.marker ? '<span class="marker-badge">'+esc(t(r.marker))+'</span>' : '';
+
+  let claimsHtml = '';
+  if(showClaims){
+    claimsHtml = '<div class="ecard-amounts">'
+      +'<div class="amt-block before"><span class="amt-label">'+t('colBefore')+'</span><span class="amt-value">'+fmt(r.totalBefore)+currencyUnit()+'</span></div>'
+      +'<span class="amt-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>'
+      +'<div class="amt-block after"><span class="amt-label">'+t('colAfter')+'</span><span class="amt-value">'+fmt(r.totalAfter)+currencyUnit()+'</span></div>'
+      +'</div>'
+      +'<div class="stamp-wrap">'+stampHtml(r.totalBefore, r.totalAfter)+'</div>';
+  }
+  let accountsHtml = '';
+  if(showAccounts && r.dues!=null){
+    accountsHtml = '<div class="entity-line'+(showClaims?'':' no-border')+'"><span class="entity-line-label"><span class="kpi-src-dot accounts"></span>'+t('colDues')+'</span><span class="entity-line-value">'+fmt(r.dues)+currencyUnit()+'</span></div>';
+  }
+  let reconcileHtml = '';
+  if(showReconcile){
+    const isMatch = r.totalAfter === r.dues;
+    if(isMatch){
+      reconcileHtml = '<div class="entity-reconcile match"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>'+esc(t('reconcileMatch'))+'</div>';
+    } else {
+      const pctTxt = r.reconcilePct==null ? '' : ' ('+(r.reconcilePct>0?'+':'')+r.reconcilePct.toFixed(1)+'%)';
+      reconcileHtml = '<div class="entity-reconcile"><span>'+esc(t('reconcileLabel'))+': <strong style="color:var(--ink);">'+fmtSigned(r.reconcileGap)+currencyUnit()+pctTxt+'</strong></span></div>';
+    }
+  }
+  return '<div class="card ecard entity-ecard">'
+    +'<button class="icon-btn no-print" data-copy-entity="'+esc(r.key)+'" title="'+t('copy')+'">'+copyIconSvg()+'</button>'
+    +'<div class="entity-ecard-name">'+esc(r.name)+marker+'</div>'
+    +claimsHtml+accountsHtml+reconcileHtml
+    +'</div>';
+}
+function renderEntityView(){
+  const host = document.getElementById('viewHost');
+  const rows = applyEntitySort(buildEntityRows());
+  entityRowsCache = rows;
+  const bothLoaded = state.claims.length>0 && state.accounts.length>0;
+  const focusSeg = !bothLoaded ? '' : '<div class="seg" id="entityFocusSeg">'
+    +'<button class="seg-btn'+(state.entityFocus==='all'?' active':'')+'" data-focus="all">'+t('focusAll')+'</button>'
+    +'<button class="seg-btn'+(state.entityFocus==='claims'?' active':'')+'" data-focus="claims">'+t('slotClaimsLabel')+'</button>'
+    +'<button class="seg-btn'+(state.entityFocus==='accounts'?' active':'')+'" data-focus="accounts">'+t('slotAccountsLabel')+'</button>'
+    +'</div>';
+  const infoIcon = !bothLoaded ? '' : '<span class="entity-info-icon" title="'+esc(t('entityScopeNote'))+'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg></span>';
+  const controlBar = '<div class="entity-toolbar">'
+    +'<div class="entity-toolbar-left"><span class="entity-count-note">'+t('entityCountNote',{n:rows.length})+'</span>'+infoIcon+'</div>'
+    +focusSeg+'</div>';
+  if(!rows.length){ host.innerHTML = controlBar+'<div class="entity-empty-note">'+t('noResults')+'</div>'; return; }
+  host.innerHTML = controlBar+'<div class="card-grid">'+rows.map(renderEntityCard).join('')+'</div>';
+  const seg = document.getElementById('entityFocusSeg');
+  if(seg) seg.querySelectorAll('[data-focus]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ state.entityFocus = btn.dataset.focus; renderAll(); });
+  });
+}
+
+function renderAll(){
+  renderMatchPanel();
+  renderKpis();
+  renderPeriodToolbar();
+  if(state.view === 'table') renderTableView();
+  else if(state.view === 'entity') renderEntityView();
+  else renderCardsView();
+}
+
+function showReport(){
+  document.getElementById('reportArea').hidden = false;
+  document.getElementById('reimportBtn').hidden = false;
+  document.getElementById('printBtn').hidden = false;
+  document.getElementById('importZone').hidden = true;
+  document.querySelectorAll('#viewSeg .seg-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===state.view));
+  document.getElementById('tableModeSeg').hidden = state.view !== 'table';
+  document.querySelector('.toolbar.second').hidden = state.view === 'entity';
+  renderGroupDimChips();
+  populateFilterOptions();
+  renderSortControls();
+  renderAll();
+}
+function currentRecordCount(){ return state.claims.length + state.accounts.length; }
 
 function renderChrome(){
   document.documentElement.lang = state.lang;
@@ -1268,24 +2395,26 @@ function renderChrome(){
   document.getElementById('mastSub').textContent = t('appSub');
   document.getElementById('printRunTitle').textContent = t('appTitle');
   document.getElementById('langBtn').textContent = t('langSwitch');
-  document.getElementById('reimportBtn').textContent = t('reimport');
+  document.getElementById('reimportBtn').textContent = t('editImport');
   document.getElementById('printBtnLabel').textContent = t('printBtn');
   document.getElementById('importTitle').textContent = t('importTitle');
   document.getElementById('importHint').textContent = t('importHint');
-  document.getElementById('dzTitle').textContent = t('dzTitle');
   document.getElementById('currencyLabel').childNodes[0].textContent = t('currencyLabel');
   document.getElementById('currencyInput').placeholder = t('currencyPh');
   document.getElementById('searchInput').placeholder = t('searchPh');
   document.querySelector('#viewSeg [data-view="table"]').textContent = t('viewTable');
   document.querySelector('#viewSeg [data-view="cards"]').textContent = t('viewCards');
+  document.querySelector('#viewSeg [data-view="entity"]').textContent = t('viewEntity');
   document.querySelector('#tableModeSeg [data-mode="detailed"]').textContent = t('tableModeDetailed');
   document.querySelector('#tableModeSeg [data-mode="aggregated"]').textContent = t('tableModeAggregated');
   document.getElementById('groupByLabel').textContent = t('groupByLabel');
   document.getElementById('resetFiltersLabel').textContent = t('resetFilters');
   document.getElementById('sortByLabel').textContent = t('sortByLabel');
   document.getElementById('addSortLabel').textContent = t('sortAddLevel');
+  document.getElementById('proceedReportBtn').textContent = t('proceedToReport');
   updateThemeButton();
-  if(state.previewRows) renderPreview();
+  refreshSlotUI();
+  if(state.pending && state.pending.rows) renderPreview();
   if(state.workbook && !document.getElementById('sheetZone').hidden){
     document.getElementById('sheetTitle').textContent = t('sheetTitle');
     document.getElementById('sheetHint').textContent = t('sheetHint');
@@ -1294,49 +2423,69 @@ function renderChrome(){
     renderSheetList(state.workbook);
   }
   if(!document.getElementById('reportArea').hidden){
+    document.querySelectorAll('#viewSeg .seg-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===state.view));
     renderGroupDimChips();
     populateFilterOptions();
     renderSortControls();
     renderAll();
   }
-  document.getElementById('printRunMeta').textContent = state.records.length
-    ? state.records.length+' · '+new Date().toLocaleDateString(state.lang==='ar'?'ar-EG':'en-US') : '';
+  const meta = [];
+  if(currentRecordCount()) meta.push(currentRecordCount());
+  if(state.period.from!=null && state.period.to!=null) meta.push(periodLabelForToolbar()+(state.period.split?' · '+t('cutoffLabel')+': '+monthLabel(state.period.cutoff):''));
+  meta.push(new Date().toLocaleDateString(state.lang==='ar'?'ar-EG':'en-US'));
+  document.getElementById('printRunMeta').textContent = currentRecordCount() ? meta.join(' · ') : '';
 }
 
-const dz = document.getElementById('dropzone');
-const fileInput = document.getElementById('fileInput');
-dz.addEventListener('click', ()=> fileInput.click());
-fileInput.addEventListener('change', (e)=>{ if(e.target.files[0]) parseAndLoad(e.target.files[0]); });
-dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('drag'); });
-dz.addEventListener('dragleave', ()=> dz.classList.remove('drag'));
-dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) parseAndLoad(e.dataTransfer.files[0]); });
+function wireSlot(kind, cap){
+  const dz = document.getElementById('dz'+cap);
+  const input = document.getElementById('fileInput'+cap);
+  dz.addEventListener('click', ()=> input.click());
+  input.addEventListener('change', (e)=>{ if(e.target.files[0]) parseAndLoad(e.target.files[0], kind); });
+  dz.addEventListener('dragover', (e)=>{ e.preventDefault(); dz.classList.add('drag'); });
+  dz.addEventListener('dragleave', ()=> dz.classList.remove('drag'));
+  dz.addEventListener('drop', (e)=>{ e.preventDefault(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) parseAndLoad(e.dataTransfer.files[0], kind); });
+  document.getElementById('slot'+cap+'ReplaceBtn').addEventListener('click', ()=> input.click());
+  document.getElementById('slot'+cap+'RemoveBtn').addEventListener('click', ()=> removeSlot(kind));
+}
+wireSlot('claims','Claims');
+wireSlot('accounts','Accounts');
+
+document.getElementById('previewKindClaimsBtn').addEventListener('click', ()=> switchPreviewKind('claims'));
+document.getElementById('previewKindAccountsBtn').addEventListener('click', ()=> switchPreviewKind('accounts'));
 
 document.getElementById('printBtn').addEventListener('click', ()=> window.print());
 document.getElementById('reimportBtn').addEventListener('click', ()=>{
   document.getElementById('reportArea').hidden = true;
   document.getElementById('importZone').hidden = false;
-  document.getElementById('reimportBtn').hidden = true;
-  document.getElementById('printBtn').hidden = true;
+  document.getElementById('proceedReportBtn').hidden = !currentRecordCount();
   document.getElementById('importStatus').textContent = '';
   document.getElementById('importStatus').className = '';
-  fileInput.value = '';
+  refreshSlotUI();
 });
+document.getElementById('proceedReportBtn').addEventListener('click', showReport);
 document.getElementById('cancelPreviewBtn').addEventListener('click', cancelPreview);
 document.getElementById('confirmImportBtn').addEventListener('click', confirmImport);
 document.getElementById('cancelSheetBtn').addEventListener('click', cancelSheetPicker);
-document.getElementById('confirmSheetBtn').addEventListener('click', ()=>{
-  if(state.workbook && state.sheetName) loadSheet(state.workbook, state.sheetName);
+document.getElementById('confirmSheetBtn').addEventListener('click', (e)=>{
+  if(!(state.workbook && state.sheetName)) return;
+  const btn = e.currentTarget;
+  btn.disabled = true;
+  btn.textContent = t('confirmSheetLoading');
+  requestAnimationFrame(()=> setTimeout(()=>{
+    loadSheet(state.workbook, state.sheetName);
+    btn.disabled = false;
+  }, 0));
 });
 document.getElementById('selectAllRowsBtn').addEventListener('click', ()=>{
-  (state.previewRows||[]).forEach(r=>r.included = true);
+  (state.pending.rows||[]).forEach(r=>{ if(!r.isTotal) r.included = true; });
   renderPreview();
 });
 document.getElementById('selectValidRowsBtn').addEventListener('click', ()=>{
-  (state.previewRows||[]).forEach(r=>r.included = r.valid);
+  (state.pending.rows||[]).forEach(r=>{ if(!r.isTotal) r.included = r.valid; });
   renderPreview();
 });
 document.getElementById('selectNoneRowsBtn').addEventListener('click', ()=>{
-  (state.previewRows||[]).forEach(r=>r.included = false);
+  (state.pending.rows||[]).forEach(r=>{ if(!r.isTotal) r.included = false; });
   renderPreview();
 });
 let searchDebounce = null;
@@ -1346,7 +2495,8 @@ document.getElementById('searchInput').addEventListener('input', (e)=>{
   searchDebounce = setTimeout(()=>{ state.query = val; renderAll(); }, 200);
 });
 document.getElementById('resetFiltersBtn').addEventListener('click', ()=>{
-  state.query=''; state.fEntity='all'; state.fCategory='all'; state.fBudget='all'; state.fMonth='all'; state.fYear='all';
+  state.query='';
+  state.filters = {entity:'all', category:'all', budget:'all', month:'all', year:'all', matchedOnly:false};
   state.sortRules=[{field:'none',dir:'asc'}];
   document.getElementById('searchInput').value='';
   populateFilterOptions();
@@ -1358,6 +2508,9 @@ document.querySelectorAll('#viewSeg .seg-btn').forEach(btn=>{
     state.view = btn.dataset.view;
     document.querySelectorAll('#viewSeg .seg-btn').forEach(b=>b.classList.toggle('active', b===btn));
     document.getElementById('tableModeSeg').hidden = state.view !== 'table';
+    document.querySelector('.toolbar.second').hidden = state.view === 'entity';
+    populateFilterOptions();
+    renderSortControls();
     renderAll();
   });
 });
@@ -1365,6 +2518,7 @@ document.querySelectorAll('#tableModeSeg .seg-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     state.tableMode = btn.dataset.mode;
     document.querySelectorAll('#tableModeSeg .seg-btn').forEach(b=>b.classList.toggle('active', b===btn));
+    renderSortControls();
     renderAll();
   });
 });
@@ -1373,6 +2527,8 @@ document.getElementById('viewHost').addEventListener('click', (e)=>{
   if(copyBtn){ copyRecord(copyBtn.dataset.copyId); return; }
   const groupBtn = e.target.closest('[data-copy-group]');
   if(groupBtn){ copyGroup(Number(groupBtn.dataset.copyGroup)); return; }
+  const entityBtn = e.target.closest('[data-copy-entity]');
+  if(entityBtn){ copyEntity(entityBtn.dataset.copyEntity); return; }
 });
 document.getElementById('langBtn').addEventListener('click', ()=>{
   state.lang = state.lang==='ar' ? 'en' : 'ar';
