@@ -328,7 +328,12 @@ td.actions-cell{text-align:center;width:40px;}
 .toggle-switch input:checked{background:var(--navy);}
 .toggle-switch input:checked::after{inset-inline-start:17px;}
 
-.marker-badge{font-size:10px;font-weight:700;color:var(--ink-faint);background:var(--divider-soft);border-radius:6px;padding:2px 7px;margin-inline-start:6px;white-space:nowrap;vertical-align:middle;}
+.marker-badge{font-size:10px;font-weight:700;border-radius:6px;padding:2px 7px;margin-inline-start:6px;white-space:nowrap;vertical-align:middle;}
+.marker-badge.onlyClaims{color:var(--navy);background:rgba(18,58,68,.09);}
+.marker-badge.onlyAccounts{color:var(--rule);background:rgba(179,137,63,.14);}
+.src-chip{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--ink-faint);letter-spacing:.01em;white-space:nowrap;}
+.src-chip.claims{color:var(--navy);}
+.src-chip.accounts{color:var(--rule);}
 .delta-pill{font-size:11.5px;font-weight:700;direction:ltr;}
 .delta-pill.good{color:var(--good);}
 .delta-pill.bad{color:var(--bad);}
@@ -352,11 +357,15 @@ td.actions-cell{text-align:center;width:40px;}
 .entity-ecard-name{font-family:var(--font-display);font-size:16.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;flex-wrap:wrap;padding-inline-end:26px;}
 .entity-line{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-top:10px;border-top:1px solid var(--divider-soft);font-size:12.5px;}
 .entity-line.no-border{border-top:none;padding-top:0;}
+.entity-line.grouped{border-top:none;padding-top:4px;}
+.entity-group-head{padding-top:10px;border-top:1px solid var(--divider-soft);}
+.entity-group-head.no-border{border-top:none;padding-top:0;}
 .entity-line-label{display:inline-flex;align-items:center;gap:6px;color:var(--ink-soft);font-weight:600;}
 .entity-line-value{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
 .entity-reconcile{font-size:11.5px;color:var(--ink-soft);display:flex;align-items:center;gap:5px;}
 .entity-reconcile.match{color:var(--good);}
 .entity-reconcile svg{flex-shrink:0;}
+.entity-reconcile-note{font-size:10px;color:var(--ink-faint);margin-top:2px;}
 .entity-empty-note{font-size:12px;color:var(--ink-faint);text-align:center;padding:30px 0;}
 
 @media (max-width:760px){
@@ -628,7 +637,6 @@ ar:{
   appTitle:'بيان جهات متعاقدة',
   appSub:'كشف مراجعة الموازنات — المطالبات والحسابات',
   langSwitch:'English',
-  reimport:'استيراد ملف آخر',
   editImport:'تعديل الاستيراد',
   printBtn:'طباعة البيان',
   importTitle:'استيراد بيانات الجهات',
@@ -659,9 +667,9 @@ ar:{
   reasonOrders:'عدد أوامر الدفع غير رقمي', reasonDues:'قيمة المستحقات غير رقمية',
   totalRowNote:'صف إجمالي — مرجع تدقيق', dateFixedNote:'تم تصحيح ترتيب التواريخ',
   cancelPreview:'إلغاء', confirmImport:'تأكيد استيراد ({n})', noValidRows:'لا توجد صفوف صالحة للاستيراد',
-  kpiRecords:'عدد السجلات', kpiEntitiesSuffix:'جهة', kpiBefore:'إجمالي قبل المراجعة', kpiAfter:'إجمالي بعد المراجعة',
-  kpiNet:'صافي الخصم', kpiReduced:'تخفيض', kpiIncreased:'زيادة',
-  kpiOrders:'أوامر الدفع', kpiDues:'المستحقات', kpiTotalAfterPeriod:'إجمالي بعد المراجعة', kpiAvgMonthly:'المتوسط الشهري', kpiSplitDelta:'الفرق قبل/بعد',
+  kpiRecords:'عدد السجلات', kpiEntitiesSuffix:'جهة', kpiBefore:'إجمالي قبل المراجعة',
+  kpiReduced:'تخفيض', kpiIncreased:'زيادة',
+  kpiOrders:'أوامر الدفع', kpiDues:'المستحقات', kpiAvgMonthly:'المتوسط الشهري', kpiSplitDelta:'الفرق قبل/بعد',
   allPeriods:'كل الفترات', auditOk:'مطابق لصف الإجمالي', auditWarn:'فرق عن الإجمالي: {n}',
   searchPh:'بحث بالاسم أو التصنيف...', viewTable:'جدول مجمّع', viewCards:'بطاقات موجزة', viewEntity:'الجهات',
   groupByLabel:'تجميع حسب', groupNone:'بدون تجميع', groupCategory:'التصنيف', groupBudget:'الموازنة', groupEntity:'الجهة', groupMonth:'الشهر', groupYear:'السنة',
@@ -670,8 +678,8 @@ ar:{
   resetFilters:'إعادة تعيين الفلاتر',
   sortByLabel:'الفرز حسب', sortNone:'بدون فرز', sortAsc:'تصاعدي', sortDesc:'تنازلي', sortRemove:'إزالة مستوى الفرز', sortAddLevel:'إضافة مستوى فرز',
   colName:'الاسم', colCategory:'التصنيف', colBudget:'الموازنة', colMonth:'الشهر', colYear:'السنة', colBefore:'قبل المراجعة', colAfter:'بعد المراجعة', colDiscount:'الخصم',
-  colOrders:'أوامر الدفع', colDues:'المستحقات', colFirstDue:'أول استحقاق', colLastDue:'آخر استحقاق',
-  colTotalAfterPeriod:'إجمالي بعد المراجعة (الفترة)', colAvgMonthly:'المتوسط الشهري', colRefBefore:'متوسط مرجعي قبل', colRefAfter:'متوسط مرجعي بعد', colDelta:'الفرق',
+  colOrders:'أوامر الدفع', colDues:'المستحقات',
+  colTotalAfterPeriod:'إجمالي بعد المراجعة (الفترة)', colAvgMonthly:'المتوسط الشهري', colRefBefore:'متوسط مرجعي قبل', colRefAfter:'متوسط مرجعي بعد',
   onlyClaims:'مطالبات فقط', onlyAccounts:'حسابات فقط', acctColsHint:'غير متاح إلا عند التجميع حسب الجهة',
   srcClaims:'من المطالبات', srcAccounts:'من الحسابات', avgCaption:'بعد المراجعة، شهريًا',
   colDueRange:'الاستحقاق', colReconcile:'الفرق عن المستحقات', colRefDelta:'فرق المتوسط المرجعي', refAvgLabel:'متوسط مرجعي ثابت',
@@ -690,18 +698,19 @@ ar:{
   copyLabelBefore:'قبل المراجعة', copyLabelAfter:'بعد المراجعة', copyLabelDiscount:'الخصم', copyLabelGroup:'المجموعة', copyLabelCount:'عدد السجلات', copyLabelBudget:'الموازنة',
   copyLabelOrders:'أوامر الدفع', copyLabelDues:'المستحقات', copyLabelFirstDue:'أول استحقاق', copyLabelLastDue:'آخر استحقاق',
   copyLabelAvgMonthly:'المتوسط الشهري', copyLabelRefBefore:'متوسط مرجعي قبل', copyLabelRefAfter:'متوسط مرجعي بعد',
-  matchingTitle:'المطابقة', matchingSummary:'المطابقة: {matched}/{total} جهة',
+  matchingSummary:'المطابقة: {matched}/{total} جهة',
   matchAccountsOnlyTitle:'جهات في الحسابات فقط', matchClaimsOnlyTitle:'جهات في المطالبات فقط',
   matchPickPlaceholder:'اختر مطابقة...', matchEmpty:'لا توجد جهات غير مطابقة', matchNoCandidates:'لا توجد مطالبات غير مطابقة للاختيار',
   periodLabelText:'الفترة', periodAll:'الكل', periodLast3:'آخر 3', periodLast6:'آخر 6', periodLast12:'آخر 12', periodCustom:'مخصص',
   periodSplitLabel:'مقارنة قبل/بعد', periodBasisLabel:'أساس المتوسط: أشهر بها حركة',
+  periodBasisCalendar:'أساس المتوسط: أشهر التقويم',
+  periodBasisHint:'يحدد عدد الأشهر الذي يُقسَّم عليه الإجمالي عند حساب المتوسط الشهري',
   cutoffLabel:'نقطة الفصل',
 },
 en:{
   appTitle:'Contracted Entities Statement',
   appSub:'Budget review statement — claims and accounts',
   langSwitch:'العربية',
-  reimport:'Import another file',
   editImport:'Edit import',
   printBtn:'Print statement',
   importTitle:'Import entity data',
@@ -732,9 +741,9 @@ en:{
   reasonOrders:'Non-numeric payment orders value', reasonDues:'Non-numeric dues value',
   totalRowNote:'Total row — audit reference', dateFixedNote:'Date order corrected',
   cancelPreview:'Cancel', confirmImport:'Confirm import ({n})', noValidRows:'No valid rows to import',
-  kpiRecords:'Records', kpiEntitiesSuffix:'entities', kpiBefore:'Total before review', kpiAfter:'Total after review',
-  kpiNet:'Net discount', kpiReduced:'reduced', kpiIncreased:'increased',
-  kpiOrders:'Payment orders', kpiDues:'Dues', kpiTotalAfterPeriod:'Total after review', kpiAvgMonthly:'Monthly average', kpiSplitDelta:'Before/after gap',
+  kpiRecords:'Records', kpiEntitiesSuffix:'entities', kpiBefore:'Total before review',
+  kpiReduced:'reduced', kpiIncreased:'increased',
+  kpiOrders:'Payment orders', kpiDues:'Dues', kpiAvgMonthly:'Monthly average', kpiSplitDelta:'Before/after gap',
   allPeriods:'All periods', auditOk:'Matches total row', auditWarn:'Diff. from total: {n}',
   searchPh:'Search by name or category...', viewTable:'Grouped table', viewCards:'Summary cards', viewEntity:'Entities',
   groupByLabel:'Group by', groupNone:'No grouping', groupCategory:'Category', groupBudget:'Budget', groupEntity:'Entity', groupMonth:'Month', groupYear:'Year',
@@ -743,8 +752,8 @@ en:{
   resetFilters:'Reset filters',
   sortByLabel:'Sort by', sortNone:'No sort', sortAsc:'Ascending', sortDesc:'Descending', sortRemove:'Remove sort level', sortAddLevel:'Add sort level',
   colName:'Name', colCategory:'Category', colBudget:'Budget', colMonth:'Month', colYear:'Year', colBefore:'Before review', colAfter:'After review', colDiscount:'Discount',
-  colOrders:'Payment orders', colDues:'Dues', colFirstDue:'First due', colLastDue:'Last due',
-  colTotalAfterPeriod:'Total after review (period)', colAvgMonthly:'Monthly average', colRefBefore:'Ref. avg before', colRefAfter:'Ref. avg after', colDelta:'Delta',
+  colOrders:'Payment orders', colDues:'Dues',
+  colTotalAfterPeriod:'Total after review (period)', colAvgMonthly:'Monthly average', colRefBefore:'Ref. avg before', colRefAfter:'Ref. avg after',
   onlyClaims:'Claims only', onlyAccounts:'Accounts only', acctColsHint:'Only available when grouped by entity',
   srcClaims:'From Claims', srcAccounts:'From Accounts', avgCaption:'After review, monthly',
   colDueRange:'Due dates', colReconcile:'Gap vs dues', colRefDelta:'Reference average delta', refAvgLabel:'Fixed reference average',
@@ -763,11 +772,13 @@ en:{
   copyLabelBefore:'Before review', copyLabelAfter:'After review', copyLabelDiscount:'Discount', copyLabelGroup:'Group', copyLabelCount:'Record count', copyLabelBudget:'Budget',
   copyLabelOrders:'Payment orders', copyLabelDues:'Dues', copyLabelFirstDue:'First due', copyLabelLastDue:'Last due',
   copyLabelAvgMonthly:'Monthly average', copyLabelRefBefore:'Ref. avg before', copyLabelRefAfter:'Ref. avg after',
-  matchingTitle:'Matching', matchingSummary:'Matching: {matched}/{total} entities',
+  matchingSummary:'Matching: {matched}/{total} entities',
   matchAccountsOnlyTitle:'Accounts-only entities', matchClaimsOnlyTitle:'Claims-only entities',
   matchPickPlaceholder:'Pick a match...', matchEmpty:'No unmatched entities', matchNoCandidates:'No unmatched claims available to select',
   periodLabelText:'Period', periodAll:'All', periodLast3:'Last 3', periodLast6:'Last 6', periodLast12:'Last 12', periodCustom:'Custom',
   periodSplitLabel:'Compare before/after', periodBasisLabel:'Average basis: months with activity',
+  periodBasisCalendar:'Average basis: calendar months',
+  periodBasisHint:'Controls how many months the total is divided by when calculating the monthly average',
   cutoffLabel:'Cutoff',
 },
 };
@@ -985,7 +996,7 @@ function monthLabel(mIdx){
 function sortFieldType(field){
   if(field==='month') return 'month';
   if(field==='year') return 'year';
-  if(['before','after','discount','orders','dues','avgMonthly','refAvgBefore','refAvgAfter','delta','reconcileDelta'].includes(field)) return 'number';
+  if(['before','after','discount','orders','dues','avgMonthly','refAvgBefore','refAvgAfter','delta','totalBefore','totalAfter','reconcileGap'].includes(field)) return 'number';
   return 'text';
 }
 function compareByField(a,b,field,dir){
@@ -1742,7 +1753,8 @@ function renderPeriodToolbar(){
   if(state.period.split){
     renderCsel('periodCutoffWrap', 'periodCutoffSel', monthOpts.length?monthOpts:[{value:'',label:'—'}], state.period.cutoff);
   }
-  document.getElementById('periodBasisLabelText').textContent = t('periodBasisLabel');
+  document.getElementById('periodBasisLabelText').textContent = t(state.period.basis==='data' ? 'periodBasisLabel' : 'periodBasisCalendar');
+  document.getElementById('periodBasisToggleWrap').title = t('periodBasisHint');
   document.getElementById('periodBasisToggle').checked = state.period.basis === 'data';
 }
 document.getElementById('periodPresetChips').addEventListener('click', (e)=>{
@@ -1815,10 +1827,13 @@ function kpiCard(cls, src, label, value, sub){
   const dot = src ? '<span class="kpi-src-dot '+src+'"></span>' : '';
   return '<div class="card kpi'+(cls?' '+cls:'')+'"><span class="kpi-label">'+dot+label+'</span><span class="kpi-value">'+value+'</span>'+(sub?'<span class="kpi-sub">'+sub+'</span>':'')+'</div>';
 }
+function srcChipHtml(src){
+  return '<span class="src-chip '+src+'"><span class="kpi-src-dot '+src+'"></span>'+t(src==='accounts'?'srcAccounts':'srcClaims')+'</span>';
+}
 function avgSourceToggleHtml(){
   return '<span class="avg-src-toggle">'
     +'<button type="button" class="avg-src-btn'+(state.avgSource==='claims'?' active':'')+'" data-avgsrc="claims">'+t('slotClaimsLabel')+'</button>'
-    +'<button type="button" class="avg-src-btn'+(state.avgSource==='accounts'?' active':'')+'" data-avgsrc="accounts">'+t('slotAccountsLabel')+'</button>'
+    +(state.accounts.length ? '<button type="button" class="avg-src-btn'+(state.avgSource==='accounts'?' active':'')+'" data-avgsrc="accounts">'+t('slotAccountsLabel')+'</button>' : '')
     +'</span>';
 }
 function renderKpis(){
@@ -1831,21 +1846,23 @@ function renderKpis(){
     const entities = new Set(records.map(r=>r.key)).size;
     tiles.push(kpiCard('', 'claims', t('kpiRecords'), fmt(records.length), entities+' '+t('kpiEntitiesSuffix')));
     const totalBefore = records.reduce((s,r)=>s+r.before,0);
-    tiles.push(kpiCard('', 'claims', t('colBefore'), fmt(totalBefore)+currencyUnit(), periodLabelForToolbar()));
+    tiles.push(kpiCard('', 'claims', t('kpiBefore'), fmt(totalBefore)+currencyUnit(), periodLabelForToolbar()));
     const totalAfter = records.reduce((s,r)=>s+r.after,0);
-    tiles.push(kpiCard('accent', 'claims', t('kpiTotalAfterPeriod'), fmt(totalAfter)+currencyUnit(), periodLabelForToolbar()));
+    tiles.push(kpiCard('accent', 'claims', t('colTotalAfterPeriod'), fmt(totalAfter)+currencyUnit(), periodLabelForToolbar()));
 
-    let avgValue, avgSub;
+    let avgValue, avgSub, avgSrc;
     if(state.avgSource==='accounts' && state.accounts.length){
       const keySet = currentAccountsKeySet();
       const list = state.accounts.filter(a=>keySet.has(a.key));
       avgValue = list.length ? list.reduce((s,a)=>s+a.refAvgAfter,0) : null;
       avgSub = avgSourceToggleHtml()+'<span class="kpi-sub-note">'+esc(t('avgAccountsNote'))+'</span>';
+      avgSrc = 'accounts';
     } else {
       avgValue = avgMonthlyFor(records, state.period.from, state.period.to);
       avgSub = avgSourceToggleHtml()+'<span class="kpi-sub-note">'+esc(periodLabelForToolbar())+'</span>';
+      avgSrc = 'claims';
     }
-    tiles.push(kpiCard('', 'claims', t('kpiAvgMonthly'), avgValue==null?'—':fmt(avgValue)+currencyUnit(), avgSub));
+    tiles.push(kpiCard('', avgSrc, t('kpiAvgMonthly'), avgValue==null?'—':fmt(avgValue)+currencyUnit(), avgSub));
 
     if(state.period.split && state.period.cutoff!=null){
       const avgA = avgMonthlyFor(records, state.period.from, state.period.cutoff-1);
@@ -1909,13 +1926,13 @@ function sortFieldOptions(){
     return [
       {value:'none', label:t('sortNone')},
       {value:'name', label:t('colName')},
-      {value:'before', label:t('colBefore')},
-      {value:'after', label:t('colAfter')},
+      {value:'totalBefore', label:t('colBefore')},
+      {value:'totalAfter', label:t('colAfter')},
       {value:'discount', label:t('colDiscount')},
       {value:'avgMonthly', label:t('colAvgMonthly')},
       {value:'orders', label:t('colOrders')},
       {value:'dues', label:t('colDues')},
-      {value:'reconcileDelta', label:t('colReconcile')},
+      {value:'reconcileGap', label:t('colReconcile')},
       {value:'refAvgBefore', label:t('colRefBefore')},
       {value:'refAvgAfter', label:t('colRefAfter')},
       {value:'delta', label:t('colRefDelta')},
@@ -2083,6 +2100,7 @@ function copyEntity(key){
     t('copyLabelCount')+': '+row.claimsCount,
     t('copyLabelBefore')+': '+(row.totalBefore==null?'—':fmt(row.totalBefore)+currencyUnit()),
     t('copyLabelAfter')+': '+(row.totalAfter==null?'—':fmt(row.totalAfter)+currencyUnit()),
+    t('copyLabelDiscount')+': '+(row.discount==null?'—':fmtSigned(row.discount)+currencyUnit()),
     t('copyLabelAvgMonthly')+': '+(row.avgMonthly==null?'—':fmt(row.avgMonthly)+currencyUnit()),
     t('copyLabelOrders')+': '+(row.orders==null?'—':fmt(row.orders)),
     t('copyLabelDues')+': '+(row.dues==null?'—':fmt(row.dues)+currencyUnit()),
@@ -2249,13 +2267,14 @@ function groupClaimsByKey(rows){
   return map;
 }
 function buildEntityRow(account, key, claimsInfo){
-  const name = account ? account.name : (claimsInfo ? claimsInfo.name : key);
+  const name = claimsInfo ? claimsInfo.name : (account ? account.name : key);
   const claimRows = claimsInfo ? claimsInfo.rows : [];
   const hasClaims = claimRows.length > 0;
   const hasAccount = !!account;
   const claimsCount = claimRows.length;
   const totalBefore = hasClaims ? claimRows.reduce((s,r)=>s+r.before,0) : null;
   const totalAfter = hasClaims ? claimRows.reduce((s,r)=>s+r.after,0) : null;
+  const discount = hasClaims ? totalBefore-totalAfter : null;
   const avgMonthly = hasClaims ? avgMonthlyFor(claimRows, state.period.from, state.period.to) : null;
   const refBefore = hasAccount ? account.refAvgBefore : null;
   const refAfter = hasAccount ? account.refAvgAfter : null;
@@ -2274,7 +2293,7 @@ function buildEntityRow(account, key, claimsInfo){
     key, name,
     claimsCount, orders: hasAccount?account.orders:null, dues,
     firstDue: hasAccount?account.firstDue:null, lastDue: hasAccount?account.lastDue:null,
-    totalBefore, totalAfter, avgMonthly, refAvgBefore: refBefore, refAvgAfter: refAfter, delta,
+    totalBefore, totalAfter, discount, avgMonthly, refAvgBefore: refBefore, refAvgAfter: refAfter, delta,
     reconcileGap, reconcilePct,
     marker,
   };
@@ -2309,7 +2328,7 @@ function renderEntityCard(r){
   const showClaims = r.claimsCount>0 && state.entityFocus!=='accounts';
   const showAccounts = (r.dues!=null || r.orders!=null) && state.entityFocus!=='claims';
   const showReconcile = showClaims && showAccounts && r.reconcileGap!=null;
-  const marker = r.marker ? '<span class="marker-badge">'+esc(t(r.marker))+'</span>' : '';
+  const marker = r.marker ? '<span class="marker-badge '+r.marker+'">'+esc(t(r.marker))+'</span>' : '';
 
   let claimsHtml = '';
   if(showClaims){
@@ -2319,10 +2338,24 @@ function renderEntityCard(r){
       +'<div class="amt-block after"><span class="amt-label">'+t('colAfter')+'</span><span class="amt-value">'+fmt(r.totalAfter)+currencyUnit()+'</span></div>'
       +'</div>'
       +'<div class="stamp-wrap">'+stampHtml(r.totalBefore, r.totalAfter)+'</div>';
+    if(r.avgMonthly!=null){
+      claimsHtml += '<div class="entity-line" title="'+esc(t('avgCaption'))+'"><span class="entity-line-label"><span class="kpi-src-dot claims"></span>'+t('colAvgMonthly')+'</span><span class="entity-line-value">'+fmt(r.avgMonthly)+currencyUnit()+'</span></div>';
+    }
   }
   let accountsHtml = '';
-  if(showAccounts && r.dues!=null){
-    accountsHtml = '<div class="entity-line'+(showClaims?'':' no-border')+'"><span class="entity-line-label"><span class="kpi-src-dot accounts"></span>'+t('colDues')+'</span><span class="entity-line-value">'+fmt(r.dues)+currencyUnit()+'</span></div>';
+  if(showAccounts){
+    const acctLines = [];
+    if(r.dues!=null) acctLines.push({label:t('colDues'), value:fmt(r.dues)+currencyUnit()});
+    if(r.orders!=null) acctLines.push({label:t('colOrders'), value:fmt(r.orders)});
+    if(r.firstDue || r.lastDue) acctLines.push({label:t('colDueRange'), value:(r.firstDue||'—')+' → '+(r.lastDue||'—')});
+    if(r.refAvgBefore!=null){
+      const deltaHtml = r.delta==null ? '' : ' <span class="delta-pill '+(r.delta<=0?'good':'bad')+'">'+(r.delta>0?'+':'')+r.delta.toFixed(1)+'%</span>';
+      acctLines.push({label:t('refAvgLabel'), value:fmt(r.refAvgBefore)+' → '+fmt(r.refAvgAfter)+currencyUnit()+deltaHtml});
+    }
+    if(acctLines.length){
+      accountsHtml = '<div class="entity-group-head'+(showClaims?'':' no-border')+'">'+srcChipHtml('accounts')+'</div>'
+        +acctLines.map(line=>'<div class="entity-line grouped"><span class="entity-line-label"><span class="kpi-src-dot accounts"></span>'+line.label+'</span><span class="entity-line-value">'+line.value+'</span></div>').join('');
+    }
   }
   let reconcileHtml = '';
   if(showReconcile){
@@ -2331,7 +2364,8 @@ function renderEntityCard(r){
       reconcileHtml = '<div class="entity-reconcile match"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>'+esc(t('reconcileMatch'))+'</div>';
     } else {
       const pctTxt = r.reconcilePct==null ? '' : ' ('+(r.reconcilePct>0?'+':'')+r.reconcilePct.toFixed(1)+'%)';
-      reconcileHtml = '<div class="entity-reconcile"><span>'+esc(t('reconcileLabel'))+': <strong style="color:var(--ink);">'+fmtSigned(r.reconcileGap)+currencyUnit()+pctTxt+'</strong></span></div>';
+      reconcileHtml = '<div class="entity-reconcile"><span>'+esc(t('reconcileLabel'))+': <strong style="color:var(--ink);">'+fmtSigned(r.reconcileGap)+currencyUnit()+pctTxt+'</strong></span></div>'
+        +'<div class="entity-reconcile-note">'+esc(t('entityScopeNote'))+'</div>';
     }
   }
   return '<div class="card ecard entity-ecard">'
